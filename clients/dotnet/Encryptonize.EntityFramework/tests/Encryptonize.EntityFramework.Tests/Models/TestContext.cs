@@ -19,9 +19,9 @@ public class EncryptedData
 {
     public int Id { get; set; }
 
-    [Encrypted]
+    [Confidential]
     public string? Data { get; set; }
 
-    [Encrypted]
+    [Confidential]
     public byte[]? Binary { get; set; }
 }

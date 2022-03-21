@@ -18,6 +18,6 @@ public static class ModelExtensions
             throw new NotSupportedException("Encryption columns if custom value converters is not supported");
         }
 
-        return property.PropertyInfo?.GetCustomAttribute<EncryptedAttribute>(false) is not null;
+        return property.PropertyInfo?.GetCustomAttribute<ConfidentialAttribute>(false) is not null;
     }
 }
