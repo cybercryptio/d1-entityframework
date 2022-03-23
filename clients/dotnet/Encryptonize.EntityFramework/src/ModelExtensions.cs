@@ -15,7 +15,7 @@ public static class ModelExtensions
 
         if (property.FindAnnotation(CoreAnnotationNames.ValueConverter) is not null)
         {
-            throw new NotSupportedException("Encryption columns if custom value converters is not supported");
+            throw new NotSupportedException("Properties with custom value converters, cannot be marked as confidential");
         }
 
         return property.PropertyInfo?.GetCustomAttribute<ConfidentialAttribute>(false) is not null;
