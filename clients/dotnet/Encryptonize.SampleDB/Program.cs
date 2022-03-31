@@ -11,7 +11,7 @@ builder.Services.AddScoped<DocumentService>();
 
 // Configure database connection.
 var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-if(String.IsNullOrWhiteSpace(connectionString)) 
+if (String.IsNullOrWhiteSpace(connectionString))
 {
     throw new Exception("Database connection string not initialized");
 }
@@ -33,7 +33,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Initialize database.
-using (var scope = app.Services.CreateScope()) {
+using (var scope = app.Services.CreateScope())
+{
     var context = scope.ServiceProvider.GetRequiredService<StorageContext>();
     context.Database.EnsureCreated();
 }

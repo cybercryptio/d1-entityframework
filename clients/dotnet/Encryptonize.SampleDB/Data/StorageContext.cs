@@ -12,11 +12,11 @@ namespace EncryptonizeDBSample.Data
         {
         }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.UseEncryptonize();
-        base.OnModelCreating(modelBuilder);
-    }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseEncryptonize();
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<Document> Documents => Set<Document>();
     }

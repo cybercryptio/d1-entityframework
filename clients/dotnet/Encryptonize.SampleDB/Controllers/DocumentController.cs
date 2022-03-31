@@ -22,7 +22,7 @@ public class DocumentController : ControllerBase
     {
         var document = _service.GetById(documentID);
 
-        if(document is not null)
+        if (document is not null)
         {
             return document;
         }
@@ -44,7 +44,7 @@ public class DocumentController : ControllerBase
     {
         var document = _service.GetById(documentID);
 
-        if(document is not null)
+        if (document is not null)
         {
             _service.DeleteById(documentID);
             return Ok();
