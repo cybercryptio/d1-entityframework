@@ -1,8 +1,8 @@
-using System.Text;
+
+// Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Encryptonize.Client;
-using System.Linq.Expressions;
 
 namespace Encryptonize.EntityFramework;
 

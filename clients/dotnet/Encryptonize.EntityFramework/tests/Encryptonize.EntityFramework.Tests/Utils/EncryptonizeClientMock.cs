@@ -1,3 +1,4 @@
+// Copyright 2020-2022 CYBERCRYPT
 using Encryptonize.Client;
 using NSubstitute;
 using NSubstitute.ClearExtensions;

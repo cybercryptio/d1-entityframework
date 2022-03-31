@@ -1,3 +1,4 @@
+// Copyright 2020-2022 CYBERCRYPT
 using System.Text;
 
 namespace Encryptonize.EntityFramework;

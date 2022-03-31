@@ -1,3 +1,4 @@
+// Copyright 2020-2022 CYBERCRYPT
 using System;
 using System.Linq;
 using Encryptonize.EntityFramework.Tests.Models;
