@@ -1,0 +1,19 @@
+using Encryptonize.Client;
+using NSubstitute;
+using NSubstitute.ClearExtensions;
+
+namespace Encryptonize.EntityFramework.Tests.Utils;
+
+// As EF models are processed only once, the mocked Encryptonize client needs to be the same
+// for all tests, which is the reason for this slightly weird setup.
+internal static class EncryptonizeClientMock
+{
+    private static readonly IEncryptonizeClient client = Substitute.For<IEncryptonizeClient>();
+
+    public static IEncryptonizeClient Mock => client;
+
+    public static void ClearSubstitute(ClearOptions options)
+    {
+        client.ClearSubstitute(options);
+    }
+}

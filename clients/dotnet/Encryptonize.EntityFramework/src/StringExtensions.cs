@@ -9,6 +9,11 @@ public static class ByteArrayExtensions
         return Convert.ToBase64String(input.GetBytes());
     }
 
+    public static string ToBase64(this byte[] input)
+    {
+        return Convert.ToBase64String(input);
+    }
+
     public static string FromBase64(this string input)
     {
         var bytes = Convert.FromBase64String(input);

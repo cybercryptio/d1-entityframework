@@ -1,16 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using Encryptonize.Client;
 
 namespace Encryptonize.EntityFramework.Tests.Models;
 
 public class TestDbContext : DbContext
 {
+    private readonly IEncryptonizeClient client;
+
     public DbSet<EncryptedData> EncryptedData { get; set; } = null!;
 
-    public TestDbContext(DbContextOptions<TestDbContext> options) : base(options) { }
+    public TestDbContext(IEncryptonizeClient client, DbContextOptions options) : base(options)
+    {
+        this.client = client;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseEncryptonize();
+        modelBuilder.UseEncryptonize(client);
         base.OnModelCreating(modelBuilder);
     }
 }

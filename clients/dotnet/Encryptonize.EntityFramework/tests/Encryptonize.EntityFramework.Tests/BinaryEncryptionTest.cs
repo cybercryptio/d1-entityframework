@@ -1,10 +1,12 @@
 using System;
 using System.Data;
 using System.Linq;
-using System.Text;
+using Encryptonize.EntityFramework.Tests.Utils;
 using Encryptonize.EntityFramework.Tests.Models;
+using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 using Xunit;
 
 namespace Encryptonize.EntityFramework.Tests;
@@ -16,10 +18,13 @@ public class BinaryEncryptionTest : IDisposable
 
     public BinaryEncryptionTest()
     {
+        // Because the model is cache globally the mock needs to have all state cleared between each test
+        EncryptonizeClientMock.ClearSubstitute(ClearOptions.All);
+        
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
         contextOptions = new DbContextOptionsBuilder<TestDbContext>().UseSqlite(connection).Options;
-        using var context = new TestDbContext(contextOptions);
+        using var context = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -27,9 +32,13 @@ public class BinaryEncryptionTest : IDisposable
     [Fact]
     public void SavingDataEncryptsData()
     {
-        var expectedData = Encoding.UTF8.GetBytes("test");
-        var expectedEncryptedData = Encoding.UTF8.GetBytes("encrypted").Concat(expectedData).ToArray();
-        using var dbContext = new TestDbContext(contextOptions);
+        var expectedData = "test".GetBytes();
+        var objectId = Guid.NewGuid().ToString();
+        var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
+        var expectedEncryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
+        EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
+            .Returns(new Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
+        using var dbContext = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
         dbContext.EncryptedData.Add(new EncryptedData
         {
             Binary = expectedData
@@ -39,16 +48,21 @@ public class BinaryEncryptionTest : IDisposable
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "SELECT Binary FROM EncryptedData";
         var result = command.ExecuteScalar() as byte[];
-        Assert.Equal(expectedEncryptedData, result);
+        
+        result.Should().Equal(expectedEncryptedData);
     }
 
 
     [Fact]
     public void QueryingDataDecryptsData()
     {
-        var expectedData = Encoding.UTF8.GetBytes("data");
-        var encryptedData = Encoding.UTF8.GetBytes("encrypted").Concat(expectedData).ToArray();
-        using var dbContext = new TestDbContext(contextOptions);
+        var expectedData = "data".GetBytes();
+        var objectId = Guid.NewGuid().ToString();
+        var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
+        var encryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
+        EncryptonizeClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
+            .Returns(new Client.Response.DecryptResponse(expectedData, new byte[0]));
+        using var dbContext = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "INSERT INTO EncryptedData (Binary) VALUES (@data)";
         var parameter = command.CreateParameter();
@@ -59,7 +73,8 @@ public class BinaryEncryptionTest : IDisposable
         command.ExecuteNonQuery();
 
         var result = dbContext.EncryptedData.First();
-        Assert.Equal(expectedData, result.Binary);
+        
+        result.Binary.Should().Equal(expectedData);
     }
 
     public void Dispose() => connection.Dispose();
