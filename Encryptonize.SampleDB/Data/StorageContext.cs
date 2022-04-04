@@ -2,19 +2,23 @@
 
 using EncryptonizeDBSample.Models;
 using Encryptonize.EntityFramework;
+using Encryptonize.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace EncryptonizeDBSample.Data
 {
     public class StorageContext : DbContext
     {
-        public StorageContext(DbContextOptions<StorageContext> options) : base(options)
+        private readonly IEncryptonizeClient client;
+
+        public StorageContext(IEncryptonizeClient client, DbContextOptions<StorageContext> options) : base(options)
         {
+            this.client = client;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseEncryptonize();
+            modelBuilder.UseEncryptonize(client);
             base.OnModelCreating(modelBuilder);
         }
 

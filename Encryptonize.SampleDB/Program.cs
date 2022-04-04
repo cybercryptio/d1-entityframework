@@ -2,19 +2,37 @@
 
 using EncryptonizeDBSample.Data;
 using EncryptonizeDBSample.Services;
+using Encryptonize.Client;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables("ENCDB_");
 
 // Add services to the container.
 builder.Services.AddScoped<DocumentService>();
 
 // Configure database connection.
-var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 if (String.IsNullOrWhiteSpace(connectionString))
 {
     throw new Exception("Database connection string not initialized");
 }
+var encryptonizeUrl = builder.Configuration.GetValue<string>("Encryptonize:Url");
+if (String.IsNullOrWhiteSpace(encryptonizeUrl))
+{
+    throw new Exception("Encryptonize URL not defined");
+}
+var encryptonizeUsername = builder.Configuration.GetValue<string>("Encryptonize:Username");
+if (String.IsNullOrWhiteSpace(encryptonizeUsername))
+{
+    throw new Exception("Encryptonize username not defined");
+}
+var encryptonizePassword = builder.Configuration.GetValue<string>("Encryptonize:Password");
+if (String.IsNullOrWhiteSpace(encryptonizePassword))
+{
+    throw new Exception("Encryptonize password not defined");
+}
+builder.Services.AddSingleton<IEncryptonizeClient>(new EncryptonizeClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>
