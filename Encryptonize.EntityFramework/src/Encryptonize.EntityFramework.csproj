@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
+    <ProjectReference Include="..\..\..\..\clients\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
   </ItemGroup>
 
 </Project>
