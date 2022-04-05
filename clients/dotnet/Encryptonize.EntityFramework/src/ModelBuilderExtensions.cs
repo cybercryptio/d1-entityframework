@@ -45,18 +45,15 @@ public static class ModelBuilderExtensions
 
     private static string StringEncryptor(string value, IEncryptonizeClient client)
     {
-        var res = client.Encrypt(value.GetBytes(), emptyByteArray);
-        var encryptedValue = res.ObjectId.GetBytes().Concat(res.Ciphertext).ToArray();
+        var encryptedValue = BinaryEncryptor(value.GetBytes(), client);
         return encryptedValue.ToBase64();
     }
 
     private static string StringDecryptor(string value, IEncryptonizeClient client)
     {
         var bytesValue = value.FromBase64().GetBytes();
-        var objectId = bytesValue.Take(UUID_LENGHT).ToArray().BytesToString();
-        var ciphertext = bytesValue.Skip(UUID_LENGHT).ToArray();
-        var res = client.Decrypt(objectId, ciphertext, emptyByteArray);
-        return res.Plaintext.BytesToString();
+        var plaintext = BinaryDecryptor(bytesValue, client);
+        return plaintext.BytesToString();
     }
 
     private static byte[] BinaryEncryptor(byte[] value, IEncryptonizeClient client)
