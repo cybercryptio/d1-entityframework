@@ -8,6 +8,7 @@ namespace Encryptonize.EntityFramework;
 
 public static class ModelBuilderExtensions
 {
+    private const int UUID_LENGHT = 36;
     private static readonly byte[] emptyByteArray = new byte[0];
 
     public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeClient client)
@@ -52,8 +53,8 @@ public static class ModelBuilderExtensions
     private static string StringDecryptor(string value, IEncryptonizeClient client)
     {
         var bytesValue = value.FromBase64().GetBytes();
-        var objectId = bytesValue.Take(36).ToArray().BytesToString();
-        var ciphertext = bytesValue.Skip(36).ToArray();
+        var objectId = bytesValue.Take(UUID_LENGHT).ToArray().BytesToString();
+        var ciphertext = bytesValue.Skip(UUID_LENGHT).ToArray();
         var res = client.Decrypt(objectId, ciphertext, emptyByteArray);
         return res.Plaintext.BytesToString();
     }
@@ -67,8 +68,8 @@ public static class ModelBuilderExtensions
 
     private static byte[] BinaryDecryptor(byte[] value, IEncryptonizeClient client)
     {
-        var objectId = value.Take(36).ToArray().BytesToString();
-        var ciphertext = value.Skip(36).ToArray();
+        var objectId = value.Take(UUID_LENGHT).ToArray().BytesToString();
+        var ciphertext = value.Skip(UUID_LENGHT).ToArray();
         var res = client.Decrypt(objectId, ciphertext, emptyByteArray);
         return res.Plaintext;      
     }
