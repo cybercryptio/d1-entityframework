@@ -8,12 +8,13 @@ help:  ## Display this help
 # Change shell to bash to allow sourcing of env variables
 SHELL := /bin/bash
 
-##### Files #####
-
+##### Variables #####
+proto_path = ../../../../../encryptonize-core/integrations/protobuf
 
 ##### Build targets #####
 .PHONY: build
 build:
+	$(MAKE) -C ../../../clients/encryption-service/dotnet/Encryptonize.Client build proto_path=$(proto_path)
 	dotnet build ./src
 
 .PHONY: test

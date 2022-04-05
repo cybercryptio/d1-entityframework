@@ -8,6 +8,9 @@ help:  ## Display this help
 # Change shell to bash to allow sourcing of env variables
 SHELL := /bin/bash
 
+##### Variables #####
+proto_path = ../../../../../encryptonize-core/integrations/protobuf
+
 ##### Functions #####
 # Check that given variables are set and all have non-empty values,
 # die with an error otherwise.
@@ -26,6 +29,7 @@ __check_defined = \
 ##### Build targets #####
 .PHONY: build
 build:
+	$(MAKE) -C ../Encryptonize.EntityFramework build proto_path=$(proto_path)
 	dotnet build
 
 .PHONY: run
