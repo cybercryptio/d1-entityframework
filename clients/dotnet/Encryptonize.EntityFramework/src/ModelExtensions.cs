@@ -1,3 +1,4 @@
+// Copyright 2020-2022 CYBERCRYPT
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
