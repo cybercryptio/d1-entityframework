@@ -7,8 +7,7 @@ namespace EncryptonizeDBSample.Models;
 
 public class Document
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int ID { get; set; }
+    public int Id { get; set; }
 
     [Confidential]
     public string? Data { get; set; }

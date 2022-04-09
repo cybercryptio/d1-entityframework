@@ -1,8 +1,9 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using EncryptonizeDBSample.Services;
 using EncryptonizeDBSample.Models;
 using Microsoft.AspNetCore.Mvc;
+using EncryptonizeDBSample.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EncryptonizeDBSample.Controllers;
 
@@ -10,17 +11,18 @@ namespace EncryptonizeDBSample.Controllers;
 [Route("[controller]")]
 public class DocumentController : ControllerBase
 {
-    private readonly DocumentService _service;
+    private readonly StorageContext storageContext;
 
-    public DocumentController(DocumentService service)
+    public DocumentController(StorageContext storageContext)
     {
-        _service = service;
+        this.storageContext = storageContext;
     }
 
     [HttpGet(Name = "GetDocument")]
-    public ActionResult<Document> GetDocument(int documentID)
+    public async Task<ActionResult<Document>> GetDocument(int documentID)
     {
-        var document = _service.GetById(documentID);
+        var document = await storageContext.Documents.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == documentID);
 
         if (document is not null)
         {
@@ -33,20 +35,22 @@ public class DocumentController : ControllerBase
     }
 
     [HttpPost(Name = "CreateDocument")]
-    public IActionResult CreateDocument(Document newDocument)
+    public async Task<IActionResult> CreateDocument(Document document)
     {
-        var document = _service.CreateDocument(newDocument);
-        return CreatedAtAction(nameof(GetDocument), new { id = document!.ID }, document);
+        await storageContext.Documents.AddAsync(document);
+        await storageContext.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetDocument), new { id = document!.Id }, document);
     }
 
     [HttpDelete(Name = "DeleteDocument")]
-    public IActionResult Delete(int documentID)
+    public async Task<IActionResult> Delete(int documentID)
     {
-        var document = _service.GetById(documentID);
+        var document = await storageContext.Documents.FindAsync(documentID);
 
         if (document is not null)
         {
-            _service.DeleteById(documentID);
+            storageContext.Documents.Remove(document);
+            await storageContext.SaveChangesAsync();
             return Ok();
         }
         else
