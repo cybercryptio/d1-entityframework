@@ -36,7 +36,7 @@ build: ## Build the sample application
 .PHONY: run
 run: # Run the sample application
 	@:$(call check_defined, db_connection_string enc_url enc_user enc_pass)	
-	ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING=$(db_connection_string) ENCDB_ENCRYPTONIZE__URL=$(enc_url) ENCDB_ENCRYPTONIZE__USERNAME=$(enc_user) ENCDB_ENCRYPTONIZE__PASSWORD=$(enc_pass) dotnet run
+	ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING='$(db_connection_string)' ENCDB_ENCRYPTONIZE__URL='$(enc_url)' ENCDB_ENCRYPTONIZE__USERNAME='$(enc_user)' ENCDB_ENCRYPTONIZE__PASSWORD='$(enc_pass)' dotnet run
 
 .PHONY: docker-build
 docker-build: ## Build the Docker image
