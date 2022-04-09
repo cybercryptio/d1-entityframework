@@ -35,8 +35,9 @@ public class DocumentController : ControllerBase
     }
 
     [HttpPost(Name = "CreateDocument")]
-    public async Task<IActionResult> CreateDocument(Document document)
+    public async Task<IActionResult> CreateDocument(NewDocument newDocument)
     {
+        var document = new Document { Data = newDocument.Data, AssociatedData = newDocument.AssociatedData };
         await storageContext.Documents.AddAsync(document);
         await storageContext.SaveChangesAsync();
         return CreatedAtAction(nameof(GetDocument), new { id = document!.Id }, document);
