@@ -1,7 +1,6 @@
 
 // Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Encryptonize.Client;
 
 namespace Encryptonize.EntityFramework;
