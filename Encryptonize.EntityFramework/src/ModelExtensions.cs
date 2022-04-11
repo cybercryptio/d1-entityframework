@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Encryptonize.EntityFramework;
 
-public static class ModelExtensions
+internal static class ModelExtensions
 {
-    public static bool ShouldEncrypt(this IMutableProperty property)
+    internal static bool ShouldEncrypt(this IMutableProperty property)
     {
         if (property is null)
         {

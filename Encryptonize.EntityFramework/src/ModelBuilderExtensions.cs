@@ -8,6 +8,9 @@ namespace Encryptonize.EntityFramework;
 
 public static class ModelBuilderExtensions
 {
+    /// <summary>
+    /// Build the model with attribute based Encryptonize support.
+    /// </summary>
     public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeClient client)
     {
         if (modelBuilder is null)

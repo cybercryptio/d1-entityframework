@@ -7,6 +7,9 @@ namespace Encryptonize.EntityFramework;
 
 public static class PropertyBuilderExtensions
 {
+    /// <summary>
+    /// Marks a property as confidential and to be encrypted using Encryptonize.
+    /// </summary>
     public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, IEncryptonizeClient client)
     {
         if (property is null)
@@ -17,6 +20,9 @@ public static class PropertyBuilderExtensions
         return property.HasConversion(ValueConverterFactory.CreateStringConverter(client));
     }
 
+    /// <summary>
+    /// Marks a property as confidential and to be encrypted using Encryptonize.
+    /// </summary>
     public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, IEncryptonizeClient client)
     {
         if (property is null)
