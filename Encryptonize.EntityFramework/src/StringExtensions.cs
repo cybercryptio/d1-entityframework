@@ -1,5 +1,8 @@
 // Copyright 2020-2022 CYBERCRYPT
+using System.Runtime.CompilerServices;
 using System.Text;
+
+[assembly: InternalsVisibleTo("Encryptonize.EntityFramework.Tests")]
 
 namespace Encryptonize.EntityFramework;
 
