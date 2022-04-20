@@ -36,3 +36,11 @@ dotnet run
 ```
 
 For easy access to the API, the Swagger UI is available at [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html).
+
+## Kubernetes deployment
+
+If you want to deploy the sample application to Kubernetes a [Helm template](../../../deploy/encryptonizedb/EncryptonizeDBSample/) is available.
+
+## Azure provision
+
+Instructions on provisioning the required SQL server and the database is available [here](../../../deploy/encryptonizedb/README.md).
