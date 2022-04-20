@@ -5,11 +5,19 @@ using Encryptonize.Client;
 
 namespace Encryptonize.EntityFramework;
 
+/// <summary>
+/// Extension methods for <see cref="ModelBuilder"/>.
+/// </summary>
 public static class ModelBuilderExtensions
 {
+    private const int UUID_LENGHT = 36;
+    private static readonly byte[] emptyByteArray = new byte[0];
+
     /// <summary>
-    /// Build the model with attribute based Encryptonize support.
+    /// Enable Encryptonize support for the given <see cref="ModelBuilder"/>.
     /// </summary>
+    /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
+    /// <param name="client">The <see cref="IEncryptonizeClient"/>.</param>
     public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeClient client)
     {
         if (modelBuilder is null)
