@@ -13,21 +13,21 @@ proto_path = ../../../../../encryptonize-core/integrations/protobuf
 
 ##### Build targets #####
 .PHONY: build
-build:
+build: ## Build the library
 	$(MAKE) -C ../../../clients/encryption-service/dotnet/Encryptonize.Client build proto_path=$(proto_path)
 	dotnet build ./src
 
 .PHONY: test
-test: build
+test: build ## Run the tests
 	dotnet test ./tests/Encryptonize.EntityFramework.Tests --no-build
 
 .PHONY: pack
-pack: build
+pack: build ## Pack the NuGet package
 	dotnet pack ./src --output ./artifacts/ --configuration Release
 
 ##### Cleanup targets #####
-.PHONY: clean  ## Remove build artifacts
-clean :
+.PHONY: clean
+clean: ## Remove build artifacts
 	dotnet clean ./src
 	dotnet clean ./tests/Encryptonize.EntityFramework.Tests
 	rm -rf ./artifacts/
