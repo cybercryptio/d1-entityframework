@@ -11,7 +11,6 @@ SHELL := /bin/bash
 ##### Variables #####
 proto_path = ../../../../../encryptonize-core/integrations/protobuf
 image_name = encryptonizedb-sample
-docker_file = encryptonizedb/dotnet/Encryptonize.SampleDB/Dockerfile
 
 ##### Functions #####
 # Check that given variables are set and all have non-empty values,
@@ -41,7 +40,7 @@ run: # Run the sample application
 
 .PHONY: docker-build
 docker-build: ## Build the Docker image
-	DOCKER_BUILDKIT=1 docker build -t $(image_name) -f $(docker_file) ../../..
+	DOCKER_BUILDKIT=1 docker build -t $(image_name) -f Dockerfile ../../..
 
 .PHONY: docker-push
 docker-push: docker-build ## Push the Docker image
