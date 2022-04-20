@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Encryptonize.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\..\..\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
+    <ProjectReference Include="..\..\..\..\..\clients\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
