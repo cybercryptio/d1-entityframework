@@ -26,9 +26,7 @@ public class EncryptedDataForPropertyBuilder
 {
     public int Id { get; set; }
 
-    [Confidential]
     public string? Data { get; set; }
 
-    [Confidential]
     public byte[]? Binary { get; set; }
 }
