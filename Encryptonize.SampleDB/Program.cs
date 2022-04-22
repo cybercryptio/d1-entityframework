@@ -1,15 +1,11 @@
 // Copyright 2020-2022 CYBERCRYPT
 
 using EncryptonizeDBSample.Data;
-using EncryptonizeDBSample.Services;
 using Encryptonize.Client;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("ENCDB_");
-
-// Add services to the container.
-builder.Services.AddScoped<DocumentService>();
 
 // Configure database connection.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
