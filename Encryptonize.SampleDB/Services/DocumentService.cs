@@ -24,7 +24,7 @@ public class DocumentService
 
     public Document CreateDocument(Document newDocument)
     {
-        _context.Documents.Add(newDocument);
+        _context.Documents.Add(new Document { Data = newDocument.Data });
         _context.SaveChanges();
 
         return newDocument;
