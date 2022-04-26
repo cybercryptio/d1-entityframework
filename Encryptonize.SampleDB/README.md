@@ -14,7 +14,7 @@ The data schema is automatically created on startup, if it does not exists and l
 
 Through the API it is possible to retrive documents, create new documents and delete documents.
 
-When a new document is created, the values in the `Data` column is automatically encrypted, and when a documented is retrived is will be decrypted, without any changes to the business logic.
+When a new document is created the values in the `Data` column are automatically encrypted, and when a documented is retrieved it will automatically be decrypted, without any changes to the business logic.
 
 ## Running the sample
 
