@@ -2,9 +2,9 @@
 
 ## Introduction
 
-The application shows how to use Encryptonize DB, to encrypt and decrypt data in a database. It is a simple REST API that encrypts data in a single column in a MSSQL database.
+The application shows how to use Encryptonize DB to encrypt and decrypt data in a database. It exposes a simple REST API that encrypts data in a single column in a MSSQL database.
 
-The data schema is automatically created on startup, if it does not exists and looks like this:
+The data schema is automatically created on startup, if it does not already exists, and looks like this:
 
 | Documents        |                                             |
 | ---------------- | ------------------------------------------- |
@@ -18,9 +18,8 @@ When a new document is created the values in the `Data` column are automatically
 
 ## Running the sample
 
-To run the sample the application needs to know about the location of the database and the Encryptonize service, and how to login into the Encryptonize.
-
-It can be configured through either the configuration file or environment variables. The configuration that need to be defined before running the application is (here shown as environment variables):
+To run the sample, the application needs to know about the location of the database and the Encryptonize service and how to login into Encryptonize.
+It can be configured either through the configuration file or environment variables. The configurations that need to be defined before running the application are (here shown as environment variables):
 
 | Variable | Description | Example |
 | - | - | - |
@@ -43,4 +42,4 @@ If you want to deploy the sample application to Kubernetes a [Helm template](../
 
 ## Azure provision
 
-Instructions on provisioning the required SQL server and the database is available [here](../../../deploy/encryptonizedb/README.md).
+Instructions on provisioning the required SQL server and the database are available [here](../../../deploy/encryptonizedb/README.md).

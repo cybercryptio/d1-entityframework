@@ -16,7 +16,7 @@
 
 Starting to encrypt a database requires minimal code changes to the an application.
 
-The model needs to told how what data should be encrypted, this can be done in two ways:
+The model needs to told what data should be encrypted. This can be done in two ways:
 
 - Adding the `Confidential` data annotation to the model
 - Configuring the model using the fluent API
@@ -63,7 +63,7 @@ public class DatabaseContext : DbContext
 }
 ```
 
-- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize sevrice, have be injected into the `DbContext`.
+- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize service, has be injected into the `DbContext`.
 - The `Confidential` data annotation is used to mark data that should be encrypted.
 - `UseEncryptonize` in `OnModelCreating` is used to tell Entity Framework Core to encrypt and decrypt data transparently.
 
@@ -105,7 +105,7 @@ public class DatabaseContext : DbContext
 }
 ```
 
-- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize sevrice, have be injected into the `DbContext`.
+- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize service, has be injected into the `DbContext`.
 - The model needs to be told, what data should be encrypted and decrypted, by marking it as confidential using the `IsConfidential` extension method.
 
 ### Migrating data
@@ -114,19 +114,19 @@ public class DatabaseContext : DbContext
 
 ### Sample
 
-A sample application is available at [https://github.com/cyber-crypt-com/encryptonize-premium/tree/encryptonizedb/clients/dotnet/Encryptonize.SampleDB](https://github.com/cyber-crypt-com/encryptonize-premium/tree/encryptonizedb/clients/dotnet/Encryptonize.SampleDB), showcasing how to use `Encryptonize.EntityFramework` to encrypt and decrypt data in a database.
+A sample application is available at [https://github.com/cyber-crypt-com/encryptonize-premium/tree/master/clients/dotnet/Encryptonize.SampleDB](https://github.com/cyber-crypt-com/encryptonize-premium/tree/encryptonizedb/clients/dotnet/Encryptonize.SampleDB), showcasing how to use `Encryptonize.EntityFramework` to encrypt and decrypt data in a database.
 
 **TODO**: Place correct link to sample application. Right now it is stored in `encryptonize-premium` repository, not publicly accessible. Also it is only available on the `encryptonizedb` branch at the moment, until the `master` branch have been fixed after the libification of core, futhermore the sample have moved to a different directory in a branch, that haven't been merged yet. Expect the link to be updated in the future.
 
 ## How it works
 
-The integration works by encrypted and decrypting data transparently, when queried or saved to the database. Selected parts of the data is encrypted from the application to the database in such a way, that the database itself never receives the data in plain text.
+The integration works by encrypted and decrypting data transparently when queried or saved to the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
-When data is queried, the data will automatically be decrypted, by making a request to the Encryptonize service, if the decrypting for some reason fails, like the application does not have access to the data or is corrupted, an exception will be thrown, and the data will not be available.
+When data is queried, the data will automatically be decrypted by making a request to the Encryptonize service. If the decryption for some reason fails, for example if the application does not have access to the data or the data is corrupted, an exception will be thrown and the data will not be available.
 
 **TODO**: Insert diagram
 
-When data is save to the database, the data will be similarly be encrypted, by making a request to the Encryptonize service. An exception is thrown if the application does not have permissions to encrypt data, or the Encryptonize service is not available.
+When data is saved to the database the data will be similarly be encrypted by making a request to the Encryptonize service. An exception is thrown if the application does not have permissions to encrypt data or the Encryptonize service is not available.
 
 **TODO**: Insert diagram
 
