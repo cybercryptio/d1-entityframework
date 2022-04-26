@@ -53,7 +53,8 @@ public class EncryptonizeMigrator<TContext> where TContext : DbContext
 
             foreach (var entry in entries)
             {
-                MapProperty(entry, oldPropertyGetter, newPropertySetter);
+                var oldProp = oldPropertyGetter(entry)!;
+                newPropertySetter(entry, oldProp);
                 processed++;
             }
 
@@ -78,7 +79,8 @@ public class EncryptonizeMigrator<TContext> where TContext : DbContext
             var empty = true;
             await foreach (var entry in entries)
             {
-                MapProperty(entry, oldPropertyGetter, newPropertySetter);
+                var oldProp = oldPropertyGetter(entry)!;
+                newPropertySetter(entry, oldProp);
                 empty = false;
                 processed++;
             }
@@ -99,11 +101,5 @@ public class EncryptonizeMigrator<TContext> where TContext : DbContext
         {
             throw new ArgumentException("Only string and byte[] properties are supported");
         }
-    }
-
-    private static void MapProperty<TEntry, TValue>(TEntry entry, Func<TEntry, TValue> oldPropertyGetter, Action<TEntry, TValue> newPropertySetter)
-    {
-        var oldProp = oldPropertyGetter(entry)!;
-        newPropertySetter(entry, oldProp);
     }
 }
