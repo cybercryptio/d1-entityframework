@@ -26,7 +26,7 @@ public class EncryptonizeMigrator<TContext> where TContext : DbContext
     }
 
     /// <summary>
-    /// Migrate data from a unencrypted column to an encrypted column.
+    /// Migrate data from an unencrypted column to an encrypted column.
     /// </summary>
     /// <param name="where">Filter to locate rows that should be migrated.</param>
     /// <param name="oldPropertyGetter"><see cref="Func{T, TResult}" /> used to get the unecrypted value.</param>
