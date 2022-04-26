@@ -63,7 +63,7 @@ public class DatabaseContext : DbContext
 }
 ```
 
-- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize service, has be injected into the `DbContext`.
+- An instance for `IEncryptonizeClient`, used to communicate with the Encryptonize service, has been injected into the `DbContext`.
 - The `Confidential` data annotation is used to mark data that should be encrypted.
 - `UseEncryptonize` in `OnModelCreating` is used to tell Entity Framework Core to encrypt and decrypt data transparently.
 
