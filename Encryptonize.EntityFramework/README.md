@@ -10,7 +10,11 @@
 
 ### Installation
 
-**TODO**: How do we want to install it? Through nuget.org, private repository, shipping DLLs, or something else?
+The Entity Framework Core integration is available through nuget.org. The latest version can be installed using the following command:
+
+```bash
+dotnet add package Encryptonize.EntityFramework
+```
 
 ### Usage
 
