@@ -126,11 +126,11 @@ A sample application is available at [https://github.com/cyber-crypt-com/encrypt
 
 The integration works by encrypted and decrypting data transparently when queried or saved to the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
-When data is queried, the data will automatically be decrypted by making a request to the Encryptonize service. If the decryption for some reason fails, for example if the application does not have access to the data or the data is corrupted, an exception will be thrown and the data will not be available.
+When data is saved to the database the data will be similarly be encrypted by making a request to the Encryptonize service. An exception is thrown if the application does not have permissions to encrypt data or the Encryptonize service is not available.
 
 **TODO**: Insert diagram
 
-When data is saved to the database the data will be similarly be encrypted by making a request to the Encryptonize service. An exception is thrown if the application does not have permissions to encrypt data or the Encryptonize service is not available.
+When data is queried, the data will automatically be decrypted by making a request to the Encryptonize service. If the decryption for some reason fails, for example if the application does not have access to the data or the data is corrupted, an exception will be thrown and the data will not be available.
 
 **TODO**: Insert diagram
 
