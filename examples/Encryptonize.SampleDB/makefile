@@ -30,7 +30,6 @@ __check_defined = \
 ##### Build targets #####
 .PHONY: build
 build: ## Build the sample application
-	$(MAKE) -C ../Encryptonize.EntityFramework build proto_path=$(proto_path)
 	dotnet build
 
 .PHONY: run
@@ -38,6 +37,7 @@ run: ## Run the sample application
 	@:$(call check_defined, db_connection_string enc_url enc_user enc_pass)	
 	ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING='$(db_connection_string)' ENCDB_ENCRYPTONIZE__URL='$(enc_url)' ENCDB_ENCRYPTONIZE__USERNAME='$(enc_user)' ENCDB_ENCRYPTONIZE__PASSWORD='$(enc_pass)' dotnet run
 
+# TODO: Sample Docker image cannot build until we have published the NuGet package to a public NuGet feed
 .PHONY: docker-build
 docker-build: ## Build the Docker image
 	DOCKER_BUILDKIT=1 docker build -t $(image_name) -f Dockerfile ../../..

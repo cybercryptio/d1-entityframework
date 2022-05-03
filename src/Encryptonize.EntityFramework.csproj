@@ -9,10 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\clients\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
+    <PackageReference Include="Encryptonize.Client" Version="0.1.14" />
   </ItemGroup>
 
 </Project>
