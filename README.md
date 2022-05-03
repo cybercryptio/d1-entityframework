@@ -118,9 +118,7 @@ public class DatabaseContext : DbContext
 
 ### Sample
 
-A sample application is available at [https://github.com/cyber-crypt-com/encryptonize-premium/tree/master/clients/dotnet/Encryptonize.SampleDB](https://github.com/cyber-crypt-com/encryptonize-premium/tree/encryptonizedb/clients/dotnet/Encryptonize.SampleDB), showcasing how to use `Encryptonize.EntityFramework` to encrypt and decrypt data in a database.
-
-**TODO**: Place correct link to sample application. Right now it is stored in `encryptonize-premium` repository, not publicly accessible. Also it is only available on the `encryptonizedb` branch at the moment, until the `master` branch have been fixed after the libification of core, futhermore the sample have moved to a different directory in a branch, that haven't been merged yet. Expect the link to be updated in the future.
+A sample application is available in the [examples directory](https://github.com/cyber-crypt-com/encryptonize-entityframework/tree/master/examples/Encryptonize.SampleDB), showcasing how to use `Encryptonize.EntityFramework` to encrypt and decrypt data in a database.
 
 ## How it works
 

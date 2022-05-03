@@ -8,7 +8,7 @@ namespace Encryptonize.EntityFramework.Migrator;
 /// <summary>
 /// Migrator used to migrate unencrypted data to encrypted data.
 /// </summary>
-/// <typeparam name="TContext">The <see cref="DbContext"> migration is done on.</typeparam>
+/// <typeparam name="TContext">The <see cref="DbContext" /> migration is done on.</typeparam>
 public class EncryptonizeMigrator<TContext> where TContext : DbContext
 {
     private readonly TContext context;
@@ -17,8 +17,8 @@ public class EncryptonizeMigrator<TContext> where TContext : DbContext
     /// <summary>
     /// Initializes a new instance of the <see cref="EncryptonizeMigrator{TContext}"/> class.
     /// </summary>
-    /// <param name="context">The <see cref="DbContext"> migration is done on.</param>
-    /// <param name="client">The <see cref="IEncryptonizeClient"> used to encrypt data.</param>
+    /// <param name="context">The <see cref="DbContext" /> migration is done on.</param>
+    /// <param name="client">The <see cref="IEncryptonizeClient" /> used to encrypt data.</param>
     public EncryptonizeMigrator(TContext context, IEncryptonizeClient client)
     {
         this.context = context;

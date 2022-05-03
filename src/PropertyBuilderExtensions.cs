@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Encryptonize.EntityFramework;
 
+/// <summary>
+/// Extentions for configuration data model properties
+/// </summary>
 public static class PropertyBuilderExtensions
 {
     /// <summary>

@@ -22,11 +22,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Encryptonize.Client" Version="0.1.14" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Encryptonize.EntityFramework.csproj" />
-    <ProjectReference Include="..\..\..\..\..\clients\encryption-service\dotnet\Encryptonize.Client\src\Encryptonize.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

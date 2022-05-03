@@ -110,7 +110,7 @@ public class MigrationTest : IDisposable
             .Returns(new Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, EncryptonizeClientMock.Mock);
-        migrator.Migrate(x => x.Data.Where(x => x.EncryptedData == null), x => x.UnencryptedData, (x, v) => x.EncryptedData = v);
+        migrator.Migrate(x => x.Data.Where(x => x.EncryptedBinaryData == null), x => x.UnencryptedBinaryData, (x, v) => x.EncryptedBinaryData = v);
 
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "SELECT EncryptedBinaryData FROM Data";
