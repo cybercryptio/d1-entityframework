@@ -41,7 +41,7 @@ pack: ## Pack the NuGet package
 .PHONY: publish
 publish: pack ## Publish the NuGet package
 	$(call check_defined, PACKAGE_SOURCE, API_KEY)
-	dotnet nuget push ./artifacts/Encryptonize.Client.${VERSION}.nupkg --source "${PACKAGE_SOURCE}" --api-key "${API_KEY}"
+	dotnet nuget push ./artifacts/Encryptonize.EntityFramework.${VERSION}.nupkg --source "${PACKAGE_SOURCE}" --api-key "${API_KEY}"
 
 ##### Cleanup targets #####
 .PHONY: clean
