@@ -22,11 +22,17 @@ jobs:
       run: |
         dotnet nuget add source --username cybot-cc --password ${{ secrets.CYBOT_TOKEN }} --store-password-in-clear-text --name ${{ env.PACKAGE_SOURCE }} "https://nuget.pkg.github.com/cyber-crypt-com/index.json"
 
+    - name: Install XmlDocMarkdown
+      run: dotnet tool install xmldocmd -g
+
     - name: Build
       run: make build
 
     - name: Test
       run: make tests
+
+    - name: Verify API docs are up-to-date
+      run: make apidocs-verify
 
     - name: Install GitVersion
       if: github.ref_name == 'master'
@@ -49,7 +55,7 @@ jobs:
 
     - name: Publish
       if: github.ref_name == 'master'
-      run: make publish
+      run: make nuget-publish
       env:
         API_KEY: ${{ secrets.CYBOT_TOKEN }}
         VERSION: ${{ steps.gitversion.outputs.semVer }}

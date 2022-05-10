@@ -134,7 +134,7 @@ When data is queried, the data will automatically be decrypted by making a reque
 
 ## API reference
 
-**TODO**: Insert link to API reference.
+[API Reference](documentation/api/Encryptonize.EntityFramework.md)
 
 ## Limitations
 
