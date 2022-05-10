@@ -22,6 +22,9 @@ jobs:
       run: |
         dotnet nuget add source --username cybot-cc --password ${{ secrets.CYBOT_TOKEN }} --store-password-in-clear-text --name ${{ env.PACKAGE_SOURCE }} "https://nuget.pkg.github.com/cyber-crypt-com/index.json"
 
+    - name: Install XmlDocMarkdown
+      run: dotnet tool install xmldocmd -g
+
     - name: Build
       run: make build
 
