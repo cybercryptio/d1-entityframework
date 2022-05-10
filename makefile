@@ -7,6 +7,12 @@ help:  ## Display this help
 ##### Config #####
 SHELL := /bin/bash
 
+publishDir = "./artifacts/publish"
+library = "$(publishDir)/Encryptonize.EntityFramework.dll"
+apiDocsDir = "./documentation/api"
+apiSourceUrl = "https://github.com/cyber-crypt-com/encryptonize-entityframework/tree/master/src"
+
+
 # Check that given variables are set and all have non-empty values,
 # die with an error otherwise.
 #
@@ -24,6 +30,7 @@ __check_defined = \
 .PHONY: build
 build: ## Build the library
 	dotnet build ./src
+	$(MAKE) apidocs
 
 .PHONY: build-examples
 build-examples: ## Build the samples
@@ -33,15 +40,27 @@ build-examples: ## Build the samples
 tests: build ## Run the tests
 	dotnet test ./tests/Encryptonize.EntityFramework.Tests
 
-.PHONY: pack
-pack: ## Pack the NuGet package
+.PHONY: nuget-pack
+nuget-pack: ## Pack the NuGet package
 	$(call check_defined, VERSION)
 	dotnet pack ./src --output ./artifacts/ --configuration Release /p:Version=${VERSION}
 
-.PHONY: publish
-publish: pack ## Publish the NuGet package
+.PHONY: nuget-publish
+nuget-publish: nuget-pack ## Publish the NuGet package
 	$(call check_defined, PACKAGE_SOURCE, API_KEY)
 	dotnet nuget push ./artifacts/Encryptonize.EntityFramework.${VERSION}.nupkg --source "${PACKAGE_SOURCE}" --api-key "${API_KEY}"
+
+.PHONY: publish
+publish: ## Publish the library and its dependencies to a local directory
+	dotnet publish -o $(publishDir) --configuration Release ./src/
+
+.PHONY: apidocs
+apidocs: publish ## Generate API documentation
+	xmldocmd $(library) $(apiDocsDir) --source $(apiSourceUrl)
+
+.PHONY: apidocs-verify
+apidocs-verify: publish ## Verify API documentation is up-to-date
+	xmldocmd $(library) $(apiDocsDir) --source $(apiSourceUrl) --verify
 
 ##### Cleanup targets #####
 .PHONY: clean
