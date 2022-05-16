@@ -7,6 +7,9 @@ It is recommend to have a high-level understanding of [Encryptonize&reg;](https:
   - [Overview](#overview)
   - [Supported data types](#supported-data-types)
   - [Storage format](#storage-format)
+    - [Overhead](#overhead)
+      - [Text data](#text-data)
+      - [Binary data](#binary-data)
     - [Example](#example)
   - [Usage](#usage)
     - [Configure data context](#configure-data-context)
@@ -46,6 +49,27 @@ In the future, more data types will be supported.
 ## Storage format
 
 Encrypted data is stored in the column as defined by the data model, but the size of the column increases in size, as the object ID of the encrypted data is prepended to the data and the encryption itself has some overhead, see the [Encryptonize&reg; Core documentation](https://github.com/cyber-crypt-com/encryptonize-core/tree/master/documentation) for more information about object IDs.
+
+### Overhead
+
+#### Text data
+
+The overhead of encrypting text data is:
+
+- Object ID prefix: 36 bytes
+- Encryption overhead: 48 bytes
+- Base64 encoding: 33 - 36%
+
+Total overhead: Text + 84 bytes + ~34%
+
+#### Binary data
+
+The overhead of encrypting binary data is:
+
+- Object ID prefix: 36 bytes
+- Encryption overhead: 48 bytes
+
+Total overhead: Data + 84 bytes
 
 ### Example
 
