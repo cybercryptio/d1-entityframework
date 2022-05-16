@@ -253,6 +253,12 @@ await dbContext.SaveChangesAsync();
 
 All querying and processing of encrypted data has to be done client side, as the database is not able to decrypt the data.
 
+For example if you want to filter on `SocialSecurityNumber` you cannot you have to fetch the data from the database first, and then filter in memory:
+
+```csharp
+var persons = await dbContext.Persons.ToListAsync().Where(x => x.SocialSecurityNumber === "123456789");
+```
+
 ### Fetching encrypted data
 
 Just like storing encrypted data, fetching encrypted data does not require any code changes, and works like regular Entity Framework Core.
