@@ -16,7 +16,8 @@ It is recommend to have a high-level understanding of [Encryptonize&reg;](https:
       - [Using data annotations](#using-data-annotations-1)
       - [Using Fluent API](#using-fluent-api-1)
     - [Storing data](#storing-data)
-    - [Query data](#query-data)
+    - [Querying encrypted data](#querying-encrypted-data)
+    - [Fetching encrypted data](#fetching-encrypted-data)
   - [Migrating existing data](#migrating-existing-data)
     - [Example](#example-1)
   - [Limitations](#limitations)
@@ -224,9 +225,13 @@ await dbContext.Persons.AddAsync(person);
 await dbContext.SaveChangesAsync();
 ```
 
-### Query data
+### Querying encrypted data
 
-Just like storing encrypted data, querying data also does not require any code changes, and works like regular Entity Framework Core.
+All querying and processing of encrypted data has to be done client side, as the database is not able to decrypt the data.
+
+### Fetching encrypted data
+
+Just like storing encrypted data, fetching encrypted data does not require any code changes, and works like regular Entity Framework Core.
 
 Before data is passed to the business logic it is automatically decrypted as described in the [Overview section](#overview).
 
