@@ -24,7 +24,7 @@ It is recommend to have a high-level understanding of [Encryptonize&reg;](https:
 
 ## Overview
 
-The integration works by encrypted and decrypting data transparently, using [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/) when queried or store in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
+The integration works by encrypting and decrypting data transparently, using [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
 When data is stored in the database the data will be encrypted by making a request to the Encryptonize service, before it is stored in the database. An exception is thrown if the application does not have permissions to encrypt data or the Encryptonize service is not available.
 
@@ -81,7 +81,7 @@ As you can see the size of the data increases for a couple of reasons:
 
 The integration works by hooking into the Entity Framework Core and intercepting reads and writes to the database.
 
-From a developers point of view there is minimal changes needed to enable encryption, and no changes to the business logic is needed.
+From a developers point of view there are minimal changes needed to enable encryption, and no changes to the business logic is needed.
 
 Encryption can be enabled in the two standard ways to configure Entity Framework Core using data annotations or the fluent API.
 
@@ -241,11 +241,11 @@ var person = await dbContext.Documents.FirstOrDefaultAsync(x => x.Firstname == "
 
 ## Migrating existing data
 
-Migrating unencrypted data to encrypted data is a simple task, but time consuming task, as all data needs to be read from the database, encrypted and then stored. A migrator is provided helping you to complete this task.
+Migrating unencrypted data to encrypted data is a simple but time consuming task, as all data needs to be read from the database, encrypted and then stored. A migrator is provided helping you to complete this task.
 
-To avoid the need for down time, a new column marked as confidential, have to be added to the table. This method allows you to have the migration running as a background task, while the application is fully operational.
+To avoid the need for down time a new column, marked as confidential, has to be added to the table. This method allows you to have the migration running as a background task, while the application is fully operational.
 
-If downtime is not acceptable, it is recommended to change the business logic to use the new column if data is encrypted data is available, and fallback to the unencrypted data if needed.
+If downtime is not acceptable, it is recommended to change the business logic to use the new column if encrypted data is available, and fallback to the unencrypted data if needed.
 
 ### Example
 
@@ -272,4 +272,4 @@ migrator.Migrate(context => context.Data.Where(model => model.EncryptedData == n
 
 ## Limitations
 
-Encrypted data cannot be decrypted by the database, meaning that it can not be filtered or processed by the database. Supported for searching inside encrypted data is on the roadmap.
+Encrypted data cannot be decrypted by the database, meaning that it can not be filtered or processed by the database. Support for searching inside encrypted data is on the roadmap.
