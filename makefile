@@ -60,7 +60,7 @@ apidocs: publish ## Generate API documentation
 
 .PHONY: apidocs-verify
 apidocs-verify: publish ## Verify API documentation is up-to-date
-	xmldocmd $(library) $(apiDocsDir) --source $(apiSourceUrl) --verify
+	git ls-files --other --modified --deleted --exclude-standard -- $(apiDocsDir)  | sed q1
 
 ##### Cleanup targets #####
 .PHONY: clean
