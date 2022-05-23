@@ -3,14 +3,13 @@
 Enable Encryptonize support for the given ModelBuilder.
 
 ```csharp
-public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, 
-    IEncryptonizeClient client)
+public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeCore client)
 ```
 
 | parameter | description |
 | --- | --- |
 | modelBuilder | The ModelBuilder. |
-| client | The IEncryptonizeClient. |
+| client | The Encryptonize Core client. |
 
 ## See Also
 

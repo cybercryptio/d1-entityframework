@@ -3,13 +3,13 @@
 Initializes a new instance of the [`EncryptonizeMigrator`](../EncryptonizeMigrator-1.md) class.
 
 ```csharp
-public EncryptonizeMigrator(TContext context, IEncryptonizeClient client)
+public EncryptonizeMigrator(TContext context, IEncryptonizeCore client)
 ```
 
 | parameter | description |
 | --- | --- |
 | context | The DbContext migration is done on. |
-| client | The IEncryptonizeClient used to encrypt data. |
+| client | The IEncryptonizeCore used to encrypt data. |
 
 ## See Also
 

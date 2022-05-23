@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="Encryptonize.Client" Version="0.1.14" />
+    <PackageReference Include="Encryptonize.Client" Version="0.1.19" />
   </ItemGroup>
 
 </Project>

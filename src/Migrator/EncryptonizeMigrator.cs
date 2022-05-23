@@ -12,14 +12,14 @@ namespace Encryptonize.EntityFramework.Migrator;
 public class EncryptonizeMigrator<TContext> where TContext : DbContext
 {
     private readonly TContext context;
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EncryptonizeMigrator{TContext}"/> class.
     /// </summary>
     /// <param name="context">The <see cref="DbContext" /> migration is done on.</param>
-    /// <param name="client">The <see cref="IEncryptonizeClient" /> used to encrypt data.</param>
-    public EncryptonizeMigrator(TContext context, IEncryptonizeClient client)
+    /// <param name="client">The <see cref="IEncryptonizeCore" /> used to encrypt data.</param>
+    public EncryptonizeMigrator(TContext context, IEncryptonizeCore client)
     {
         this.context = context;
         this.client = client;

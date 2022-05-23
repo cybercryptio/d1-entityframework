@@ -9,9 +9,9 @@ namespace Encryptonize.EntityFramework.Tests.Utils;
 // for all tests, which is the reason for this slightly weird setup.
 internal static class EncryptonizeClientMock
 {
-    private static readonly IEncryptonizeClient client = Substitute.For<IEncryptonizeClient>();
+    private static readonly IEncryptonizeCore client = Substitute.For<IEncryptonizeCore>();
 
-    public static IEncryptonizeClient Mock => client;
+    public static IEncryptonizeCore Mock => client;
 
     public static void ClearSubstitute(ClearOptions options)
     {

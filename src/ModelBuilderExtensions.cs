@@ -17,8 +17,8 @@ public static class ModelBuilderExtensions
     /// Enable Encryptonize support for the given <see cref="ModelBuilder"/>.
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
-    /// <param name="client">The <see cref="IEncryptonizeClient"/>.</param>
-    public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeClient client)
+    /// <param name="client">The Encryptonize Core client.</param>
+    public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeCore client)
     {
         if (modelBuilder is null)
         {

@@ -27,12 +27,12 @@ using Encryptonize.Client;
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<Person> Persons { get; set; };
 
     // An Encryptonize client is injected
-    public DatabaseContext(IEncryptonizeClient client)
+    public DatabaseContext(IEncryptonizeCore client)
     {
         this.client = client;
     }

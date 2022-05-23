@@ -9,9 +9,9 @@ namespace EncryptonizeDBSample.Data
 {
     public class StorageContext : DbContext
     {
-        private readonly IEncryptonizeClient client;
+        private readonly IEncryptonizeCore client;
 
-        public StorageContext(IEncryptonizeClient client, DbContextOptions<StorageContext> options) : base(options)
+        public StorageContext(IEncryptonizeCore client, DbContextOptions<StorageContext> options) : base(options)
         {
             this.client = client;
         }

@@ -28,7 +28,7 @@ if (String.IsNullOrWhiteSpace(encryptonizePassword))
 {
     throw new Exception("Encryptonize password not defined");
 }
-builder.Services.AddSingleton<IEncryptonizeClient>(new EncryptonizeClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
+builder.Services.AddSingleton<IEncryptonizeCore>(new EncryptonizeCoreClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>
