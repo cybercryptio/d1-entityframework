@@ -13,7 +13,7 @@ public static class PropertyBuilderExtensions
     /// <summary>
     /// Marks a property as confidential and to be encrypted using Encryptonize.
     /// </summary>
-    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, IEncryptonizeClient client)
+    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, IEncryptonizeCore client)
     {
         if (property is null)
         {
@@ -26,7 +26,7 @@ public static class PropertyBuilderExtensions
     /// <summary>
     /// Marks a property as confidential and to be encrypted using Encryptonize.
     /// </summary>
-    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, IEncryptonizeClient client)
+    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, IEncryptonizeCore client)
     {
         if (property is null)
         {

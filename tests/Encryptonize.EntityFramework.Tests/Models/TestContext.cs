@@ -6,11 +6,11 @@ namespace Encryptonize.EntityFramework.Tests.Models;
 
 public class TestDbContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<EncryptedData> EncryptedData { get; set; } = null!;
 
-    public TestDbContext(IEncryptonizeClient client, DbContextOptions options) : base(options)
+    public TestDbContext(IEncryptonizeCore client, DbContextOptions options) : base(options)
     {
         this.client = client;
     }

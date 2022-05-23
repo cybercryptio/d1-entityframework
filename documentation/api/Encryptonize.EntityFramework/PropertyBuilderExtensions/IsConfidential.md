@@ -4,7 +4,7 @@ Marks a property as confidential and to be encrypted using Encryptonize.
 
 ```csharp
 public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, 
-    IEncryptonizeClient client)
+    IEncryptonizeCore client)
 ```
 
 ## See Also
@@ -20,7 +20,7 @@ Marks a property as confidential and to be encrypted using Encryptonize.
 
 ```csharp
 public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, 
-    IEncryptonizeClient client)
+    IEncryptonizeCore client)
 ```
 
 ## See Also

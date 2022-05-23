@@ -6,11 +6,11 @@ namespace Encryptonize.EntityFramework.Tests.Models;
 
 public class PropertyBuilderTestContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<EncryptedDataForPropertyBuilder> EncryptedData { get; set; } = null!;
 
-    public PropertyBuilderTestContext(IEncryptonizeClient client, DbContextOptions options) : base(options)
+    public PropertyBuilderTestContext(IEncryptonizeCore client, DbContextOptions options) : base(options)
     {
         this.client = client;
     }

@@ -6,11 +6,11 @@ namespace Encryptonize.EntityFramework.Tests.Models;
 
 public class MigrationTestContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<MigrationData> Data { get; set; } = null!;
 
-    public MigrationTestContext(IEncryptonizeClient client, DbContextOptions options) : base(options)
+    public MigrationTestContext(IEncryptonizeCore client, DbContextOptions options) : base(options)
     {
         this.client = client;
     }

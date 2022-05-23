@@ -113,7 +113,7 @@ Encryption can be enabled in the two standard ways to configure Entity Framework
 
 #### Using data annotations
 
-The `DbContext` needs to be configured to use the Encryptonize&reg; integration, by overriding the `OnModelCreating` method and injecting an instance of `IEncryptonizeClient`.
+The `DbContext` needs to be configured to use the Encryptonize&reg; integration, by overriding the `OnModelCreating` method and injecting an instance of `IEncryptonizeCore`.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
@@ -132,11 +132,11 @@ public class Program
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(IEncryptonizeClient client)
+    public DatabaseContext(IEncryptonizeCore client)
     {
         this.client = client;
     }
@@ -174,11 +174,11 @@ public class Program
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeClient client;
+    private readonly IEncryptonizeCore client;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(IEncryptonizeClient client)
+    public DatabaseContext(IEncryptonizeCore client)
     {
         this.client = client;
     }
