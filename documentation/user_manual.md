@@ -3,28 +3,6 @@
 This manual is designed to be readable by someone with basic knowledge of [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/).
 It is recommend to have a high-level understanding of [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/), but it is not a strict requirement.
 
-- [User manual](#user-manual)
-  - [Overview](#overview)
-  - [Supported data types](#supported-data-types)
-  - [Storage format](#storage-format)
-    - [Overhead](#overhead)
-      - [Text data](#text-data)
-      - [Binary data](#binary-data)
-    - [Example](#example)
-  - [Usage](#usage)
-    - [Configure data context](#configure-data-context)
-      - [Using data annotations](#using-data-annotations)
-      - [Using Fluent API](#using-fluent-api)
-    - [Configure data model](#configure-data-model)
-      - [Using data annotations](#using-data-annotations-1)
-      - [Using Fluent API](#using-fluent-api-1)
-    - [Storing data](#storing-data)
-    - [Querying encrypted data](#querying-encrypted-data)
-    - [Fetching encrypted data](#fetching-encrypted-data)
-  - [Migrating existing data](#migrating-existing-data)
-    - [Example](#example-1)
-  - [Limitations](#limitations)
-
 ## Overview
 
 The integration works by encrypting and decrypting data transparently, using [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
