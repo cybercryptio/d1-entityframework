@@ -10,8 +10,6 @@ SHELL := /bin/bash
 publishDir = "./artifacts/publish"
 library = "$(publishDir)/Encryptonize.EntityFramework.dll"
 apiDocsDir = "./documentation/api"
-apiSourceUrl = "https://github.com/cyber-crypt-com/encryptonize-entityframework/tree/master/src"
-
 
 # Check that given variables are set and all have non-empty values,
 # die with an error otherwise.
@@ -56,7 +54,7 @@ publish: ## Publish the library and its dependencies to a local directory
 
 .PHONY: apidocs
 apidocs: publish ## Generate API documentation
-	xmldocmd $(library) $(apiDocsDir) --source $(apiSourceUrl)
+	xmldocmd $(library) $(apiDocsDir)
 
 .PHONY: apidocs-verify
 apidocs-verify: publish ## Verify API documentation is up-to-date
