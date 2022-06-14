@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "EncryptonizeDBSample.fullname" . }}
+  labels:
+    {{- include "EncryptonizeDBSample.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "EncryptonizeDBSample.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "EncryptonizeDBSample.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.imageCredentials }}
+      imagePullSecrets:
+        - name: {{ include "EncryptonizeDBSample.fullname" . }}-registry
+      {{- end }}
+      containers:
+        - name: encryptonizedb-sample
+          env:
+            - name: ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING
+              value: {{ required "Database connection string is required" .Values.database.connectionstring }}
+            - name: ENCDB_ENCRYPTONIZE__URL
+              value: {{ required "Encryptonize URL is required" .Values.encryptonize.url }}
+            - name: ENCDB_ENCRYPTONIZE__USERNAME
+              value: {{ required "Encryptonize username is required" .Values.encryptonize.username }}
+            - name: ENCDB_ENCRYPTONIZE__PASSWORD
+              value: {{ required "Encryptonize password is required" .Values.encryptonize.password }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "Always" }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
