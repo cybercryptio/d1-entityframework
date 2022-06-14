@@ -8,7 +8,7 @@
     <PackageId>Encryptonize.EntityFramework</PackageId>
     <Company>Cybercrypt A/S</Company>
     <PackageDescription>Integrate Encryptonize with Entity Framework</PackageDescription>
-    <RepositoryUrl>https://github.com/cyber-crypt-com/encryptonize-entityframework</RepositoryUrl>
+    <RepositoryUrl>https://github.com/cybercryptio/d1-entityframework</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
