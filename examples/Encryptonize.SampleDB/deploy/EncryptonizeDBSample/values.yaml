@@ -1,0 +1,21 @@
+image:
+  repository: ghcr.io/cyber-crypt-com/encryptonizedb-sample
+  tag: latest
+
+imageCredentials: {}
+  # registry: 
+  # username: 
+  # password: 
+  # email: 
+
+service:
+  type: LoadBalancer
+  port: 80
+
+database:
+  connectionstring: ""
+
+encryptonize:
+  username: ""
+  password: ""
+  url: ""
