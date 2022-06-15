@@ -6,7 +6,6 @@ on:
       - '**'
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
-      - '![0-9]+.[0-9]+.[0-9]+-*'
 
 env:
   PACKAGE_SOURCE: github
@@ -18,8 +17,6 @@ jobs:
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
 
     - name: Setup and cache dependencies
       uses: cyber-crypt-com/build-setup-action@master
