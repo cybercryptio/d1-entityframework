@@ -2,16 +2,16 @@
 
 using EncryptonizeDBSample.Models;
 using Encryptonize.EntityFramework;
-using Encryptonize.Client;
 using Microsoft.EntityFrameworkCore;
+using CyberCrypt.D1.Client;
 
 namespace EncryptonizeDBSample.Data
 {
     public class StorageContext : DbContext
     {
-        private readonly IEncryptonizeCore client;
+        private readonly ID1Generic client;
 
-        public StorageContext(IEncryptonizeCore client, DbContextOptions<StorageContext> options) : base(options)
+        public StorageContext(ID1Generic client, DbContextOptions<StorageContext> options) : base(options)
         {
             this.client = client;
         }

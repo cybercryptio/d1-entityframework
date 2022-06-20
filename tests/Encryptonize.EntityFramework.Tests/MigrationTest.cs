@@ -45,9 +45,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedData = secondData });
         dbContext.SaveChanges();
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, EncryptonizeClientMock.Mock);
         migrator.Migrate(x => x.Data.Where(x => x.EncryptedData == null), x => x.UnencryptedData, (x, v) => x.EncryptedData = v);
@@ -75,9 +75,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedData = secondData });
         dbContext.SaveChanges();
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, EncryptonizeClientMock.Mock);
         await migrator.MigrateAsync(x => x.Data.Where(x => x.EncryptedData == null), x => x.UnencryptedData, (x, v) => x.EncryptedData = v);
@@ -105,9 +105,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = secondData });
         dbContext.SaveChanges();
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, EncryptonizeClientMock.Mock);
         migrator.Migrate(x => x.Data.Where(x => x.EncryptedBinaryData == null), x => x.UnencryptedBinaryData, (x, v) => x.EncryptedBinaryData = v);
@@ -135,9 +135,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = secondData });
         dbContext.SaveChanges();
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, EncryptonizeClientMock.Mock);
         await migrator.MigrateAsync(x => x.Data.Where(x => x.EncryptedBinaryData == null), x => x.UnencryptedBinaryData, (x, v) => x.EncryptedBinaryData = v);

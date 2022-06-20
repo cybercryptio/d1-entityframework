@@ -1,5 +1,5 @@
 // Copyright 2020-2022 CYBERCRYPT
-using Encryptonize.Client;
+using CyberCrypt.D1.Client;
 using NSubstitute;
 using NSubstitute.ClearExtensions;
 
@@ -9,9 +9,9 @@ namespace Encryptonize.EntityFramework.Tests.Utils;
 // for all tests, which is the reason for this slightly weird setup.
 internal static class EncryptonizeClientMock
 {
-    private static readonly IEncryptonizeCore client = Substitute.For<IEncryptonizeCore>();
+    private static readonly ID1Generic client = Substitute.For<ID1Generic>();
 
-    public static IEncryptonizeCore Mock => client;
+    public static ID1Generic Mock => client;
 
     public static void ClearSubstitute(ClearOptions options)
     {

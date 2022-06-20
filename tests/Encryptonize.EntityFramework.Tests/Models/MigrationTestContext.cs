@@ -1,16 +1,16 @@
 // Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.Client;
+using CyberCrypt.D1.Client;
 
 namespace Encryptonize.EntityFramework.Tests.Models;
 
 public class MigrationTestContext : DbContext
 {
-    private readonly IEncryptonizeCore client;
+    private readonly ID1Generic client;
 
     public DbSet<MigrationData> Data { get; set; } = null!;
 
-    public MigrationTestContext(IEncryptonizeCore client, DbContextOptions options) : base(options)
+    public MigrationTestContext(ID1Generic client, DbContextOptions options) : base(options)
     {
         this.client = client;
     }

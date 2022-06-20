@@ -1,6 +1,6 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using Encryptonize.Client;
+using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore;
 
 namespace Encryptonize.EntityFramework.Migrator;
@@ -12,14 +12,14 @@ namespace Encryptonize.EntityFramework.Migrator;
 public class EncryptonizeMigrator<TContext> where TContext : DbContext
 {
     private readonly TContext context;
-    private readonly IEncryptonizeCore client;
+    private readonly ID1Generic client;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EncryptonizeMigrator{TContext}"/> class.
     /// </summary>
     /// <param name="context">The <see cref="DbContext" /> migration is done on.</param>
-    /// <param name="client">The <see cref="IEncryptonizeCore" /> used to encrypt data.</param>
-    public EncryptonizeMigrator(TContext context, IEncryptonizeCore client)
+    /// <param name="client">The <see cref="ID1Generic" /> used to encrypt data.</param>
+    public EncryptonizeMigrator(TContext context, ID1Generic client)
     {
         this.context = context;
         this.client = client;

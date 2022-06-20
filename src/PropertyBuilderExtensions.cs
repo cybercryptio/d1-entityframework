@@ -1,6 +1,6 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using Encryptonize.Client;
+using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Encryptonize.EntityFramework;
@@ -13,7 +13,7 @@ public static class PropertyBuilderExtensions
     /// <summary>
     /// Marks a property as confidential and to be encrypted using Encryptonize.
     /// </summary>
-    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, IEncryptonizeCore client)
+    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, ID1Generic client)
     {
         if (property is null)
         {
@@ -26,7 +26,7 @@ public static class PropertyBuilderExtensions
     /// <summary>
     /// Marks a property as confidential and to be encrypted using Encryptonize.
     /// </summary>
-    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, IEncryptonizeCore client)
+    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, ID1Generic client)
     {
         if (property is null)
         {

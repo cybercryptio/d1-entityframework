@@ -38,7 +38,7 @@ public class BinaryEncryptionPropertyBuilderTest : IDisposable
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var expectedEncryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
         EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
         using var dbContext = new PropertyBuilderTestContext(EncryptonizeClientMock.Mock, contextOptions);
         dbContext.EncryptedData.Add(new EncryptedDataForPropertyBuilder
         {
@@ -62,7 +62,7 @@ public class BinaryEncryptionPropertyBuilderTest : IDisposable
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var encryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
         EncryptonizeClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
-            .Returns(new Client.Response.DecryptResponse(expectedData, new byte[0]));
+            .Returns(new CyberCrypt.D1.Client.Response.DecryptResponse(expectedData, new byte[0]));
         using var dbContext = new PropertyBuilderTestContext(EncryptonizeClientMock.Mock, contextOptions);
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "INSERT INTO EncryptedData (Binary) VALUES (@data)";
