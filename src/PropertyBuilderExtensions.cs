@@ -3,7 +3,7 @@
 using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Extentions for configuration data model properties

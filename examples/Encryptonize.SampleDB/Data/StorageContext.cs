@@ -1,7 +1,7 @@
 // Copyright 2020-2022 CYBERCRYPT
 
 using EncryptonizeDBSample.Models;
-using Encryptonize.EntityFramework;
+using CyberCrypt.D1.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
@@ -18,7 +18,7 @@ namespace EncryptonizeDBSample.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseEncryptonize(client);
+            modelBuilder.UseD1(client);
             base.OnModelCreating(modelBuilder);
         }
 

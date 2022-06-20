@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Extension methods for <see cref="ModelBuilder"/>.
@@ -18,7 +18,7 @@ public static class ModelBuilderExtensions
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
     /// <param name="client">The Encryptonize Core client.</param>
-    public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, ID1Generic client)
+    public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)
     {
         if (modelBuilder is null)
         {

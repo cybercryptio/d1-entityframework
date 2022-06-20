@@ -1,7 +1,7 @@
 using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 internal static class ValueConverterFactory
 {

@@ -3,23 +3,23 @@
 using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore;
 
-namespace Encryptonize.EntityFramework.Migrator;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Migrator used to migrate unencrypted data to encrypted data.
 /// </summary>
 /// <typeparam name="TContext">The <see cref="DbContext" /> migration is done on.</typeparam>
-public class EncryptonizeMigrator<TContext> where TContext : DbContext
+public class D1Migrator<TContext> where TContext : DbContext
 {
     private readonly TContext context;
     private readonly ID1Generic client;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="EncryptonizeMigrator{TContext}"/> class.
+    /// Initializes a new instance of the <see cref="D1Migrator{TContext}"/> class.
     /// </summary>
     /// <param name="context">The <see cref="DbContext" /> migration is done on.</param>
     /// <param name="client">The <see cref="ID1Generic" /> used to encrypt data.</param>
-    public EncryptonizeMigrator(TContext context, ID1Generic client)
+    public D1Migrator(TContext context, ID1Generic client)
     {
         this.context = context;
         this.client = client;

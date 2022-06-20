@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
-namespace Encryptonize.EntityFramework.Tests.Models;
+namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
 public class MigrationTestContext : DbContext
 {
@@ -17,7 +17,7 @@ public class MigrationTestContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseEncryptonize(client);
+        modelBuilder.UseD1(client);
         base.OnModelCreating(modelBuilder);
     }
 }

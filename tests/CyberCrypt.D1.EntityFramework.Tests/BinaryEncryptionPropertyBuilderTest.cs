@@ -2,30 +2,30 @@
 using System;
 using System.Data;
 using System.Linq;
-using Encryptonize.EntityFramework.Tests.Utils;
-using Encryptonize.EntityFramework.Tests.Models;
+using CyberCrypt.D1.EntityFramework.Tests.Utils;
+using CyberCrypt.D1.EntityFramework.Tests.Models;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using Xunit;
 
-namespace Encryptonize.EntityFramework.Tests;
+namespace CyberCrypt.D1.EntityFramework.Tests;
 
-public class BinaryEncryptionTest : IDisposable
+public class BinaryEncryptionPropertyBuilderTest : IDisposable
 {
-    private readonly DbContextOptions<TestDbContext> contextOptions;
+    private readonly DbContextOptions<PropertyBuilderTestContext> contextOptions;
     private readonly SqliteConnection connection;
 
-    public BinaryEncryptionTest()
+    public BinaryEncryptionPropertyBuilderTest()
     {
         // Because the model is cache globally the mock needs to have all state cleared between each test
-        EncryptonizeClientMock.ClearSubstitute(ClearOptions.All);
-        
+        D1ClientMock.ClearSubstitute(ClearOptions.All);
+
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
-        contextOptions = new DbContextOptionsBuilder<TestDbContext>().UseSqlite(connection).Options;
-        using var context = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
+        contextOptions = new DbContextOptionsBuilder<PropertyBuilderTestContext>().UseSqlite(connection).Options;
+        using var context = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -37,10 +37,10 @@ public class BinaryEncryptionTest : IDisposable
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var expectedEncryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
-        EncryptonizeClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
-        using var dbContext = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
-        dbContext.EncryptedData.Add(new EncryptedData
+        using var dbContext = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
+        dbContext.EncryptedData.Add(new EncryptedDataForPropertyBuilder
         {
             Binary = expectedData
         });
@@ -49,7 +49,7 @@ public class BinaryEncryptionTest : IDisposable
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "SELECT Binary FROM EncryptedData";
         var result = command.ExecuteScalar() as byte[];
-        
+
         result.Should().Equal(expectedEncryptedData);
     }
 
@@ -61,9 +61,9 @@ public class BinaryEncryptionTest : IDisposable
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var encryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
-        EncryptonizeClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.DecryptResponse(expectedData, new byte[0]));
-        using var dbContext = new TestDbContext(EncryptonizeClientMock.Mock, contextOptions);
+        using var dbContext = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "INSERT INTO EncryptedData (Binary) VALUES (@data)";
         var parameter = command.CreateParameter();
@@ -74,7 +74,7 @@ public class BinaryEncryptionTest : IDisposable
         command.ExecuteNonQuery();
 
         var result = dbContext.EncryptedData.First();
-        
+
         result.Binary.Should().Equal(expectedData);
     }
 

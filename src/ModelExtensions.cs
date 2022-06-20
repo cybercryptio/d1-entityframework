@@ -3,7 +3,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 internal static class ModelExtensions
 {

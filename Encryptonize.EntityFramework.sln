@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5AA3CBFD-ECB5-428E-A0A7-5C39F7027197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encryptonize.EntityFramework.Tests", "tests\Encryptonize.EntityFramework.Tests\Encryptonize.EntityFramework.Tests.csproj", "{8950393C-5047-4791-B4EA-B61EBDE2A1CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberCrypt.D1.EntityFramework.Tests", "tests\CyberCrypt.D1.EntityFramework.Tests\CyberCrypt.D1.EntityFramework.Tests.csproj", "{8950393C-5047-4791-B4EA-B61EBDE2A1CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encryptonize.EntityFramework", "src\Encryptonize.EntityFramework.csproj", "{1251B1B2-8704-4C72-AC12-D2EC95C9F0DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberCrypt.D1.EntityFramework", "src\CyberCrypt.D1.EntityFramework.csproj", "{1251B1B2-8704-4C72-AC12-D2EC95C9F0DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{A703CB9A-C880-4C97-A11A-1CBFC6275E12}"
 EndProject

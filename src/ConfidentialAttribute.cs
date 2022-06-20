@@ -1,5 +1,5 @@
 ﻿// Copyright 2020-2022 CYBERCRYPT
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Attribute used to mark data as confidential.

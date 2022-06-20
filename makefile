@@ -8,7 +8,7 @@ help:  ## Display this help
 SHELL := /bin/bash
 
 publishDir = "./artifacts/publish"
-library = "$(publishDir)/Encryptonize.EntityFramework.dll"
+library = "$(publishDir)/CyberCrypt.D1.EntityFramework.dll"
 apiDocsDir = "./documentation/api"
 
 # Check that given variables are set and all have non-empty values,

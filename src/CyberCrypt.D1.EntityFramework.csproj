@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageId>Encryptonize.EntityFramework</PackageId>
+    <PackageId>CyberCrypt.D1.EntityFramework</PackageId>
     <Company>Cybercrypt A/S</Company>
     <PackageDescription>Integrate Encryptonize with Entity Framework</PackageDescription>
     <RepositoryUrl>https://github.com/cybercryptio/d1-entityframework</RepositoryUrl>

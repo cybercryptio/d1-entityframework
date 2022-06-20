@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
-namespace Encryptonize.EntityFramework.Tests.Models;
+namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
 public class PropertyBuilderTestContext : DbContext
 {
