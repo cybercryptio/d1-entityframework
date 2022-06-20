@@ -3,7 +3,7 @@
 using CyberCrypt.D1.Client;
 using Microsoft.EntityFrameworkCore;
 
-namespace CyberCrypt.D1.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework.Migrator;
 
 /// <summary>
 /// Migrator used to migrate unencrypted data to encrypted data.

@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Encryptonize.EntityFramework.csproj" />
+    <ProjectReference Include="..\..\src\CyberCrypt.D1.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
