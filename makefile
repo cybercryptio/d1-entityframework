@@ -36,7 +36,7 @@ build-examples: ## Build the samples
 
 .PHONY: tests
 tests: build ## Run the tests
-	dotnet test ./tests/Encryptonize.EntityFramework.Tests
+	dotnet test ./tests/CyberCrypt.D1.EntityFramework.Tests
 
 .PHONY: nuget-pack
 nuget-pack: ## Pack the NuGet package
@@ -46,7 +46,7 @@ nuget-pack: ## Pack the NuGet package
 .PHONY: nuget-publish
 nuget-publish: nuget-pack ## Publish the NuGet package
 	$(call check_defined, PACKAGE_SOURCE, API_KEY)
-	dotnet nuget push ./artifacts/Encryptonize.EntityFramework.${VERSION}.nupkg --source "${PACKAGE_SOURCE}" --api-key "${API_KEY}"
+	dotnet nuget push ./artifacts/CyberCrypt.D1.EntityFramework.${VERSION}.nupkg --source "${PACKAGE_SOURCE}" --api-key "${API_KEY}"
 
 .PHONY: publish
 publish: ## Publish the library and its dependencies to a local directory
@@ -64,5 +64,5 @@ apidocs-verify: publish ## Verify API documentation is up-to-date
 .PHONY: clean
 clean: ## Remove build artifacts
 	dotnet clean ./src
-	dotnet clean ./tests/Encryptonize.EntityFramework.Tests
+	dotnet clean ./tests/CyberCrypt.D1.EntityFramework.Tests
 	rm -rf ./artifacts/
