@@ -1,4 +1,4 @@
-# CYBERCRYPT Entity Framework
+# CYBERCRYPT D1 Entity Framework
 
 The integration works by encrypting and decrypting data transparently, using [CYBERCRYPT D1 Generic](https://github.com/cybercryptio/d1-service-generic/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
