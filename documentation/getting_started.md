@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- The [Encryptonize&reg; Core](https://github.com/cyber-crypt-com/encryptonize-core) service must be deployed and accessible. See the [Encryptonize&reg; Core README](https://github.com/cyber-crypt-com/encryptonize-core/blob/master/README.md) for more information.
+- The [Cybercrypt D1 Generic](https://github.com/cybercryptio/d1-service-generic/) service must be deployed and accessible. See the [Cybercrypt D1 Generic README](https://github.com/cybercryptio/d1-service-generic/blob/master/README.md) for more information.
 - [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/) must be referenced in the application.
 - [A supported database](supported_databases.md) deployed.
 
@@ -11,28 +11,28 @@
 The Entity Framework Core integration is available through nuget.org. The latest version can be installed using the following command:
 
 ```bash
-dotnet add package Encryptonize.EntityFramework
+dotnet add package CyberCrypt.D1.EntityFramework
 ```
 
 ## Usage
 
 ### Configue data context
 
-The `DbContext` needs to be configured to use the Encryptonize&reg; integration, by overriding the `OnModelCreating` method:
+The `DbContext` needs to be configured to use the D1 Generic integration, by overriding the `OnModelCreating` method:
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
+using CyberCrypt.D1.Client;
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeCore client;
+    private readonly ID1Generic client;
 
     public DbSet<Person> Persons { get; set; };
 
-    // An Encryptonize client is injected
-    public DatabaseContext(IEncryptonizeCore client)
+    // An D1 client is injected
+    public DatabaseContext(ID1Generic client)
     {
         this.client = client;
     }
@@ -40,7 +40,7 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // The model is configured to encrypt and decrypt data based on data annotations
-        modelBuilder.UseEncryptonize(client);
+        modelBuilder.UseD1(client);
         base.OnModelCreating(modelBuilder);
     }
 }
@@ -54,8 +54,7 @@ The final step is to add the `Confidential` data annotation to the model.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
 
 public class Person
 {
@@ -74,7 +73,7 @@ public class Person
 
 Storing data, is done the same way as with the regular Entity Framework Core.
 
-Before the data is sent to the database, it will be encrypted using the Encryptonize&reg; service, without any additional steps.
+Before the data is sent to the database, it will be encrypted using the D1 service, without any additional steps.
 
 ```csharp
 var person = new Person { Firstname = "John", Surname = "Doe", SocialSecurityNumber = "123456789" };
@@ -86,7 +85,7 @@ await dbContext.SaveChangesAsync();
 
 Querying data is done the same way as with the regular Entity Framework Core.
 
-When the data is received from the database, it will automatically be decrypted using the Encryptonize&reg; service, you won't need to do anything special to read the data.
+When the data is received from the database, it will automatically be decrypted using the D1 service, you won't need to do anything special to read the data.
 
 ```csharp
 var person = await dbContext.Documents.FirstOrDefaultAsync(x => x.Firstname == "John");

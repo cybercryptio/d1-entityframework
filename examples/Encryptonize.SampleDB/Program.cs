@@ -1,8 +1,8 @@
 // Copyright 2020-2022 CYBERCRYPT
 
 using EncryptonizeDBSample.Data;
-using Encryptonize.Client;
 using Microsoft.EntityFrameworkCore;
+using CyberCrypt.D1.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("ENCDB_");
@@ -28,7 +28,7 @@ if (String.IsNullOrWhiteSpace(encryptonizePassword))
 {
     throw new Exception("Encryptonize password not defined");
 }
-builder.Services.AddSingleton<IEncryptonizeCore>(new EncryptonizeCoreClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
+builder.Services.AddSingleton<ID1Generic>(new D1GenericClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>

@@ -1,17 +1,17 @@
 # User manual
 
 This manual is designed to be readable by someone with basic knowledge of [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/).
-It is recommend to have a high-level understanding of [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/), but it is not a strict requirement.
+It is recommend to have a high-level understanding of [D1 Generic](https://github.com/cybercryptio/d1-service-generic/), but it is not a strict requirement.
 
 ## Overview
 
-The integration works by encrypting and decrypting data transparently, using [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
+The integration works by encrypting and decrypting data transparently, using [D1 Generic](https://github.com/cybercryptio/d1-service-generic/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
-When data is stored in the database the data will be encrypted by making a request to the Encryptonize service, before it is stored in the database. An exception is thrown if the application does not have permissions to encrypt data or the Encryptonize service is not available.
+When data is stored in the database the data will be encrypted by making a request to the D1 service, before it is stored in the database. An exception is thrown if the application does not have permissions to encrypt data or the D1 service is not available.
 
 ![Storing data flow](images/StoreData.svg)
 
-When data is queried, data will automatically be decrypted by making a request to the Encryptonize service, before the data is returned to the caller. If the decryption for some reason fails, for example if the application does not have access to the data or the data is corrupt, an exception will be thrown and the data will not be returned to the caller.
+When data is queried, data will automatically be decrypted by making a request to the D1 service, before the data is returned to the caller. If the decryption for some reason fails, for example if the application does not have access to the data or the data is corrupt, an exception will be thrown and the data will not be returned to the caller.
 
 ![Storing data flow](images/ReadData.svg)
 
@@ -26,7 +26,7 @@ In the future, more data types will be supported.
 
 ## Storage format
 
-Encrypted data is stored in the column as defined by the data model, but the size of the column increases in size, as the object ID of the encrypted data is prepended to the data and the encryption itself has some overhead, see the [Encryptonize&reg; Core documentation](https://github.com/cyber-crypt-com/encryptonize-core/tree/master/documentation) for more information about object IDs.
+Encrypted data is stored in the column as defined by the data model, but the size of the column increases in size, as the object ID of the encrypted data is prepended to the data and the encryption itself has some overhead, see the [D1 Generic documentation](https://github.com/cybercryptio/d1-service-generic/tree/master/documentation) for more information about object IDs.
 
 ### Overhead
 
@@ -91,18 +91,18 @@ Encryption can be enabled in the two standard ways to configure Entity Framework
 
 #### Using data annotations
 
-The `DbContext` needs to be configured to use the Encryptonize&reg; integration, by overriding the `OnModelCreating` method and injecting an instance of `IEncryptonizeCore`.
+The `DbContext` needs to be configured to use the D1 Generic integration, by overriding the `OnModelCreating` method and injecting an instance of `ID1Generic`.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
+using CyberCrypt.D1.Client;
 
 public class Program
 {
     public static void Main()
     {
-        var client = new EncryptonizeClient("https://localhost:9000", "username", "password");
+        var client = new D1GenericClient("https://localhost:9000", "username", "password");
         var databaseContext = new DatabaseContext(client);
 
     }
@@ -110,18 +110,18 @@ public class Program
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeCore client;
+    private readonly ID1Generic client;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(IEncryptonizeCore client)
+    public DatabaseContext(ID1Generic client)
     {
         this.client = client;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseEncryptonize(client);
+        modelBuilder.UseD1(client);
         base.OnModelCreating(modelBuilder);
     }
 }
@@ -133,18 +133,18 @@ When using the Fluent API you mark the properties that should be encrypted when 
 
 Marking the property as confidential is done using the `IsConfidential` extension method.
 
-If no properties are marked as confidential no encryption will happen, and the data will be stored in the database without any modification and without communicating the the Encryptonize&reg; service.
+If no properties are marked as confidential no encryption will happen, and the data will be stored in the database without any modification and without communicating the the D1 Generic service.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
+using CyberCrypt.D1.Client;
 
 public class Program
 {
     public static void Main()
     {
-        var client = new EncryptonizeClient("https://localhost:9000", "username", "password");
+        var client = new D1GenericClient("https://localhost:9000", "username", "password");
         var databaseContext = new DatabaseContext(client);
 
     }
@@ -152,11 +152,11 @@ public class Program
 
 public class DatabaseContext : DbContext
 {
-    private readonly IEncryptonizeCore client;
+    private readonly ID1Generic client;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(IEncryptonizeCore client)
+    public DatabaseContext(ID1Generic client)
     {
         this.client = client;
     }
@@ -174,12 +174,11 @@ public class DatabaseContext : DbContext
 
 You also have to indicate what properties that should be encrypte by adding the `Confidential` attribute to the property. Multiple properties can be marked as confidential in each model.
 
-If no properties are marked as confidential no encryption will happen, and the data will be stored in the database without any modification and without communicating the the Encryptonize&reg; service.
+If no properties are marked as confidential no encryption will happen, and the data will be stored in the database without any modification and without communicating the the D1 Generic service.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
 
 public class Person
 {
@@ -200,8 +199,8 @@ When using the Fluent API no changes to the data model is needed, as all the con
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.EntityFramework;
-using Encryptonize.Client;
+using CyberCrypt.D1.EntityFramework.EntityFramework;
+using CyberCrypt.D1.Client;
 
 public class Person
 {
@@ -274,7 +273,7 @@ public class MigrationData
 The migrator will then read the unecrypted column, and store the value encrypted in the new column.
 
 ```csharp
-var migrator = new EncryptonizeMigrator<MigrationTestContext>(dbContext, encryptonizeClient);
+var migrator = new D1Migrator<MigrationTestContext>(dbContext, d1GenericClient);
 migrator.Migrate(context => context.Data.Where(model => model.EncryptedData == null), model => model.UnencryptedData, (model, value) => x.EncryptedData = value);
 ```
 

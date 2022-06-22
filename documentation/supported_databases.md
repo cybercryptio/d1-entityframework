@@ -1,6 +1,6 @@
 # Supported databases
 
-All databases supported by Entity Framework Core are supported by Encryptonize.EntityFramework.
+All databases supported by Entity Framework Core are supported by CyberCrypt.D1.EntityFramework.
 
 Some of the most used databases supported includes:
 

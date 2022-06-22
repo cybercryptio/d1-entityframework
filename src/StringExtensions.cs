@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 
-[assembly: InternalsVisibleTo("Encryptonize.EntityFramework.Tests")]
+[assembly: InternalsVisibleTo("CyberCrypt.D1.EntityFramework.Tests")]
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 internal static class ByteArrayExtensions
 {

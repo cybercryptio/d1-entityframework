@@ -1,9 +1,9 @@
 
 // Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
-using Encryptonize.Client;
+using CyberCrypt.D1.Client;
 
-namespace Encryptonize.EntityFramework;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Extension methods for <see cref="ModelBuilder"/>.
@@ -17,8 +17,8 @@ public static class ModelBuilderExtensions
     /// Enable Encryptonize support for the given <see cref="ModelBuilder"/>.
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
-    /// <param name="client">The Encryptonize Core client.</param>
-    public static ModelBuilder UseEncryptonize(this ModelBuilder modelBuilder, IEncryptonizeCore client)
+    /// <param name="client">The D1 Generic client.</param>
+    public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)
     {
         if (modelBuilder is null)
         {

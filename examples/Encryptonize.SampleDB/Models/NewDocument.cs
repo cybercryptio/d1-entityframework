@@ -1,7 +1,7 @@
 // Copyright 2020-2022 CYBERCRYPT
 
 using System.ComponentModel.DataAnnotations.Schema;
-using Encryptonize.EntityFramework;
+using CyberCrypt.D1.EntityFramework;
 
 namespace EncryptonizeDBSample.Models;
 

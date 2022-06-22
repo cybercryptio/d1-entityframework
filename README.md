@@ -1,6 +1,6 @@
-# Encryptonize Entity Framework
+# CYBERCRYPT D1 Entity Framework
 
-The integration works by encrypting and decrypting data transparently, using [Encryptonize&reg;](https://github.com/cyber-crypt-com/encryptonize-core/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
+The integration works by encrypting and decrypting data transparently, using [CYBERCRYPT D1 Generic](https://github.com/cybercryptio/d1-service-generic/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
 This protects the data in the database from being read by third parties and tampering.
 
@@ -9,7 +9,7 @@ This protects the data in the database from being read by third parties and tamp
 The Entity Framework Core integration is available through nuget.org. The latest version can be installed using the following command:
 
 ```bash
-dotnet add package Encryptonize.EntityFramework
+dotnet add package CyberCrypt.D1.EntityFramework
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ To get started, see the [Getting Started guide](documentation/getting_started.md
 
 ## API reference
 
-[API Reference](documentation/api/Encryptonize.EntityFramework.md)
+[API Reference](documentation/api/CyberCrypt.D1.EntityFramework.md)
 
 ## Limitations
 
