@@ -9,7 +9,7 @@ public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic clie
 | parameter | description |
 | --- | --- |
 | modelBuilder | The ModelBuilder. |
-| client | The Encryptonize Core client. |
+| client | The D1 Generic client. |
 
 ## See Also
 

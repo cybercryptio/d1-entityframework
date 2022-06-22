@@ -1,6 +1,6 @@
 # PropertyBuilderExtensions.IsConfidential method (1 of 2)
 
-Marks a property as confidential and to be encrypted using Encryptonize.
+Marks a property as confidential and to be encrypted using D1.
 
 ```csharp
 public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, 
@@ -16,7 +16,7 @@ public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]
 
 # PropertyBuilderExtensions.IsConfidential method (2 of 2)
 
-Marks a property as confidential and to be encrypted using Encryptonize.
+Marks a property as confidential and to be encrypted using D1.
 
 ```csharp
 public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, 

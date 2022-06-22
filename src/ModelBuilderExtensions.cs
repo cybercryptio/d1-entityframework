@@ -17,7 +17,7 @@ public static class ModelBuilderExtensions
     /// Enable Encryptonize support for the given <see cref="ModelBuilder"/>.
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
-    /// <param name="client">The Encryptonize Core client.</param>
+    /// <param name="client">The D1 Generic client.</param>
     public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)
     {
         if (modelBuilder is null)

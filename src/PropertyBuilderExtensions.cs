@@ -11,7 +11,7 @@ namespace CyberCrypt.D1.EntityFramework;
 public static class PropertyBuilderExtensions
 {
     /// <summary>
-    /// Marks a property as confidential and to be encrypted using Encryptonize.
+    /// Marks a property as confidential and to be encrypted using D1.
     /// </summary>
     public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, ID1Generic client)
     {
@@ -24,7 +24,7 @@ public static class PropertyBuilderExtensions
     }
 
     /// <summary>
-    /// Marks a property as confidential and to be encrypted using Encryptonize.
+    /// Marks a property as confidential and to be encrypted using D1.
     /// </summary>
     public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, ID1Generic client)
     {

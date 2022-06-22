@@ -5,7 +5,7 @@ using NSubstitute.ClearExtensions;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Utils;
 
-// As EF models are processed only once, the mocked Encryptonize client needs to be the same
+// As EF models are processed only once, the mocked D1 Generic client needs to be the same
 // for all tests, which is the reason for this slightly weird setup.
 internal static class D1ClientMock
 {
