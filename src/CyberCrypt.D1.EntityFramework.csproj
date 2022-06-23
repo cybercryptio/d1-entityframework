@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>CyberCrypt.D1.EntityFramework</PackageId>
     <Company>Cybercrypt A/S</Company>
-    <PackageDescription>Integrate Encryptonize with Entity Framework</PackageDescription>
+    <PackageDescription>Integrate D1 with Entity Framework</PackageDescription>
     <RepositoryUrl>https://github.com/cybercryptio/d1-entityframework</RepositoryUrl>
   </PropertyGroup>
 

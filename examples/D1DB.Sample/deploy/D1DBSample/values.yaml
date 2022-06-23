@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/cyber-crypt-com/encryptonizedb-sample
+  repository: ghcr.io/cyber-crypt-com/d1db-sample
   tag: latest
 
 imageCredentials: {}
@@ -15,7 +15,7 @@ service:
 database:
   connectionstring: ""
 
-encryptonize:
+d1:
   username: ""
   password: ""
   url: ""

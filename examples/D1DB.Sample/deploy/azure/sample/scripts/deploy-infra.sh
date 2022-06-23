@@ -26,4 +26,4 @@ fi
 
 set -eu
 
-az deployment group create --name "EncDBSample" --resource-group "${resourceGroup}" --template-file sql.bicep --parameters administratorLogin="${adminLogin}" administratorLoginPassword="${adminPass}" serverName="${serverName}"
+az deployment group create --name "D1DBSample" --resource-group "${resourceGroup}" --template-file sql.bicep --parameters administratorLogin="${adminLogin}" administratorLoginPassword="${adminPass}" serverName="${serverName}"

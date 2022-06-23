@@ -14,7 +14,7 @@ public static class ModelBuilderExtensions
     private static readonly byte[] emptyByteArray = new byte[0];
 
     /// <summary>
-    /// Enable Encryptonize support for the given <see cref="ModelBuilder"/>.
+    /// Enable D1 support for the given <see cref="ModelBuilder"/>.
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
     /// <param name="client">The D1 Generic client.</param>

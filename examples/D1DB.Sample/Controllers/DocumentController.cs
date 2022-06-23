@@ -1,11 +1,11 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using EncryptonizeDBSample.Models;
+using D1DB.Sample.Models;
 using Microsoft.AspNetCore.Mvc;
-using EncryptonizeDBSample.Data;
+using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EncryptonizeDBSample.Controllers;
+namespace D1DB.Sample.Controllers;
 
 [ApiController]
 [Route("[controller]")]

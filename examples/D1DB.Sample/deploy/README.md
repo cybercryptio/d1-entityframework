@@ -1,10 +1,10 @@
-# Encryptonize DB Azure deployment and provisioning
+# D1 Entity Framework Azure deployment and provisioning
 
 ## Provisioning the infrastructure
 
-### Encryptonize service
+### D1 Generic service
 
-The Encryptonize service needs to be deployed and accessible from the application. Instructions on how to quickly deploy Encryptonize to Azure are available [here](https://github.com/cybercryptio/d1-service-generic/blob/master/deployment/provision/README.md#AKS-cluster).
+The D1 Generic service needs to be deployed and accessible from the application. Instructions on how to quickly deploy D1 Generic to Azure are available [here](https://github.com/cybercryptio/d1-service-generic/blob/master/deployment/provision/README.md#AKS-cluster).
 
 ### SQL server
 
@@ -26,10 +26,10 @@ make deploy adminUser="${adminUser}" adminPass="${adminPass}" resource_group="${
 
 ### Sample application
 
-Deployment of the sample application is done using a Helm template located in [EncryptonizeDBSample](EncryptonizeDBSample/).
+Deployment of the sample application is done using a Helm template located in [D1DBSample](D1DBSample/).
 
-[values.yaml](EncryptonizeDBSample/values.yaml) needs to be updated to reflect the correct values for the SQL server and the Encryptonize service. Once those values have been updated, the application can be deployed using the command:
+[values.yaml](D1DBSample/values.yaml) needs to be updated to reflect the correct values for the SQL server and the D1 Generic service. Once those values have been updated, the application can be deployed using the command:
 
 ```
-helm install encryptonizedb-sample .
+helm install d1db-sample .
 ```

@@ -1,11 +1,11 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using EncryptonizeDBSample.Models;
+using D1DB.Sample.Models;
 using CyberCrypt.D1.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
-namespace EncryptonizeDBSample.Data
+namespace D1DB.Sample.Data
 {
     public class StorageContext : DbContext
     {

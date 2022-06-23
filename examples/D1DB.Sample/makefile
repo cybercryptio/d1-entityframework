@@ -9,8 +9,7 @@ help:  ## Display this help
 SHELL := /bin/bash
 
 ##### Variables #####
-proto_path = ../../../../../encryptonize-core/integrations/protobuf
-image_name = encryptonizedb-sample
+image_name = d1db-sample
 
 ##### Functions #####
 # Check that given variables are set and all have non-empty values,
@@ -35,7 +34,7 @@ build: ## Build the sample application
 .PHONY: run
 run: ## Run the sample application
 	@:$(call check_defined, db_connection_string enc_url enc_user enc_pass)	
-	ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING='$(db_connection_string)' ENCDB_ENCRYPTONIZE__URL='$(enc_url)' ENCDB_ENCRYPTONIZE__USERNAME='$(enc_user)' ENCDB_ENCRYPTONIZE__PASSWORD='$(enc_pass)' dotnet run
+	D1DB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING='$(db_connection_string)' D1DB_D1GENERIC__URL='$(enc_url)' D1DB_D1GENERIC__USERNAME='$(enc_user)' D1DB_D1GENERIC__PASSWORD='$(enc_pass)' dotnet run
 
 # TODO: Sample Docker image cannot build until we have published the NuGet package to a public NuGet feed
 .PHONY: docker-build
