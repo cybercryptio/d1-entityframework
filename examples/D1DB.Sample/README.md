@@ -1,8 +1,8 @@
-# Encryptonize DB sample application
+# D1 Entity Framework sample application
 
 ## Introduction
 
-The application shows how to use Encryptonize DB to encrypt and decrypt data in a database. It exposes a simple REST API that encrypts data in a single column in a MSSQL database.
+The application shows how to use D1 Entity Framework to encrypt and decrypt data in a database. It exposes a simple REST API that encrypts data in a single column in a MSSQL database.
 
 The data schema is automatically created on startup, if it does not already exists, and looks like this:
 
@@ -18,15 +18,15 @@ When a new document is created the values in the `Data` column are automatically
 
 ## Running the sample
 
-To run the sample, the application needs to know about the location of the database and the Encryptonize service and how to login into Encryptonize.
+To run the sample, the application needs to know about the location of the database and the D1 Generic service and how to login into D1.
 It can be configured either through the configuration file [appsettings.json](appsettings.json) or environment variables. The configurations that need to be defined before running the application are (here shown as environment variables):
 
 | Variable | Description | Example |
 | - | - | - |
-| ENCDB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING | The database connection string      | `Server=tcp:<insert sqlserver>,1433;Initial Catalog=SampleDB;Persist Security Info=False;User ID=<insert user ID>;Password=<insert user password>;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30` |
-| ENCDB_ENCRYPTONIZE__URL                          | The URL to the Encryptonize service | `http://localhost:9000` |
-| ENCDB_ENCRYPTONIZE__USERNAME                     | The Encryptonize username           | `<insert Encryptonize username>` |
-| ENCDB_ENCRYPTONIZE__PASSWORD                     | The Encryptonize password           | `<insert Encryptonize password>` |
+| D1DB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING | The database connection string      | `Server=tcp:<insert sqlserver>,1433;Initial Catalog=SampleDB;Persist Security Info=False;User ID=<insert user ID>;Password=<insert user paD1DBd>;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30` |
+| D1DB_D1GENERIC__URL                          | The URL to the D1 Generic service | `http://localhost:9000` |
+| D1DB_D1GENERIC__USERNAME                     | The D1 Generic username           | `<insert D1 Generic username>` |
+| D1DB_D1GENERIC__PASSWORD                     | The D1 Generic password           | `<insert D1 Generic password>` |
 
 Once those environment variables have been defined, the application can be started by running:
 
@@ -38,7 +38,7 @@ For easy access to the API, the Swagger UI is available at [http://localhost:500
 
 ## Kubernetes deployment
 
-If you want to deploy the sample application to Kubernetes a [Helm template](deploy/EncryptonizeDBSample/) is available.
+If you want to deploy the sample application to Kubernetes a [Helm template](deploy/D1DBSample/) is available.
 
 ## Azure provision
 

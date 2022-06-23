@@ -5,7 +5,7 @@ help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make <target> \033[36m\033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
 ##### Variables #####
-release_name = encryptonizedb-sample
+release_name = d1db-sample
 
 ##### Functions #####
 # Check that given variables are set and all have non-empty values,
@@ -26,10 +26,10 @@ __check_defined = \
 .PHONY: install
 install: ## Install the sample application in a Kubernetes cluster
 	@:$(call check_defined, registry_pass db_connectionstring enc_uid enc_pass enc_url)
-	helm install $(release_name) EncryptonizeDBSample \
+	helm install $(release_name) D1DBSample \
 	--set imageCredentials.registry=ghcr.io,imageCredentials.username=cybot-cc,imageCredentials.email=cybot@cyber-crypt.com \
-	--set imageCredentials.password='$(registry_pass)',database.connectionstring="$(db_connectionstring)",encryptonize.username='$(enc_uid)' \
-	--set encryptonize.password='$(enc_pass)',encryptonize.url='$(enc_url)'
+	--set imageCredentials.password='$(registry_pass)',database.connectionstring="$(db_connectionstring)",d1.username='$(enc_uid)' \
+	--set d1.password='$(enc_pass)',d1.url='$(enc_url)'
 
 .PHONY: uninstall
 uninstall: ## Uninstall the sample application

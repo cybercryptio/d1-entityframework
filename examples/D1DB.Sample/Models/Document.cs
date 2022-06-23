@@ -3,7 +3,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using CyberCrypt.D1.EntityFramework;
 
-namespace EncryptonizeDBSample.Models;
+namespace D1DB.Sample.Models;
 
 public class Document
 {

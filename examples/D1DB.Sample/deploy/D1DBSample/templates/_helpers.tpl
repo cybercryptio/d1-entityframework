@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "EncryptonizeDBSample.name" -}}
+{{- define "D1DBSample.name" -}}
 {{- .Chart.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,23 +10,23 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "EncryptonizeDBSample.fullname" -}}
+{{- define "D1DBSample.fullname" -}}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "EncryptonizeDBSample.chart" -}}
+{{- define "D1DBSample.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "EncryptonizeDBSample.labels" -}}
-helm.sh/chart: {{ include "EncryptonizeDBSample.chart" . }}
-{{ include "EncryptonizeDBSample.selectorLabels" . }}
+{{- define "D1DBSample.labels" -}}
+helm.sh/chart: {{ include "D1DBSample.chart" . }}
+{{ include "D1DBSample.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -36,7 +36,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "EncryptonizeDBSample.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "EncryptonizeDBSample.name" . }}
+{{- define "D1DBSample.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "D1DBSample.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

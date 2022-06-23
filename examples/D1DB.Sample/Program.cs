@@ -1,11 +1,11 @@
 // Copyright 2020-2022 CYBERCRYPT
 
-using EncryptonizeDBSample.Data;
+using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvironmentVariables("ENCDB_");
+builder.Configuration.AddEnvironmentVariables("D1DB_");
 
 // Configure database connection.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
@@ -13,22 +13,22 @@ if (String.IsNullOrWhiteSpace(connectionString))
 {
     throw new Exception("Database connection string not initialized");
 }
-var encryptonizeUrl = builder.Configuration.GetValue<string>("Encryptonize:Url");
-if (String.IsNullOrWhiteSpace(encryptonizeUrl))
+var d1Url = builder.Configuration.GetValue<string>("D1Generic:Url");
+if (String.IsNullOrWhiteSpace(d1Url))
 {
-    throw new Exception("Encryptonize URL not defined");
+    throw new Exception("D1 Generic URL not defined");
 }
-var encryptonizeUsername = builder.Configuration.GetValue<string>("Encryptonize:Username");
-if (String.IsNullOrWhiteSpace(encryptonizeUsername))
+var d1Username = builder.Configuration.GetValue<string>("D1Generic:Username");
+if (String.IsNullOrWhiteSpace(d1Username))
 {
-    throw new Exception("Encryptonize username not defined");
+    throw new Exception("D1 Generic username not defined");
 }
-var encryptonizePassword = builder.Configuration.GetValue<string>("Encryptonize:Password");
-if (String.IsNullOrWhiteSpace(encryptonizePassword))
+var d1Password = builder.Configuration.GetValue<string>("D1Generic:Password");
+if (String.IsNullOrWhiteSpace(d1Password))
 {
-    throw new Exception("Encryptonize password not defined");
+    throw new Exception("D1 Generic password not defined");
 }
-builder.Services.AddSingleton<ID1Generic>(new D1GenericClient(encryptonizeUrl, encryptonizeUsername, encryptonizePassword));
+builder.Services.AddSingleton<ID1Generic>(new D1GenericClient(d1Url, d1Username, d1Password));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>

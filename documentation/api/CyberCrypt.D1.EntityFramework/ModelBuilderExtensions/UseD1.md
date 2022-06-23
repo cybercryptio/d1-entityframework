@@ -1,6 +1,6 @@
 # ModelBuilderExtensions.UseD1 method
 
-Enable Encryptonize support for the given ModelBuilder.
+Enable D1 support for the given ModelBuilder.
 
 ```csharp
 public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)

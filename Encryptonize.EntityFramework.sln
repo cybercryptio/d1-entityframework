@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberCrypt.D1.EntityFramewo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{A703CB9A-C880-4C97-A11A-1CBFC6275E12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptonizeDBSample", "examples\Encryptonize.SampleDB\EncryptonizeDBSample.csproj", "{E5BEF5D8-DE39-44EC-858E-F3E1A476A590}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D1DBSample", "examples\D1DB.Sample\D1DB.Sample.csproj", "{E5BEF5D8-DE39-44EC-858E-F3E1A476A590}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

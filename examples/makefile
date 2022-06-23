@@ -10,9 +10,9 @@ SHELL := /bin/bash
 ##### Build targets #####
 .PHONY: build
 build: ## Build the library
-	@make -C Encryptonize.SampleDB build
+	@make -C D1DB.Sample build
 
 ##### Cleanup targets #####
 .PHONY: clean
 clean: ## Remove build artifacts
-	@make -C Encryptonize.SampleDB build
+	@make -C D1DB.Sample build

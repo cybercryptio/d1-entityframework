@@ -10,7 +10,7 @@ public static class ModelBuilderExtensions
 
 | name | description |
 | --- | --- |
-| static [UseD1](ModelBuilderExtensions/UseD1.md)(…) | Enable Encryptonize support for the given ModelBuilder. |
+| static [UseD1](ModelBuilderExtensions/UseD1.md)(…) | Enable D1 support for the given ModelBuilder. |
 
 ## See Also
 
