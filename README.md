@@ -4,6 +4,19 @@ The integration works by encrypting and decrypting data transparently, using [CY
 
 This protects the data in the database from being read by third parties and tampering.
 
+## Supported databases
+
+All databases supported by Entity Framework Core are supported by CyberCrypt.D1.EntityFramework.
+
+Some of the most used databases supported includes:
+
+- Microsoft SQL Server
+- Oracle
+- MySQL
+- MariaDB
+- PostgresSQL
+- SQLite
+
 ## Installation
 
 The Entity Framework Core integration is available through nuget.org. The latest version can be installed using the following command:
