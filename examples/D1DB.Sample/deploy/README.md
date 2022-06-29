@@ -26,9 +26,9 @@ make deploy adminUser="${adminUser}" adminPass="${adminPass}" resource_group="${
 
 ### Sample application
 
-Deployment of the sample application is done using a Helm template located in [D1DBSample](D1DBSample/).
+Deployment of the sample application is done using a Helm template located in [D1DBSample](https://github.com/cybercryptio/helm-charts/tree/main/d1-entityframework-sample).
 
-[values.yaml](D1DBSample/values.yaml) needs to be updated to reflect the correct values for the SQL server and the D1 Generic service. Once those values have been updated, the application can be deployed using the command:
+[values.yaml](https://github.com/cybercryptio/helm-charts/blob/main/d1-entityframework-sample/values.yaml) needs to be updated to reflect the correct values for the SQL server and the D1 Generic service. Once those values have been updated, the application can be deployed using the command:
 
 ```
 helm install d1db-sample .
