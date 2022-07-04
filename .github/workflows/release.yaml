@@ -37,7 +37,7 @@ jobs:
         API_KEY: ${{ secrets.CYBOT_TOKEN }}
         VERSION: ${{ github.ref_name }}
 
-  nuget-puch:
+  nuget-push:
     runs-on: ubuntu-20.04
 
     steps:
