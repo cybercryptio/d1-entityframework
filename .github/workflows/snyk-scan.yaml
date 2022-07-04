@@ -1,0 +1,34 @@
+name: Snyk scan
+
+on: push
+
+env:
+  PACKAGE_SOURCE: github
+
+jobs:
+  scan-dotnet:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Setup and cache dependencies
+      uses: cyber-crypt-com/build-setup-action@master
+
+    - name: Install XmlDocMarkdown
+      run: dotnet tool install xmldocmd -g
+
+    - name: Login into package feed
+      run: |
+        dotnet nuget add source --username cybot-cc --password ${{ secrets.CYBOT_TOKEN }} --store-password-in-clear-text --name ${{ env.PACKAGE_SOURCE }} "https://nuget.pkg.github.com/cybercryptio/index.json"
+
+    - name: Build
+      run: make build
+
+    - name: Install Snyk CLI
+      uses: snyk/actions/setup@master
+
+    - name: Scan dotnet projects
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: snyk test --all-projects
