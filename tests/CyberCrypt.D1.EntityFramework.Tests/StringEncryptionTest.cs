@@ -34,7 +34,7 @@ public class StringEncryptionTest : IDisposable
         var expectedData = "test";
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
         using var dbContext = new TestDbContext(D1ClientMock.Mock, contextOptions);
         dbContext.EncryptedData.Add(new EncryptedData
@@ -57,7 +57,7 @@ public class StringEncryptionTest : IDisposable
         const string expectedData = "data";
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew";
-        D1ClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.DecryptResponse(expectedData.GetBytes(), new byte[0]));
         var encryptedData = objectId.GetBytes().Concat(ciphertext.GetBytes()).ToArray().ToBase64();
         using var dbContext = new TestDbContext(D1ClientMock.Mock, contextOptions);

@@ -44,9 +44,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedData = firstData });
         dbContext.Data.Add(new MigrationData { UnencryptedData = secondData });
         dbContext.SaveChanges();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new D1Migrator<MigrationTestContext>(dbContext, D1ClientMock.Mock);
@@ -74,9 +74,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedData = firstData });
         dbContext.Data.Add(new MigrationData { UnencryptedData = secondData });
         dbContext.SaveChanges();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new D1Migrator<MigrationTestContext>(dbContext, D1ClientMock.Mock);
@@ -104,9 +104,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = firstData });
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = secondData });
         dbContext.SaveChanges();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new D1Migrator<MigrationTestContext>(dbContext, D1ClientMock.Mock);
@@ -134,9 +134,9 @@ public class MigrationTest : IDisposable
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = firstData });
         dbContext.Data.Add(new MigrationData { UnencryptedBinaryData = secondData });
         dbContext.SaveChanges();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(firstData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(firstObjectId, firstCiphertext, new byte[0]));
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(secondData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(secondObjectId, secondCiphertext, new byte[0]));
 
         var migrator = new D1Migrator<MigrationTestContext>(dbContext, D1ClientMock.Mock);

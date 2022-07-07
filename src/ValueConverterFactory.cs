@@ -33,7 +33,7 @@ internal static class ValueConverterFactory
 
     private static byte[] BinaryEncryptor(byte[] value, ID1Generic client)
     {
-        var res = client.Encrypt(value, emptyByteArray);
+        var res = client.Generic.Encrypt(value, emptyByteArray);
         var encryptedValue = res.ObjectId.GetBytes().Concat(res.Ciphertext).ToArray();
         return encryptedValue;
     }
@@ -42,7 +42,7 @@ internal static class ValueConverterFactory
     {
         var objectId = value.Take(UUID_LENGHT).ToArray().BytesToString();
         var ciphertext = value.Skip(UUID_LENGHT).ToArray();
-        var res = client.Decrypt(objectId, ciphertext, emptyByteArray);
+        var res = client.Generic.Decrypt(objectId, ciphertext, emptyByteArray);
         return res.Plaintext;
     }
 }
