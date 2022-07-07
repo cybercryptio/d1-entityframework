@@ -29,8 +29,8 @@ if (String.IsNullOrWhiteSpace(d1Password))
 {
     throw new Exception("D1 Generic password not defined");
 }
-builder.Services.AddSingleton<ID1Credentials>(new UsernamePasswordCredentials(d1Url, d1Username, d1Password));
-builder.Services.AddSingleton<ID1Generic>(x => new D1GenericClient(d1Url, new D1ClientOptions(), x.GetRequiredService<ID1Credentials>()));
+builder.Services.AddScoped<ID1Credentials>(_ => new UsernamePasswordCredentials(d1Url, d1Username, d1Password));
+builder.Services.AddScoped<ID1Generic>(x => new D1GenericClient(d1Url, new D1ClientOptions(), x.GetRequiredService<ID1Credentials>()));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>
