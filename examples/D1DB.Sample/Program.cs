@@ -3,6 +3,7 @@
 using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
+using CyberCrypt.D1.Client.Credentials;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("D1DB_");
@@ -28,7 +29,8 @@ if (String.IsNullOrWhiteSpace(d1Password))
 {
     throw new Exception("D1 Generic password not defined");
 }
-builder.Services.AddSingleton<ID1Generic>(new D1GenericClient(d1Url, d1Username, d1Password));
+builder.Services.AddSingleton<ID1Credentials>(new UsernamePasswordCredentials(d1Url, d1Username, d1Password));
+builder.Services.AddSingleton<ID1Generic>(x => new D1GenericClient(d1Url, new D1ClientOptions(), x.GetRequiredService<ID1Credentials>()));
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>

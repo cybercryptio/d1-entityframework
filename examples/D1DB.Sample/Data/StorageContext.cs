@@ -9,16 +9,17 @@ namespace D1DB.Sample.Data
 {
     public class StorageContext : DbContext
     {
-        private readonly ID1Generic client;
+        private readonly Func<ID1Generic> clientFactory;
 
-        public StorageContext(ID1Generic client, DbContextOptions<StorageContext> options) : base(options)
+        public StorageContext(Func<ID1Generic> clientFactory, DbContextOptions<StorageContext> options)
+            : base(options)
         {
-            this.client = client;
+            this.clientFactory = clientFactory;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseD1(client);
+            modelBuilder.UseD1(clientFactory);
             base.OnModelCreating(modelBuilder);
         }
 
