@@ -23,7 +23,7 @@ public class StringEncryptionTest : IDisposable
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
         contextOptions = new DbContextOptionsBuilder<TestDbContext>().UseSqlite(connection).Options;
-        using var context = new TestDbContext(D1ClientMock.Mock, contextOptions);
+        using var context = new TestDbContext(() => D1ClientMock.Mock, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -36,7 +36,7 @@ public class StringEncryptionTest : IDisposable
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
-        using var dbContext = new TestDbContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new TestDbContext(() => D1ClientMock.Mock, contextOptions);
         dbContext.EncryptedData.Add(new EncryptedData
         {
             Data = expectedData
@@ -60,7 +60,7 @@ public class StringEncryptionTest : IDisposable
         D1ClientMock.Mock.Generic.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext.GetBytes())), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.DecryptResponse(expectedData.GetBytes(), new byte[0]));
         var encryptedData = objectId.GetBytes().Concat(ciphertext.GetBytes()).ToArray().ToBase64();
-        using var dbContext = new TestDbContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new TestDbContext(() => D1ClientMock.Mock, contextOptions);
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = $"INSERT INTO EncryptedData (Data) VALUES ('{encryptedData}')";
         command.ExecuteNonQuery();

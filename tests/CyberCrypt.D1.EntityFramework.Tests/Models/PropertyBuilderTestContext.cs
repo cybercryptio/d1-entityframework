@@ -1,24 +1,25 @@
 // Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
+using System;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
 public class PropertyBuilderTestContext : DbContext
 {
-    private readonly ID1Generic client;
+    private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<EncryptedDataForPropertyBuilder> EncryptedData { get; set; } = null!;
 
-    public PropertyBuilderTestContext(ID1Generic client, DbContextOptions options) : base(options)
+    public PropertyBuilderTestContext(Func<ID1Generic> clientFactory, DbContextOptions options) : base(options)
     {
-        this.client = client;
+        this.clientFactory = clientFactory;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<EncryptedDataForPropertyBuilder>().Property(x => x.Data!).IsConfidential(client);
-        modelBuilder.Entity<EncryptedDataForPropertyBuilder>().Property(x => x.Binary!).IsConfidential(client);
+        modelBuilder.Entity<EncryptedDataForPropertyBuilder>().Property(x => x.Data!).IsConfidential(clientFactory);
+        modelBuilder.Entity<EncryptedDataForPropertyBuilder>().Property(x => x.Binary!).IsConfidential(clientFactory);
     }
 }
 

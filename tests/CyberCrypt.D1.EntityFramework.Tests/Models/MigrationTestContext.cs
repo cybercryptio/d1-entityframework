@@ -1,23 +1,24 @@
 // Copyright 2020-2022 CYBERCRYPT
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
+using System;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
 public class MigrationTestContext : DbContext
 {
-    private readonly ID1Generic client;
+    private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<MigrationData> Data { get; set; } = null!;
 
-    public MigrationTestContext(ID1Generic client, DbContextOptions options) : base(options)
+    public MigrationTestContext(Func<ID1Generic> clientFactory, DbContextOptions options) : base(options)
     {
-        this.client = client;
+        this.clientFactory = clientFactory;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseD1(client);
+        modelBuilder.UseD1(clientFactory);
         base.OnModelCreating(modelBuilder);
     }
 }

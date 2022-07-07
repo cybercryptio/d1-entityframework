@@ -17,16 +17,16 @@ public static class ModelBuilderExtensions
     /// Enable D1 support for the given <see cref="ModelBuilder"/>.
     /// </summary>
     /// <param name="modelBuilder">The <see cref="ModelBuilder"/>.</param>
-    /// <param name="client">The D1 Generic client.</param>
-    public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)
+    /// <param name="clientFactory">The D1 Generic client.</param>
+    public static ModelBuilder UseD1(this ModelBuilder modelBuilder, Func<ID1Generic> clientFactory)
     {
         if (modelBuilder is null)
         {
             throw new ArgumentNullException(nameof(modelBuilder));
         }
 
-        var stringConverter = ValueConverterFactory.CreateStringConverter(client);
-        var binaryConverter = ValueConverterFactory.CreateBinaryConverter(client);
+        var stringConverter = ValueConverterFactory.CreateStringConverter(clientFactory);
+        var binaryConverter = ValueConverterFactory.CreateBinaryConverter(clientFactory);
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {

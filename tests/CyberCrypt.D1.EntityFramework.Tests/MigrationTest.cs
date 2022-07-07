@@ -26,7 +26,7 @@ public class MigrationTest : IDisposable
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
         contextOptions = new DbContextOptionsBuilder<MigrationTestContext>().UseSqlite(connection).Options;
-        using var context = new MigrationTestContext(D1ClientMock.Mock, contextOptions);
+        using var context = new MigrationTestContext(() => D1ClientMock.Mock, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -34,7 +34,7 @@ public class MigrationTest : IDisposable
     [Fact]
     public void MigratingStringPropertiesTest()
     {
-        using var dbContext = new MigrationTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new MigrationTestContext(() => D1ClientMock.Mock, contextOptions);
         var firstObjectId = Guid.NewGuid().ToString();
         var firstData = "first";
         var firstCiphertext = "anything1".GetBytes();
@@ -64,7 +64,7 @@ public class MigrationTest : IDisposable
     [Fact]
     public async Task MigratingAsyncStringPropertiesTest()
     {
-        using var dbContext = new MigrationTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new MigrationTestContext(() => D1ClientMock.Mock, contextOptions);
         var firstObjectId = Guid.NewGuid().ToString();
         var firstData = "firstAsync";
         var firstCiphertext = "anythingAsync1".GetBytes();
@@ -94,7 +94,7 @@ public class MigrationTest : IDisposable
     [Fact]
     public void MigratingBinaryPropertiesTest()
     {
-        using var dbContext = new MigrationTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new MigrationTestContext(() => D1ClientMock.Mock, contextOptions);
         var firstObjectId = Guid.NewGuid().ToString();
         var firstData = "first".GetBytes();
         var firstCiphertext = "anything1".GetBytes();
@@ -124,7 +124,7 @@ public class MigrationTest : IDisposable
     [Fact]
     public async Task MigratingAsyncBinaryPropertiesTest()
     {
-        using var dbContext = new MigrationTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new MigrationTestContext(() => D1ClientMock.Mock, contextOptions);
         var firstObjectId = Guid.NewGuid().ToString();
         var firstData = "firstAsync".GetBytes();
         var firstCiphertext = "anythingAsync1".GetBytes();
