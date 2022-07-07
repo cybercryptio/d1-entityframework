@@ -103,25 +103,25 @@ public class Program
     public static void Main()
     {
         var client = new D1GenericClient("https://localhost:9000", "username", "password");
-        var databaseContext = new DatabaseContext(client);
+        var databaseContext = new DatabaseContext(() => client);
 
     }
 }
 
 public class DatabaseContext : DbContext
 {
-    private readonly ID1Generic client;
+    private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(ID1Generic client)
+    public DatabaseContext(Func<ID1Generic> clientFactory)
     {
-        this.client = client;
+        this.clientFactory = clientFactory;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.UseD1(client);
+        modelBuilder.UseD1(clientFactory);
         base.OnModelCreating(modelBuilder);
     }
 }
@@ -145,25 +145,25 @@ public class Program
     public static void Main()
     {
         var client = new D1GenericClient("https://localhost:9000", "username", "password");
-        var databaseContext = new DatabaseContext(client);
+        var databaseContext = new DatabaseContext(() => client);
 
     }
 }
 
 public class DatabaseContext : DbContext
 {
-    private readonly ID1Generic client;
+    private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<Person> Persons { get; set; };
 
-    public DatabaseContext(ID1Generic client)
+    public DatabaseContext(Func<ID1Generic> clientFactory)
     {
-        this.client = client;
+        this.clientFactory = clientFactory;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Person>().Property(x => x.SocialSecurityNumber).IsConfidential(client);
+        modelBuilder.Entity<Person>().Property(x => x.SocialSecurityNumber).IsConfidential(clientFactory);
     }
 }
 ```
