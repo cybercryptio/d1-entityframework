@@ -27,20 +27,20 @@ using CyberCrypt.D1.Client;
 
 public class DatabaseContext : DbContext
 {
-    private readonly ID1Generic client;
+    private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<Person> Persons { get; set; };
 
     // An D1 client is injected
-    public DatabaseContext(ID1Generic client)
+    public DatabaseContext(Func<ID1Generic> clientFactory)
     {
-        this.client = client;
+        this.clientFactory = clientFactory;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // The model is configured to encrypt and decrypt data based on data annotations
-        modelBuilder.UseD1(client);
+        modelBuilder.UseD1(clientFactory);
         base.OnModelCreating(modelBuilder);
     }
 }

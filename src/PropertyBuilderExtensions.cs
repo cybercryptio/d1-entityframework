@@ -13,26 +13,26 @@ public static class PropertyBuilderExtensions
     /// <summary>
     /// Marks a property as confidential and to be encrypted using D1.
     /// </summary>
-    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, ID1Generic client)
+    public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, Func<ID1Generic> clientFactory)
     {
         if (property is null)
         {
             throw new ArgumentNullException(nameof(property));
         }
 
-        return property.HasConversion(ValueConverterFactory.CreateStringConverter(client));
+        return property.HasConversion(ValueConverterFactory.CreateStringConverter(clientFactory));
     }
 
     /// <summary>
     /// Marks a property as confidential and to be encrypted using D1.
     /// </summary>
-    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, ID1Generic client)
+    public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, Func<ID1Generic> clientFactory)
     {
         if (property is null)
         {
             throw new ArgumentNullException(nameof(property));
         }
 
-        return property.HasConversion(ValueConverterFactory.CreateBinaryConverter(client));
+        return property.HasConversion(ValueConverterFactory.CreateBinaryConverter(clientFactory));
     }
 }

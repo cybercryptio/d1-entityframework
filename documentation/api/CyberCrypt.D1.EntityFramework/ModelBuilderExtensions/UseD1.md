@@ -3,13 +3,13 @@
 Enable D1 support for the given ModelBuilder.
 
 ```csharp
-public static ModelBuilder UseD1(this ModelBuilder modelBuilder, ID1Generic client)
+public static ModelBuilder UseD1(this ModelBuilder modelBuilder, Func<ID1Generic> clientFactory)
 ```
 
 | parameter | description |
 | --- | --- |
 | modelBuilder | The ModelBuilder. |
-| client | The D1 Generic client. |
+| clientFactory | The D1 Generic client. |
 
 ## See Also
 

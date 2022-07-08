@@ -4,7 +4,7 @@ Marks a property as confidential and to be encrypted using D1.
 
 ```csharp
 public static PropertyBuilder<byte[]> IsConfidential(this PropertyBuilder<byte[]> property, 
-    ID1Generic client)
+    Func<ID1Generic> clientFactory)
 ```
 
 ## See Also
@@ -20,7 +20,7 @@ Marks a property as confidential and to be encrypted using D1.
 
 ```csharp
 public static PropertyBuilder<string> IsConfidential(this PropertyBuilder<string> property, 
-    ID1Generic client)
+    Func<ID1Generic> clientFactory)
 ```
 
 ## See Also

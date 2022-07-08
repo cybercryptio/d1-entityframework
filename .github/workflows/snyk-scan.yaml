@@ -31,4 +31,4 @@ jobs:
     - name: Scan dotnet projects
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: snyk test --all-projects
+      run: snyk test --file=src/obj/project.assets.json

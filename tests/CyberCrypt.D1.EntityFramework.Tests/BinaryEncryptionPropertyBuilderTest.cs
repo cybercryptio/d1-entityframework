@@ -25,7 +25,7 @@ public class BinaryEncryptionPropertyBuilderTest : IDisposable
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
         contextOptions = new DbContextOptionsBuilder<PropertyBuilderTestContext>().UseSqlite(connection).Options;
-        using var context = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
+        using var context = new PropertyBuilderTestContext(() => D1ClientMock.Mock, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -37,9 +37,9 @@ public class BinaryEncryptionPropertyBuilderTest : IDisposable
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var expectedEncryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
-        D1ClientMock.Mock.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Encrypt(Arg.Is<byte[]>(x => x.SequenceEqual(expectedData)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.EncryptResponse(objectId, ciphertext, new byte[0]));
-        using var dbContext = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new PropertyBuilderTestContext(() => D1ClientMock.Mock, contextOptions);
         dbContext.EncryptedData.Add(new EncryptedDataForPropertyBuilder
         {
             Binary = expectedData
@@ -61,9 +61,9 @@ public class BinaryEncryptionPropertyBuilderTest : IDisposable
         var objectId = Guid.NewGuid().ToString();
         var ciphertext = "dshajdhsadjlkjdsdsækliiouew".GetBytes();
         var encryptedData = objectId.GetBytes().Concat(ciphertext).ToArray();
-        D1ClientMock.Mock.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
+        D1ClientMock.Mock.Generic.Decrypt(objectId, Arg.Is<byte[]>(x => x.SequenceEqual(ciphertext)), Arg.Any<byte[]>())
             .Returns(new CyberCrypt.D1.Client.Response.DecryptResponse(expectedData, new byte[0]));
-        using var dbContext = new PropertyBuilderTestContext(D1ClientMock.Mock, contextOptions);
+        using var dbContext = new PropertyBuilderTestContext(() => D1ClientMock.Mock, contextOptions);
         var command = dbContext.Database.GetDbConnection().CreateCommand();
         command.CommandText = "INSERT INTO EncryptedData (Binary) VALUES (@data)";
         var parameter = command.CreateParameter();
