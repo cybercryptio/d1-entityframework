@@ -22,7 +22,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="CyberCrypt.D1.Client" Version="0.1.22-ci.15" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,12 +27,8 @@ __check_defined = \
 ##### Build targets #####
 .PHONY: build
 build: ## Build the library
-	dotnet build ./src
+	dotnet build
 	$(MAKE) apidocs
-
-.PHONY: build-examples
-build-examples: ## Build the samples
-	@make -C examples build
 
 .PHONY: tests
 tests: build ## Run the tests
