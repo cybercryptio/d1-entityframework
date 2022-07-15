@@ -5,22 +5,12 @@ using System;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
-public class TestDbContext : DbContext
+public class TestDbContext : D1DbContext
 {
-    private readonly Func<ID1Generic> clientFactory;
-
     public DbSet<EncryptedData> EncryptedData { get; set; } = null!;
 
-    public TestDbContext(Func<ID1Generic> clientFactory, DbContextOptions options) : base(options)
-    {
-        this.clientFactory = clientFactory;
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.UseD1(clientFactory);
-        base.OnModelCreating(modelBuilder);
-    }
+    public TestDbContext(Func<ID1Generic> clientFactory, DbContextOptions options)
+        : base(clientFactory, options) { }
 }
 
 public class EncryptedData

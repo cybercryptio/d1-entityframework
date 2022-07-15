@@ -5,6 +5,7 @@
 | public type | description |
 | --- | --- |
 | class [ConfidentialAttribute](./CyberCrypt.D1.EntityFramework/ConfidentialAttribute.md) | Attribute used to mark data as confidential. |
+| class [D1DbContext](./CyberCrypt.D1.EntityFramework/D1DbContext.md) | D1 database context. |
 | static class [ModelBuilderExtensions](./CyberCrypt.D1.EntityFramework/ModelBuilderExtensions.md) | Extension methods for ModelBuilder. |
 | static class [PropertyBuilderExtensions](./CyberCrypt.D1.EntityFramework/PropertyBuilderExtensions.md) | Extentions for configuration data model properties |
 

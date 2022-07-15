@@ -35,4 +35,19 @@ public static class PropertyBuilderExtensions
 
         return property.HasConversion(ValueConverterFactory.CreateBinaryConverter(clientFactory));
     }
+
+    /// <summary>
+    /// Marks a property as searchable.
+    /// </summary>
+    /// <param name="property">The property to mark as searchable.</param>
+    /// <param name="keywordsFunc">Function calculation keywords for the property.</param>
+    public static PropertyBuilder<string> AsSearchable(this PropertyBuilder<string> property, Func<string?, IEnumerable<string>?> keywordsFunc)
+    {
+        if (property is null)
+        {
+            throw new ArgumentNullException(nameof(property));
+        }
+
+        return property.HasAnnotation(Constants.SearchableKeywordsFuncAnnotationName, keywordsFunc);
+    }
 }
