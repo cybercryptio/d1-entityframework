@@ -42,8 +42,14 @@ public class SearchableTest
         });
         dbContext.SaveChanges();
 
-        D1ClientMock.Mock.Searchable.Received(1).Add(Arg.Is<List<string>>(x => x.All(y => dataContent.Split(" ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(1).Add(Arg.Is<List<string>>(x => x.All(y => otherDataContent.Split(", ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|OtherData|1"));
+        var dataContentKeywords = dataContent.Split(" ");
+        D1ClientMock.Mock.Searchable.Received(1).Add(
+            Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
+            Arg.Is<string>("Data|Data|1"));
+        var otherDataContentKeywords = otherDataContent.Split(", ");
+        D1ClientMock.Mock.Searchable.Received(1).Add(
+            Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
+            Arg.Is<string>("Data|OtherData|1"));
     }
 
     [Fact]
@@ -63,8 +69,14 @@ public class SearchableTest
         dbContext.Data.Remove(entry);
         dbContext.SaveChanges();
 
-        D1ClientMock.Mock.Searchable.Received(1).Delete(Arg.Is<List<string>>(x => x.All(y => dataContent.Split(" ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(1).Delete(Arg.Is<List<string>>(x => x.All(y => otherDataContent.Split(", ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|OtherData|1"));
+        var dataContentKeywords = dataContent.Split(" ");
+        D1ClientMock.Mock.Searchable.Received(1).Delete(
+            Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
+            Arg.Is<string>("Data|Data|1"));
+        var otherDataContentKeywords = otherDataContent.Split(", ");
+        D1ClientMock.Mock.Searchable.Received(1).Delete(
+            Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
+            Arg.Is<string>("Data|OtherData|1"));
     }
 
     [Fact]
@@ -87,10 +99,22 @@ public class SearchableTest
         entry.OtherData = updatedOtherDataContent;
         dbContext.SaveChanges();
 
-        D1ClientMock.Mock.Searchable.Received(1).Delete(Arg.Is<List<string>>(x => x.All(y => dataContent.Split(" ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(1).Delete(Arg.Is<List<string>>(x => x.All(y => otherDataContent.Split(", ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|OtherData|1"));
-        D1ClientMock.Mock.Searchable.Received(1).Add(Arg.Is<List<string>>(x => x.All(y => updateDataContent.Split(" ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(1).Add(Arg.Is<List<string>>(x => x.All(y => updatedOtherDataContent.Split(", ", StringSplitOptions.None).Contains(y))), Arg.Is<string>("Data|OtherData|1"));
+        var dataContentKeywords = dataContent.Split(" ");
+        D1ClientMock.Mock.Searchable.Received(1).Delete(
+            Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
+            Arg.Is<string>("Data|Data|1"));
+        var otherDataContentKeywords = otherDataContent.Split(", ");
+        D1ClientMock.Mock.Searchable.Received(1).Delete(
+            Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
+            Arg.Is<string>("Data|OtherData|1"));
+        var updatedDataContentKeywords = updateDataContent.Split(" ");
+        D1ClientMock.Mock.Searchable.Received(1).Add(
+            Arg.Is<List<string>>(x => x.SequenceEqual(updatedDataContentKeywords)),
+            Arg.Is<string>("Data|Data|1"));
+        var updatedOtherDataContentKeywords = updatedOtherDataContent.Split(", ");
+        D1ClientMock.Mock.Searchable.Received(1).Add(
+            Arg.Is<List<string>>(x => x.SequenceEqual(updatedOtherDataContentKeywords)),
+            Arg.Is<string>("Data|OtherData|1"));
     }
 
     [Fact]
@@ -107,8 +131,12 @@ public class SearchableTest
         entry.NotSearchable = "changed";
         dbContext.SaveChanges();
 
-        D1ClientMock.Mock.Searchable.Received(0).Delete(Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(0).Add(Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")), Arg.Is<string>("Data|Data|1"));
+        D1ClientMock.Mock.Searchable.Received(0).Delete(
+            Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")),
+            Arg.Is<string>("Data|Data|1"));
+        D1ClientMock.Mock.Searchable.Received(0).Add(
+            Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")),
+            Arg.Is<string>("Data|Data|1"));
     }
 
     [Fact]
@@ -127,7 +155,11 @@ public class SearchableTest
         dbContext.SaveChanges();
 
         // The entry will be added once to the index, but not again when the NotSearchable property is changed.
-        D1ClientMock.Mock.Searchable.Received(1).Add(Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")), Arg.Is<string>("Data|Data|1"));
-        D1ClientMock.Mock.Searchable.Received(0).Delete(Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")), Arg.Is<string>("Data|Data|1"));
+        D1ClientMock.Mock.Searchable.Received(1).Add(
+            Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")),
+            Arg.Is<string>("Data|Data|1"));
+        D1ClientMock.Mock.Searchable.Received(0).Delete(
+            Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")),
+            Arg.Is<string>("Data|Data|1"));
     }
 }
