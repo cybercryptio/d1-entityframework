@@ -33,22 +33,22 @@ public class D1DbContext : DbContext
     /// <inheritdoc/>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        var mappings = Preprocess();
+        var searchableEntries = FindSearchableEntries();
         var result = base.SaveChanges(acceptAllChangesOnSuccess);
-        Process(clientFactory(), mappings);
+        UpdateSearchIndex(clientFactory(), searchableEntries);
         return result;
     }
 
     /// <inheritdoc/>
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        var mappings = Preprocess();
+        var searchableEntries = FindSearchableEntries();
         var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        Process(clientFactory(), mappings);
+        UpdateSearchIndex(clientFactory(), searchableEntries);
         return result;
     }
 
-    private IEnumerable<EntryMapping> Preprocess()
+    private IEnumerable<EntryMapping> FindSearchableEntries()
     {
         var mappings = new List<EntryMapping>();
         foreach (var entry in ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted || x.State == EntityState.Modified || x.State == EntityState.Added))
@@ -96,7 +96,7 @@ public class D1DbContext : DbContext
         return mappings;
     }
 
-    private void Process(ID1Generic client, IEnumerable<EntryMapping> mappings)
+    private void UpdateSearchIndex(ID1Generic client, IEnumerable<EntryMapping> mappings)
     {
         foreach (var mapping in mappings)
         {
