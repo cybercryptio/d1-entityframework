@@ -177,10 +177,10 @@ public class D1DbContext : DbContext
 
         public string GetIdentifier(IModel model, SearchableProperty property)
         {
-            var entityType = model.FindEntityType(Entry.Entity.GetType());
-            var tableName = entityType?.GetSchemaQualifiedTableName() ?? "";
-            var storeObjectIdentifier = StoreObjectIdentifier.Table(entityType!.GetSchemaQualifiedTableName()!);
-            var columnName = entityType?.FindProperty(property.PropertyEntry.Metadata.Name)?.GetColumnName(storeObjectIdentifier) ?? "";
+            var entityType = model.FindEntityType(Entry.Entity.GetType())!;
+            var tableName = entityType.GetSchemaQualifiedTableName() ?? "";
+            var storeObjectIdentifier = StoreObjectIdentifier.Table(entityType.GetSchemaQualifiedTableName()!);
+            var columnName = entityType.FindProperty(property.PropertyEntry.Metadata.Name)?.GetColumnName(storeObjectIdentifier) ?? "";
             var primaryKey = PrimaryKey.FieldInfo?.GetValue(Entry.Entity)?.ToString() ?? "";
             return $"{tableName}|{columnName}|{primaryKey}";
         }
