@@ -1,0 +1,38 @@
+version: '3.9'
+
+x-config:
+  &config
+  D1_SERVICE_INSECURE: "1"
+
+  # IO Provider
+  D1_IO_REDIS_ADDRESS: "redis:6379"
+
+services:
+  d1-service-generic:
+    image: ghcr.io/cybercryptio/d1-service-generic:v0.1.49-ci.48
+    container_name: d1-service-generic
+    environment:
+      <<: *config
+    volumes:
+      - ${PWD}/config.toml:/config.toml
+    ports:
+      - 9000:9000
+    depends_on:
+      - redis
+      - sqlserver
+    tty: true
+
+  # redis
+  redis:
+    image: redis:7.0.3-alpine
+    container_name: redis
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: sqlserver
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=yourStrong(!)Password
+      - MSSQL_PID=Express
