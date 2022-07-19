@@ -137,20 +137,13 @@ public static class SearchableQueryExtensions
         }
 
         BinaryExpression predicateExpr;
-        if (idExpressions.Count == 2)
+        var left = idExpressions[0];
+        var right = idExpressions[1];
+        for (var i = 1; i < idExpressions.Count; i++)
         {
-            predicateExpr = Expression.Or(idExpressions[0], idExpressions[1]);
+            left = Expression.Or(left, idExpressions[i]);
         }
-        else
-        {
-            var left = idExpressions[0];
-            var right = idExpressions[1];
-            for (var i = 2; i < idExpressions.Count; i++)
-            {
-                left = Expression.Or(left, idExpressions[i]);
-            }
-            predicateExpr = (BinaryExpression)left;
-        }
+        predicateExpr = (BinaryExpression)left;
 
         var whereExpr = Expression.Lambda<Func<T, bool>>(predicateExpr, parameter);
         return dbSet.Where(whereExpr);

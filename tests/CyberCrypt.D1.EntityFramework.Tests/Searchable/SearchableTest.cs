@@ -215,31 +215,68 @@ public class SearchableTest
     }
 
     [Fact]
-    public void SearchingForExistingMultipleKeywordsWorks()
+    public void SearchingForExistingMultipleKeywordsWorksByORingIds()
     {
         string[] keywords = new[] { "multipleKeywords1", "multipleKeywords2" };
         using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keywords[0]).Returns(_ => new SearchResponse(new List<string>
             {
-                "Data|Data|1"
+                "Data|Data|1",
+                "Data|Data|2",
             }));
         client.Searchable.Search(keywords[1]).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
             }));
-        var entry = new PropertySearchableData
+        var firstEntry = new PropertySearchableData
         {
             Data = "multipleKeywords1 multipleKeywords2",
         };
-        dbContext.Data.Add(entry);
+        var secondEntry = new PropertySearchableData
+        {
+            Data = "multipleKeywords1",
+        };
+        dbContext.Data.Add(firstEntry);
+        dbContext.Data.Add(secondEntry);
         dbContext.SaveChanges();
 
         var result = dbContext.Data.ConfidentialSearch(x => x.Data, keywords).ToList();
 
-        Assert.True(result.Count() == 1);
-        Assert.Equal(entry.Id, result.First().Id);
+        Assert.True(result.Count() == 2);
+        Assert.Equal(firstEntry.Id, result.First().Id);
+        Assert.Equal(secondEntry.Id, result.Last().Id);
         client.Searchable.Received(1).Search(keywords[0]);
         client.Searchable.Received(1).Search(keywords[1]);
+    }
+
+    [Fact]
+    public void SearchingWithMoreTwoMatchesWorks()
+    {
+        const string keyword = "twoMatches";
+        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
+            {
+                "Data|Data|1",
+                "Data|Data|2",
+            }));
+        var firstEntry = new PropertySearchableData
+        {
+            Data = "multipleKeywords1",
+        };
+        var secondEntry = new PropertySearchableData
+        {
+            Data = "multipleKeywords1",
+        };
+        dbContext.Data.Add(firstEntry);
+        dbContext.Data.Add(secondEntry);
+        dbContext.SaveChanges();
+
+        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keyword).ToList();
+
+        Assert.True(result.Count() == 2);
+        Assert.Equal(firstEntry.Id, result.First().Id);
+        Assert.Equal(secondEntry.Id, result.Last().Id);
+        client.Searchable.Received(1).Search(keyword);
     }
 
     [Fact]
