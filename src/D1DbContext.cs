@@ -12,6 +12,8 @@ public class D1DbContext : DbContext
 {
     private readonly Func<ID1Generic> clientFactory;
 
+    internal Func<ID1Generic> ClientFactory => clientFactory;
+
     /// <summary>
     /// Create a new instance of <see cref="D1DbContext"/>.
     /// </summary>
