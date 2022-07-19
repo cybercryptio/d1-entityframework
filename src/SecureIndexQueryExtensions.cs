@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CyberCrypt.D1.Client;
+namespace CyberCrypt.D1.EntityFramework;
 
 /// <summary>
 /// Extension methods for querying the secure index.

@@ -1,11 +1,5 @@
 # CyberCrypt.D1.EntityFramework assembly
 
-## CyberCrypt.D1.Client namespace
-
-| public type | description |
-| --- | --- |
-| static class [SecureIndexQueryExtensions](./CyberCrypt.D1.Client/SecureIndexQueryExtensions.md) | Extension methods for querying the secure index. |
-
 ## CyberCrypt.D1.EntityFramework namespace
 
 | public type | description |
@@ -14,6 +8,7 @@
 | class [D1DbContext](./CyberCrypt.D1.EntityFramework/D1DbContext.md) | D1 database context. |
 | static class [ModelBuilderExtensions](./CyberCrypt.D1.EntityFramework/ModelBuilderExtensions.md) | Extension methods for ModelBuilder. |
 | static class [PropertyBuilderExtensions](./CyberCrypt.D1.EntityFramework/PropertyBuilderExtensions.md) | Extentions for configuration data model properties |
+| static class [SecureIndexQueryExtensions](./CyberCrypt.D1.EntityFramework/SecureIndexQueryExtensions.md) | Extension methods for querying the secure index. |
 
 ## CyberCrypt.D1.EntityFramework.Migrator namespace
 
