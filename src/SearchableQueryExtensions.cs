@@ -100,7 +100,7 @@ public static class SearchableQueryExtensions
                     return (tableName, columnName, id);
                 });
         }
-        ).ToList();
+        ).Distinct().ToList();
 
         if (!searchResults.Any())
         {
