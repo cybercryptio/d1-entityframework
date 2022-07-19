@@ -14,7 +14,9 @@ internal static class ModelExtensions
             throw new ArgumentNullException(nameof(property));
         }
 
+#pragma warning disable EF1001 // Internal EF Core API usage.
         if (property.FindAnnotation(CoreAnnotationNames.ValueConverter) is not null)
+#pragma warning restore EF1001 // Internal EF Core API usage.
         {
             throw new NotSupportedException("Properties with custom value converters, cannot be marked as confidential");
         }
