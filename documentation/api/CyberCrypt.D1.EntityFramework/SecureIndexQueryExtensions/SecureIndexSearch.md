@@ -3,7 +3,7 @@
 Find all entity matching the provided keywords.
 
 ```csharp
-public static IEnumerable<T> SecureIndexSearch<T, U>(this DbSet<T> dbSet, 
+public static IQueryable<T> SecureIndexSearch<T, U>(this DbSet<T> dbSet, 
     Expression<Func<T, U>> propertyAccessor, params string[] keywords)
     where T : class
 ```

@@ -130,7 +130,7 @@ public class D1DbContext : DbContext
             }
 
             var identifier = mapping.GetIdentifier(Model, property);
-            client.Searchable.Delete(property.OldKeywords.ToList(), identifier);
+            client.Index.Delete(property.OldKeywords.ToList(), identifier);
         }
     }
 
@@ -141,12 +141,12 @@ public class D1DbContext : DbContext
             var identifier = mapping.GetIdentifier(Model, property);
             if (property.OldKeywords is not null && property.OldKeywords.Any())
             {
-                client.Searchable.Delete(property.OldKeywords.ToList(), identifier);
+                client.Index.Delete(property.OldKeywords.ToList(), identifier);
             }
 
             if (property.NewKeywords is not null && property.NewKeywords.Any())
             {
-                client.Searchable.Add(property.NewKeywords.ToList(), identifier);
+                client.Index.Add(property.NewKeywords.ToList(), identifier);
             }
         }
     }
@@ -161,7 +161,7 @@ public class D1DbContext : DbContext
             }
 
             var identifier = mapping.GetIdentifier(Model, property);
-            client.Searchable.Add(property.NewKeywords.ToList(), identifier);
+            client.Index.Add(property.NewKeywords.ToList(), identifier);
         }
     }
 

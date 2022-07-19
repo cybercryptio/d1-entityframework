@@ -42,11 +42,11 @@ public class SecureIndexTest
         dbContext.SaveChanges();
 
         var dataContentKeywords = dataContent.Split(" ");
-        client.Searchable.Received(1).Add(
+        client.Index.Received(1).Add(
             Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
             Arg.Is<string>("Data|Data|1"));
         var otherDataContentKeywords = otherDataContent.Split(", ");
-        client.Searchable.Received(1).Add(
+        client.Index.Received(1).Add(
             Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
             Arg.Is<string>("Data|OtherData|1"));
     }
@@ -69,11 +69,11 @@ public class SecureIndexTest
         dbContext.SaveChanges();
 
         var dataContentKeywords = dataContent.Split(" ");
-        client.Searchable.Received(1).Delete(
+        client.Index.Received(1).Delete(
             Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
             Arg.Is<string>("Data|Data|1"));
         var otherDataContentKeywords = otherDataContent.Split(", ");
-        client.Searchable.Received(1).Delete(
+        client.Index.Received(1).Delete(
             Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
             Arg.Is<string>("Data|OtherData|1"));
     }
@@ -99,19 +99,19 @@ public class SecureIndexTest
         dbContext.SaveChanges();
 
         var dataContentKeywords = dataContent.Split(" ");
-        client.Searchable.Received(1).Delete(
+        client.Index.Received(1).Delete(
             Arg.Is<List<string>>(x => x.SequenceEqual(dataContentKeywords)),
             Arg.Is<string>("Data|Data|1"));
         var otherDataContentKeywords = otherDataContent.Split(", ");
-        client.Searchable.Received(1).Delete(
+        client.Index.Received(1).Delete(
             Arg.Is<List<string>>(x => x.SequenceEqual(otherDataContentKeywords)),
             Arg.Is<string>("Data|OtherData|1"));
         var updatedDataContentKeywords = updateDataContent.Split(" ");
-        client.Searchable.Received(1).Add(
+        client.Index.Received(1).Add(
             Arg.Is<List<string>>(x => x.SequenceEqual(updatedDataContentKeywords)),
             Arg.Is<string>("Data|Data|1"));
         var updatedOtherDataContentKeywords = updatedOtherDataContent.Split(", ");
-        client.Searchable.Received(1).Add(
+        client.Index.Received(1).Add(
             Arg.Is<List<string>>(x => x.SequenceEqual(updatedOtherDataContentKeywords)),
             Arg.Is<string>("Data|OtherData|1"));
     }
@@ -130,10 +130,10 @@ public class SecureIndexTest
         entry.NotSearchable = "changed";
         dbContext.SaveChanges();
 
-        client.Searchable.Received(0).Delete(
+        client.Index.Received(0).Delete(
             Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")),
             Arg.Is<string>("Data|Data|1"));
-        client.Searchable.Received(0).Add(
+        client.Index.Received(0).Add(
             Arg.Is<List<string>>(x => x.Contains("anything") || x.Contains("changed")),
             Arg.Is<string>("Data|Data|1"));
     }
@@ -149,15 +149,15 @@ public class SecureIndexTest
         };
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
-        client.Searchable.ClearReceivedCalls();
+        client.Index.ClearReceivedCalls();
 
         entry.NotSearchable = "changed";
         dbContext.SaveChanges();
 
-        client.Searchable.Received(0).Add(
+        client.Index.Received(0).Add(
             Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")),
             Arg.Is<string>("Data|Data|1"));
-        client.Searchable.Received(0).Delete(
+        client.Index.Received(0).Delete(
             Arg.Is<List<string>>(x => x.Contains("shouldBeUntouched")),
             Arg.Is<string>("Data|Data|1"));
     }
@@ -167,7 +167,7 @@ public class SecureIndexTest
     {
         const string keyword = "noResult";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
         var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
@@ -180,7 +180,7 @@ public class SecureIndexTest
     {
         const string keyword = "noResult";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
         var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
@@ -195,7 +195,7 @@ public class SecureIndexTest
     {
         const string keyword = "oneResult";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
             }));
@@ -210,7 +210,7 @@ public class SecureIndexTest
 
         Assert.True(result.Count() == 1);
         Assert.Equal(entry.Id, result.First().Id);
-        client.Searchable.Received(1).Search(keyword);
+        client.Index.Received(1).Search(keyword);
     }
 
     [Fact]
@@ -218,12 +218,12 @@ public class SecureIndexTest
     {
         string[] keywords = new[] { "multipleKeywords1", "multipleKeywords2" };
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keywords[0]).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keywords[0]).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1",
                 "Data|Data|2",
             }));
-        client.Searchable.Search(keywords[1]).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keywords[1]).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
             }));
@@ -244,8 +244,8 @@ public class SecureIndexTest
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
         Assert.Equal(secondEntry.Id, result.Last().Id);
-        client.Searchable.Received(1).Search(keywords[0]);
-        client.Searchable.Received(1).Search(keywords[1]);
+        client.Index.Received(1).Search(keywords[0]);
+        client.Index.Received(1).Search(keywords[1]);
     }
 
     [Fact]
@@ -253,7 +253,7 @@ public class SecureIndexTest
     {
         const string keyword = "twoMatches";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1",
                 "Data|Data|2",
@@ -275,7 +275,7 @@ public class SecureIndexTest
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
         Assert.Equal(secondEntry.Id, result.Last().Id);
-        client.Searchable.Received(1).Search(keyword);
+        client.Index.Received(1).Search(keyword);
     }
 
     [Fact]
@@ -283,7 +283,7 @@ public class SecureIndexTest
     {
         const string keyword = "resultForOtherProperty";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|OtherData|1",
             }));
@@ -305,7 +305,7 @@ public class SecureIndexTest
         const string keyword = "chainingMethodsWorks";
         const string otherString = "otherString";
         using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
-        client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
+        client.Index.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
             }));
@@ -328,7 +328,7 @@ public class SecureIndexTest
             .Where(x => x.NotSearchable == "notExisting")
             .ToList();
 
-        client.Searchable.Received(2).Search(keyword);
+        client.Index.Received(2).Search(keyword);
         Assert.True(result.Count == 1);
         Assert.Equal(entry.Id, result.First().Id);
         Assert.Empty(noResults);

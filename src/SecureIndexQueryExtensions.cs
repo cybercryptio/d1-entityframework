@@ -86,7 +86,7 @@ public static class SecureIndexQueryExtensions
         var client = d1DbContext.ClientFactory();
         var searchResults = keywords.SelectMany(x =>
         {
-            return client.Searchable
+            return client.Index
                 .Search(x)
                 .Identifiers
                 .Select(x =>
