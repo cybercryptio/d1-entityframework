@@ -19,6 +19,7 @@ public static class SearchableQueryExtensions
         Expression<Func<T, U>> propertyAccessor,
         params string[] keywords) where T : class
     {
+        // Check if the expression selects a property, and find the name of the property
         var expr = ((LambdaExpression)propertyAccessor).Body;
         if (expr.NodeType != ExpressionType.MemberAccess)
         {
@@ -31,6 +32,7 @@ public static class SearchableQueryExtensions
         }
         var propertyName = memberExpr.Member.Name;
 
+        // Get the D1DbContext instance using reflection, as it is not supported by default
 #pragma warning disable EF1001 // Internal EF Core API usage.
         var efCoreInternalDbSet = (InternalDbSet<T>)dbSet;
 #pragma warning restore EF1001 // Internal EF Core API usage.
@@ -52,6 +54,7 @@ public static class SearchableQueryExtensions
             throw new ArgumentException("DbContext must be a D1DbContext");
         }
 
+        // Check if the selected property is searchable
 #pragma warning disable EF1001 // Internal EF Core API usage.
         var entityType = efCoreInternalDbSet.EntityType;
 #pragma warning restore EF1001 // Internal EF Core API usage.
@@ -66,6 +69,7 @@ public static class SearchableQueryExtensions
             throw new ArgumentException("Property must be searchable");
         }
 
+        // Get the primary key of the entity type
         var primaryKey = entityType.FindPrimaryKey();
         if (primaryKey is null)
         {
@@ -77,10 +81,9 @@ public static class SearchableQueryExtensions
         {
             throw new ArgumentException("Composite primary keys are not supported");
         }
-        var primaryKeyFieldInfo = primaryKey.Properties.First().FieldInfo;
-        var primaryKeyInfo = primaryKey.Properties.First().PropertyInfo;
-        var client = d1DbContext.ClientFactory();
 
+        // Lookup matching identifers in the secure index, and deduplicate the results
+        var client = d1DbContext.ClientFactory();
         var searchResults = keywords.SelectMany(x =>
         {
             return client.Searchable
@@ -88,6 +91,7 @@ public static class SearchableQueryExtensions
                 .Identifiers
                 .Select(x =>
                 {
+                    // Split identifiers into the table name, column name and primary key value
                     var splitIdents = x.Split(Constants.IdentifierSeperator);
                     if (splitIdents.Length != 3)
                     {
@@ -102,14 +106,18 @@ public static class SearchableQueryExtensions
         }
         ).Distinct().ToList();
 
+        // Return empty result in case of no matching identifiers
         if (!searchResults.Any())
         {
             return Enumerable.Empty<T>();
         }
 
+        // Process all the results from the search, build a list of expressions to pass on to
+        // Entity Framework
         var entityTableName = entityType.GetSchemaQualifiedTableName();
         var storeObjectIdentifier = StoreObjectIdentifier.Table(entityType.GetSchemaQualifiedTableName()!);
         var entityColumnName = entityType.FindProperty(propertyName)?.GetColumnName(storeObjectIdentifier);
+        var primaryKeyInfo = primaryKey.Properties.First().PropertyInfo;
         var parameter = Expression.Parameter(typeof(T), "x");
         var idExpressions = new List<Expression>();
         foreach (var (tableName, columnName, id) in searchResults)
@@ -126,10 +134,12 @@ public static class SearchableQueryExtensions
             idExpressions.Add(equalExpr);
         }
 
+        // Return empty result in case of no matching identifiers
         if (!idExpressions.Any()) {
             return Enumerable.Empty<T>();
         }
 
+        // Build final expression for filtering entities
         if (idExpressions.Count == 1)
         {
             var lambdaExpr = Expression.Lambda<Func<T, bool>>(idExpressions[0], parameter);
