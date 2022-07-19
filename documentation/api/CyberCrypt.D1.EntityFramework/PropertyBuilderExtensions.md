@@ -10,7 +10,7 @@ public static class PropertyBuilderExtensions
 
 | name | description |
 | --- | --- |
-| static [AsSearchable](PropertyBuilderExtensions/AsSearchable.md)(…) | Marks a property as searchable. |
+| static [AddToSecureIndex](PropertyBuilderExtensions/AddToSecureIndex.md)(…) | Marks a property as added to the secure index. |
 | static [IsConfidential](PropertyBuilderExtensions/IsConfidential.md)(…) | Marks a property as confidential and to be encrypted using D1. (2 methods) |
 
 ## See Also

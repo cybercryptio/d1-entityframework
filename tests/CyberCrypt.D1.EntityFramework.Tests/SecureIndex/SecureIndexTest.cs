@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CyberCrypt.D1.Client;
 using CyberCrypt.D1.Client.Response;
-using CyberCrypt.D1.EntityFramework.Tests.Utils;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
@@ -13,18 +12,18 @@ using Xunit;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
-public class SearchableTest
+public class SecureIndexTest
 {
-    private readonly DbContextOptions<SearchablePropertyBuilderTestContext> contextOptions;
+    private readonly DbContextOptions<SecureIndexTestPropertyBuilderTestContext> contextOptions;
     private readonly SqliteConnection connection;
     private readonly ID1Generic client = Substitute.For<ID1Generic>();
 
-    public SearchableTest()
+    public SecureIndexTest()
     {
         connection = new SqliteConnection("Filename=:memory:");
         connection.Open();
-        contextOptions = new DbContextOptionsBuilder<SearchablePropertyBuilderTestContext>().UseSqlite(connection).Options;
-        using var context = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        contextOptions = new DbContextOptionsBuilder<SecureIndexTestPropertyBuilderTestContext>().UseSqlite(connection).Options;
+        using var context = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         context.Database.EnsureCreated();
         context.SaveChanges();
     }
@@ -34,7 +33,7 @@ public class SearchableTest
     {
         const string dataContent = "addData addTest";
         const string otherDataContent = "addOther1, addOther2";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         dbContext.Data.Add(new PropertySearchableData
         {
             Data = dataContent,
@@ -57,7 +56,7 @@ public class SearchableTest
     {
         const string dataContent = "deleteData deleteTest";
         const string otherDataContent = "deleteOther1, deleteOther2";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         var entry = new PropertySearchableData
         {
             Data = dataContent,
@@ -86,7 +85,7 @@ public class SearchableTest
         const string updateDataContent = "something else";
         const string otherDataContent = "updateOther1, updateOther2";
         const string updatedOtherDataContent = "updatedother";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         var entry = new PropertySearchableData
         {
             Data = dataContent,
@@ -120,7 +119,7 @@ public class SearchableTest
     [Fact]
     public void ChangingNonSearchableDataDoesNotTouchTheIndex()
     {
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         var entry = new PropertySearchableData
         {
             NotSearchable = "anything",
@@ -142,7 +141,7 @@ public class SearchableTest
     [Fact]
     public void SavingChangedEntityWithoutChangingSearchablePropertyDoesNotTouchTheIndex()
     {
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         var entry = new PropertySearchableData
         {
             Data = "shouldBeUntouched",
@@ -167,26 +166,26 @@ public class SearchableTest
     public void SearchingForKeywordsOnNonSearchablePropertyThrows()
     {
         const string keyword = "noResult";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
         var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        Assert.Throws<ArgumentException>(() => dbContext.Data.ConfidentialSearch(x => x.NotSearchable, keyword));
+        Assert.Throws<ArgumentException>(() => dbContext.Data.SecureIndexSearch(x => x.NotSearchable, keyword));
     }
 
     [Fact]
     public void SearchingForNonExistingKeywordWorks()
     {
         const string keyword = "noResult";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
         var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keyword);
+        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword);
 
         Assert.Empty(result);
     }
@@ -195,7 +194,7 @@ public class SearchableTest
     public void SearchingForExistingKeywordWorks()
     {
         const string keyword = "oneResult";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
@@ -207,7 +206,7 @@ public class SearchableTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
 
         Assert.True(result.Count() == 1);
         Assert.Equal(entry.Id, result.First().Id);
@@ -218,7 +217,7 @@ public class SearchableTest
     public void SearchingForExistingMultipleKeywordsWorksByORingIds()
     {
         string[] keywords = new[] { "multipleKeywords1", "multipleKeywords2" };
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keywords[0]).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1",
@@ -240,7 +239,7 @@ public class SearchableTest
         dbContext.Data.Add(secondEntry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keywords).ToList();
+        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keywords).ToList();
 
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
@@ -253,7 +252,7 @@ public class SearchableTest
     public void SearchingWithMoreTwoMatchesWorks()
     {
         const string keyword = "twoMatches";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1",
@@ -271,7 +270,7 @@ public class SearchableTest
         dbContext.Data.Add(secondEntry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
 
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
@@ -283,7 +282,7 @@ public class SearchableTest
     public void KeywordsForOtherPropertiesAreNotReturned()
     {
         const string keyword = "resultForOtherProperty";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|OtherData|1",
@@ -295,7 +294,7 @@ public class SearchableTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.ConfidentialSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
 
         Assert.Empty(result);
     }
@@ -305,7 +304,7 @@ public class SearchableTest
     {
         const string keyword = "chainingMethodsWorks";
         const string otherString = "otherString";
-        using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
+        using var dbContext = new SecureIndexTestPropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>
             {
                 "Data|Data|1"
@@ -320,12 +319,12 @@ public class SearchableTest
 
         var result = dbContext
             .Data
-            .ConfidentialSearch(x => x.Data, keyword)
+            .SecureIndexSearch(x => x.Data, keyword)
             .Where(x => x.NotSearchable == otherString)
             .ToList();
         var noResults = dbContext
             .Data
-            .ConfidentialSearch(x => x.Data, keyword)
+            .SecureIndexSearch(x => x.Data, keyword)
             .Where(x => x.NotSearchable == "notExisting")
             .ToList();
 

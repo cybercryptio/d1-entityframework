@@ -37,11 +37,11 @@ public static class PropertyBuilderExtensions
     }
 
     /// <summary>
-    /// Marks a property as searchable.
+    /// Marks a property as added to the secure index.
     /// </summary>
     /// <param name="property">The property to mark as searchable.</param>
     /// <param name="keywordsFunc">Function calculation keywords for the property.</param>
-    public static PropertyBuilder<string> AsSearchable(this PropertyBuilder<string> property, Func<string?, IEnumerable<string>?> keywordsFunc)
+    public static PropertyBuilder<string> AddToSecureIndex(this PropertyBuilder<string> property, Func<string?, IEnumerable<string>?> keywordsFunc)
     {
         if (property is null)
         {

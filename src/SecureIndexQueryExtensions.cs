@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 namespace CyberCrypt.D1.Client;
 
 /// <summary>
-/// Extension methods for querying searchable keywords.
+/// Extension methods for querying the secure index.
 /// </summary>
-public static class SearchableQueryExtensions
+public static class SecureIndexQueryExtensions
 {
     /// <summary>
     /// Find all entity matching the provided keywords.
     /// </summary>
-    public static IEnumerable<T> ConfidentialSearch<T, U>(this DbSet<T> dbSet,
+    public static IEnumerable<T> SecureIndexSearch<T, U>(this DbSet<T> dbSet,
         Expression<Func<T, U>> propertyAccessor,
         params string[] keywords) where T : class
     {

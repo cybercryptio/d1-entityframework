@@ -4,7 +4,7 @@
 
 | public type | description |
 | --- | --- |
-| static class [SearchableQueryExtensions](./CyberCrypt.D1.Client/SearchableQueryExtensions.md) | Extension methods for querying searchable keywords. |
+| static class [SecureIndexQueryExtensions](./CyberCrypt.D1.Client/SecureIndexQueryExtensions.md) | Extension methods for querying the secure index. |
 
 ## CyberCrypt.D1.EntityFramework namespace
 
