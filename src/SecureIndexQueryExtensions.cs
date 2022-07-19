@@ -15,7 +15,7 @@ public static class SecureIndexQueryExtensions
     /// <summary>
     /// Find all entity matching the provided keywords.
     /// </summary>
-    public static IEnumerable<T> SecureIndexSearch<T, U>(this DbSet<T> dbSet,
+    public static IQueryable<T> SecureIndexSearch<T, U>(this DbSet<T> dbSet,
         Expression<Func<T, U>> propertyAccessor,
         params string[] keywords) where T : class
     {
@@ -109,7 +109,7 @@ public static class SecureIndexQueryExtensions
         // Return empty result in case of no matching identifiers
         if (!searchResults.Any())
         {
-            return Enumerable.Empty<T>();
+            return Enumerable.Empty<T>().AsQueryable();
         }
 
         // Process all the results from the search, build a list of expressions to pass on to
@@ -136,7 +136,7 @@ public static class SecureIndexQueryExtensions
 
         // Return empty result in case of no matching identifiers
         if (!idExpressions.Any()) {
-            return Enumerable.Empty<T>();
+            return Enumerable.Empty<T>().AsQueryable();
         }
 
         // Build final expression for filtering entities
