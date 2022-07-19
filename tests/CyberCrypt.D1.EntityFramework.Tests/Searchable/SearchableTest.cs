@@ -169,10 +169,7 @@ public class SearchableTest
         const string keyword = "noResult";
         using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
-        var entry = new PropertySearchableData
-        {
-            Data = keyword,
-        };
+        var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
@@ -185,10 +182,7 @@ public class SearchableTest
         const string keyword = "noResult";
         using var dbContext = new SearchablePropertyBuilderTestContext(() => client, contextOptions);
         client.Searchable.Search(keyword).Returns(_ => new SearchResponse(new List<string>()));
-        var entry = new PropertySearchableData
-        {
-            Data = keyword,
-        };
+        var entry = new PropertySearchableData();
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
@@ -235,7 +229,7 @@ public class SearchableTest
             }));
         var entry = new PropertySearchableData
         {
-            Data = "anything",
+            Data = "multipleKeywords1 multipleKeywords2",
         };
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
@@ -259,7 +253,7 @@ public class SearchableTest
             }));
         var entry = new PropertySearchableData
         {
-            Data = keyword,
+            OtherData = keyword,
         };
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
