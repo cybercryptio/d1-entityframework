@@ -45,10 +45,10 @@ public class D1DbContext : DbContext
     }
 
     /// <inheritdoc/>
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         var searchableEntries = FindSearchableEntries();
-        var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         UpdateSearchIndex(clientFactory(), searchableEntries);
         return result;
     }
