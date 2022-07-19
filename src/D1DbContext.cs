@@ -12,7 +12,10 @@ public class D1DbContext : DbContext
 {
     private readonly Func<ID1Generic> clientFactory;
 
-    internal Func<ID1Generic> ClientFactory => clientFactory;
+    /// <summary>
+    /// Gets the factory function used to create a new <see cref="ID1Generic"/> client.
+    /// </summary>
+    public Func<ID1Generic> ClientFactory => clientFactory;
 
     /// <summary>
     /// Create a new instance of <see cref="D1DbContext"/>.
