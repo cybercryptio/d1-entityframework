@@ -184,7 +184,7 @@ public class D1DbContext : DbContext
             var storeObjectIdentifier = StoreObjectIdentifier.Table(entityType.GetSchemaQualifiedTableName()!);
             var columnName = entityType.FindProperty(property.PropertyEntry.Metadata.Name)?.GetColumnName(storeObjectIdentifier) ?? "";
             var primaryKey = PrimaryKey.FieldInfo?.GetValue(Entry.Entity)?.ToString() ?? "";
-            return $"{tableName}|{columnName}|{primaryKey}";
+            return $"{tableName}{Constants.IdentifierSeperator}{columnName}{Constants.IdentifierSeperator}{primaryKey}";
         }
     }
 

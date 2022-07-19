@@ -88,7 +88,7 @@ public static class SearchableQueryExtensions
                 .Identifiers
                 .Select(x =>
                 {
-                    var splitIdents = x.Split("|");
+                    var splitIdents = x.Split(Constants.IdentifierSeperator);
                     if (splitIdents.Length != 3)
                     {
                         throw new InvalidOperationException($"Received unsupported identifer format from D1: '{string.Join('|', splitIdents)}'");
