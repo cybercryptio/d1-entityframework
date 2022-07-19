@@ -36,4 +36,3 @@ To get started, see the [Getting Started guide](documentation/getting_started.md
 ## Limitations
 
 - Currently only `string` and `byte[]` properties can be encrypted.
-- Encrypted data is not searchable by the database.
