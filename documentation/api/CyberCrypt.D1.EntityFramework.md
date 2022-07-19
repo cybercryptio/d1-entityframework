@@ -1,5 +1,11 @@
 # CyberCrypt.D1.EntityFramework assembly
 
+## CyberCrypt.D1.Client namespace
+
+| public type | description |
+| --- | --- |
+| static class [SearchableQueryExtensions](./CyberCrypt.D1.Client/SearchableQueryExtensions.md) | Extension methods for querying searchable keywords. |
+
 ## CyberCrypt.D1.EntityFramework namespace
 
 | public type | description |
