@@ -217,7 +217,7 @@ await dbContext.SaveChangesAsync();
 
 ### Querying encrypted data
 
-Unless [securing indexing](#secure-indexing) have been configured, all querying and processing of encrypted data has to be done client side, as the database is not able to decrypt the data.
+Unless [searchable encryption](#searchable-encryption) have been configured, all querying and processing of encrypted data has to be done client side, as the database is not able to decrypt the data.
 
 For example if you want to filter on `SocialSecurityNumber` you have to fetch the data from the database first, and then filter in memory:
 
@@ -235,14 +235,15 @@ Before data is passed to the business logic it is automatically decrypted as des
 var person = await dbContext.Documents.FirstOrDefaultAsync(x => x.Firstname == "John");
 ```
 
-## Secure Indexing
+## Searchable Encryption
 
-Secure indexing is a feature that allows you to index encrypted data in the database, each value is associated with keywords, and the keywords are used to search for the value.
-More information on how secure indexing works and the extra security properties it provides can be found in the [D1 Library Explainer](https://github.com/cybercryptio/d1-lib/blob/master/documentation/explainer.md#searchable-encrypted-data).
+Searchable encryption is a feature that allows you to index encrypted data in the database, each value is associated with keywords, and the keywords are used to search for the value.
+
+Searhable encryption is built on top of the secure indexing feature in the [D1 Library](https://github.com/cybercryptio/d1-lib). More information on how secure indexing works and the extra security properties it provides can be found in the [D1 Library Explainer](https://github.com/cybercryptio/d1-lib/blob/master/documentation/explainer.md#searchable-encrypted-data).
 
 ### Configuration
 
-Using secure indexing is done by marking a property with `AsSearchable`, this can only be done using the Fluent Entity Framework API.
+Using searchable encryption is done by marking a property with `AsSearchable`, this can only be done using the Fluent Entity Framework API.
 
 `AsSearchable` takes a function as an argument, which is used to specify how keywords are determined from the value. The function is called each time the property is updated.
 
@@ -279,9 +280,9 @@ public class DatabaseContext : DbContext
 }
 ```
 
-### Searching
+### Querying
 
-Once secure indexing has been configured, you can search for values using the `WhereSearchable` extension method available on `DbSet<T>`.
+Once searchable encryption has been configured, you can query for values using the `WhereSearchable` extension method available on `DbSet<T>`.
 
 ```csharp
 var persons = await dbContext.Persons.WhereSearchable(x => x.SocialSecurityNumber, "123456789").ToListAsync();
