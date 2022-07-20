@@ -17,7 +17,7 @@ namespace D1DB.Sample.Data
         {
             modelBuilder.Entity<Document>()
                 .Property<string>("Data")
-                .AddToSecureIndex(value => value?.Split(" "));
+                .AsSearchable(value => value?.Split(" "));
             base.OnModelCreating(modelBuilder);
         }
 

@@ -242,9 +242,9 @@ More information on how secure indexing works and the extra security properties 
 
 ### Configuration
 
-Using secure indexing is done by marking a property with `AddToSecureIndex`, this can only be done using the Fluent Entity Framework API.
+Using secure indexing is done by marking a property with `AsSearchable`, this can only be done using the Fluent Entity Framework API.
 
-`AddToSecureIndex` takes a function as an argument, which is used to specify how keywords are determined from the value. The function is called each time the property is updated.
+`AsSearchable` takes a function as an argument, which is used to specify how keywords are determined from the value. The function is called each time the property is updated.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
@@ -274,20 +274,20 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Person>().Property(x => x.SocialSecurityNumber).AddToSecureIndex(value => value);
+        modelBuilder.Entity<Person>().Property(x => x.SocialSecurityNumber).AsSearchable(value => value);
     }
 }
 ```
 
 ### Searching
 
-Once secure indexing has been configured, you can search for values using the `SecureIndexSearch` extension method available on `DbSet<T>`.
+Once secure indexing has been configured, you can search for values using the `WhereSearchable` extension method available on `DbSet<T>`.
 
 ```csharp
-var persons = await dbContext.Persons.SecureIndexSearch(x => x.SocialSecurityNumber, "123456789").ToListAsync();
+var persons = await dbContext.Persons.WhereSearchable(x => x.SocialSecurityNumber, "123456789").ToListAsync();
 ```
 
-It is only possible to use the `SecureIndexSearch` extension method on `DbSet<T>` if the property is marked as `AddToSecureIndex`, and is the
+It is only possible to use the `WhereSearchable` extension method on `DbSet<T>` if the property is marked as `AsSearchable`, and is the
 first method in the query chain.
 
 ### Limitations

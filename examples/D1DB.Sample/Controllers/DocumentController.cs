@@ -65,7 +65,7 @@ public class DocumentController : ControllerBase
     [HttpPost("search", Name = "SearchDocuments")]
     public async Task<ActionResult> Search(string[] keywords)
     {
-        var documents = await storageContext.Documents.SecureIndexSearch(x => x.Data, keywords)
+        var documents = await storageContext.Documents.WhereSearchable(x => x.Data, keywords)
             .ToListAsync();
 
         return Ok(documents);
