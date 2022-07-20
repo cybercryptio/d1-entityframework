@@ -148,7 +148,6 @@ public static class SearchableQueryExtensions
 
         BinaryExpression predicateExpr;
         var left = idExpressions[0];
-        var right = idExpressions[1];
         for (var i = 1; i < idExpressions.Count; i++)
         {
             left = Expression.Or(left, idExpressions[i]);
