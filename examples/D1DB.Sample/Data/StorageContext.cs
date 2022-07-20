@@ -7,19 +7,17 @@ using CyberCrypt.D1.Client;
 
 namespace D1DB.Sample.Data
 {
-    public class StorageContext : DbContext
+    public class StorageContext : D1DbContext
     {
-        private readonly Func<ID1Generic> clientFactory;
-
         public StorageContext(Func<ID1Generic> clientFactory, DbContextOptions<StorageContext> options)
-            : base(options)
-        {
-            this.clientFactory = clientFactory;
-        }
+            : base(clientFactory, options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseD1(clientFactory);
+            modelBuilder.Entity<Document>()
+                .Property<string>("Data")
+                .AsSearchable(value => value?.Split(" "));
             base.OnModelCreating(modelBuilder);
         }
 

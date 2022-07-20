@@ -4,6 +4,8 @@ using D1DB.Sample.Models;
 using Microsoft.AspNetCore.Mvc;
 using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
+using CyberCrypt.D1.Client;
+using CyberCrypt.D1.EntityFramework;
 
 namespace D1DB.Sample.Controllers;
 
@@ -58,5 +60,14 @@ public class DocumentController : ControllerBase
         {
             return NotFound();
         }
+    }
+
+    [HttpPost("search", Name = "SearchDocuments")]
+    public async Task<ActionResult> Search(string[] keywords)
+    {
+        var documents = await storageContext.Documents.WhereSearchable(x => x.Data, keywords)
+            .ToListAsync();
+
+        return Ok(documents);
     }
 }
