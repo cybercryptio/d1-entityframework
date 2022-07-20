@@ -238,13 +238,13 @@ var person = await dbContext.Documents.FirstOrDefaultAsync(x => x.Firstname == "
 ## Secure Indexing
 
 Secure indexing is a feature that allows you to index encrypted data in the database, each value is associated with keywords, and the keywords are used to search for the value.
-More information on how secure indexing works and the extra security properties is provides can be found in the [D1 Library Explainer](https://github.com/cybercryptio/d1-lib/blob/master/documentation/explainer.md#searchable-encrypted-data).
+More information on how secure indexing works and the extra security properties it provides can be found in the [D1 Library Explainer](https://github.com/cybercryptio/d1-lib/blob/master/documentation/explainer.md#searchable-encrypted-data).
 
 ### Configuration
 
 Using secure indexing is done by marking a property with `AddToSecureIndex`, this can only be done using the Fluent Entity Framework API.
 
-`AddToSecureIndex` takes a function as an argument, which is used to specify how keywords is determined from the value. The function is called each time the property is updated.
+`AddToSecureIndex` takes a function as an argument, which is used to specify how keywords are determined from the value. The function is called each time the property is updated.
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
@@ -287,12 +287,12 @@ Once secure indexing has been configured, you can search for values using the `S
 var persons = await dbContext.Persons.SecureIndexSearch(x => x.SocialSecurityNumber, "123456789").ToListAsync();
 ```
 
-It is only possible to use the `SecureIndexSearch` extension method on `DbSet<T>` if the property is marked as `AddToSecureIndex`, and as the
+It is only possible to use the `SecureIndexSearch` extension method on `DbSet<T>` if the property is marked as `AddToSecureIndex`, and is the
 first method in the query chain.
 
 ### Limitations
 
-- Keywords are not stored in the database, and are only used to search for the value.
+- Keywords are not stored in the database, and are only used to be searched for.
 - Keywords are case-sensitive.
 - Getting a result back from the secure index, doesn't mean that you have access to decrypt the value.
 - The database context must inherit from `D1DbContext`.
