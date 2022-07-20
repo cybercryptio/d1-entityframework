@@ -237,7 +237,7 @@ var person = await dbContext.Documents.FirstOrDefaultAsync(x => x.Firstname == "
 
 ## Searchable Encryption
 
-Searchable encryption is a feature that allows you to index encrypted data in the database, each value is associated with keywords, and the keywords are used to search for the value.
+Searchable encryption is a feature that allows you to index encrypted data in the database. Each value is associated with keywords, and those keywords can be used when querying the database, returning all the entities that match the keywords.
 
 Searhable encryption is built on top of the secure indexing feature in the [D1 Library](https://github.com/cybercryptio/d1-lib). More information on how secure indexing works and the extra security properties it provides can be found in the [D1 Library Explainer](https://github.com/cybercryptio/d1-lib/blob/master/documentation/explainer.md#searchable-encrypted-data).
 
