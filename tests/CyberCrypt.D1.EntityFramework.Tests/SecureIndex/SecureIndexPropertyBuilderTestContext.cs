@@ -5,13 +5,13 @@ using System;
 
 namespace CyberCrypt.D1.EntityFramework.Tests.Models;
 
-public class SearchablePropertyBuilderTestContext : D1DbContext
+public class SecureIndexTestPropertyBuilderTestContext : D1DbContext
 {
     private readonly Func<ID1Generic> clientFactory;
 
     public DbSet<PropertySearchableData> Data { get; set; } = null!;
 
-    public SearchablePropertyBuilderTestContext(Func<ID1Generic> clientFactory, DbContextOptions options) : base(clientFactory, options)
+    public SecureIndexTestPropertyBuilderTestContext(Func<ID1Generic> clientFactory, DbContextOptions options) : base(clientFactory, options)
     {
         this.clientFactory = clientFactory;
     }

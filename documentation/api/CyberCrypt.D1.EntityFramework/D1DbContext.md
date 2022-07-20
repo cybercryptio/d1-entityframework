@@ -11,6 +11,7 @@ public class D1DbContext : DbContext
 | name | description |
 | --- | --- |
 | [D1DbContext](D1DbContext/D1DbContext.md)(…) | Create a new instance of [`D1DbContext`](./D1DbContext.md). |
+| [ClientFactory](D1DbContext/ClientFactory.md) { get; } | Gets the factory function used to create a new ID1Generic client. |
 | override [SaveChanges](D1DbContext/SaveChanges.md)(…) |  |
 | override [SaveChangesAsync](D1DbContext/SaveChangesAsync.md)(…) |  |
 

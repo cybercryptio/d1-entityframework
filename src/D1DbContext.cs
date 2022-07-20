@@ -13,6 +13,11 @@ public class D1DbContext : DbContext
     private readonly Func<ID1Generic> clientFactory;
 
     /// <summary>
+    /// Gets the factory function used to create a new <see cref="ID1Generic"/> client.
+    /// </summary>
+    public Func<ID1Generic> ClientFactory => clientFactory;
+
+    /// <summary>
     /// Create a new instance of <see cref="D1DbContext"/>.
     /// </summary>
     /// <param name="clientFactory">The factory for creating <see cref="ID1Generic"/> instances.</param>
@@ -125,7 +130,7 @@ public class D1DbContext : DbContext
             }
 
             var identifier = mapping.GetIdentifier(Model, property);
-            client.Searchable.Delete(property.OldKeywords.ToList(), identifier);
+            client.Index.Delete(property.OldKeywords.ToList(), identifier);
         }
     }
 
@@ -136,12 +141,12 @@ public class D1DbContext : DbContext
             var identifier = mapping.GetIdentifier(Model, property);
             if (property.OldKeywords is not null && property.OldKeywords.Any())
             {
-                client.Searchable.Delete(property.OldKeywords.ToList(), identifier);
+                client.Index.Delete(property.OldKeywords.ToList(), identifier);
             }
 
             if (property.NewKeywords is not null && property.NewKeywords.Any())
             {
-                client.Searchable.Add(property.NewKeywords.ToList(), identifier);
+                client.Index.Add(property.NewKeywords.ToList(), identifier);
             }
         }
     }
@@ -156,7 +161,7 @@ public class D1DbContext : DbContext
             }
 
             var identifier = mapping.GetIdentifier(Model, property);
-            client.Searchable.Add(property.NewKeywords.ToList(), identifier);
+            client.Index.Add(property.NewKeywords.ToList(), identifier);
         }
     }
 
@@ -182,7 +187,7 @@ public class D1DbContext : DbContext
             var storeObjectIdentifier = StoreObjectIdentifier.Table(entityType.GetSchemaQualifiedTableName()!);
             var columnName = entityType.FindProperty(property.PropertyEntry.Metadata.Name)?.GetColumnName(storeObjectIdentifier) ?? "";
             var primaryKey = PrimaryKey.FieldInfo?.GetValue(Entry.Entity)?.ToString() ?? "";
-            return $"{tableName}|{columnName}|{primaryKey}";
+            return $"{tableName}{Constants.IdentifierSeperator}{columnName}{Constants.IdentifierSeperator}{primaryKey}";
         }
     }
 

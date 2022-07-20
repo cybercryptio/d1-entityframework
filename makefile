@@ -50,6 +50,7 @@ publish: ## Publish the library and its dependencies to a local directory
 
 .PHONY: apidocs
 apidocs: publish ## Generate API documentation
+	rm -rf $(apiDocsDir)
 	xmldocmd $(library) $(apiDocsDir)
 
 .PHONY: apidocs-verify
