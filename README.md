@@ -2,7 +2,7 @@
 
 The integration works by encrypting and decrypting data transparently, using [CYBERCRYPT D1 Generic](https://github.com/cybercryptio/d1-service-generic/) when querying or storing in the database. Selected parts of the data is encrypted from the application to the database in such a way that the database itself never receives the data in plain text.
 
-Searchable encryption is also supported by adding keywords to a secure index handled by CYBERCRYPT D1 Generic. For more information about searchable encryption read [User maanual - Searchable encryption](documentation/user_manual.md#searchable-encryption).
+Searchable encryption is also supported by adding keywords to a secure index handled by CYBERCRYPT D1 Generic. For more information about searchable encryption read [User manual - Searchable encryption](documentation/user_manual.md#searchable-encryption).
 
 This protects the data in the database from being read by third parties and tampering.
 
