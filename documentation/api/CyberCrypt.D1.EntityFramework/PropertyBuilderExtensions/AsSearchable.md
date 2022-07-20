@@ -1,9 +1,9 @@
-# PropertyBuilderExtensions.AddToSecureIndex method
+# PropertyBuilderExtensions.AsSearchable method
 
-Marks a property as added to the secure index.
+Marks a property as searchable.
 
 ```csharp
-public static PropertyBuilder<string> AddToSecureIndex(this PropertyBuilder<string> property, 
+public static PropertyBuilder<string> AsSearchable(this PropertyBuilder<string> property, 
     Func<string?, IEnumerable<string>?> keywordsFunc)
 ```
 

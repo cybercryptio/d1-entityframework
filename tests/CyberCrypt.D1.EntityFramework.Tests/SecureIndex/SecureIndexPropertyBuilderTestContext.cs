@@ -18,8 +18,8 @@ public class SecureIndexTestPropertyBuilderTestContext : D1DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PropertySearchableData>().Property(x => x.Data!).AddToSecureIndex(value => value?.Split(" "));
-        modelBuilder.Entity<PropertySearchableData>().Property(x => x.OtherData!).AddToSecureIndex(value => value?.Split(", "));
+        modelBuilder.Entity<PropertySearchableData>().Property(x => x.Data!).AsSearchable(value => value?.Split(" "));
+        modelBuilder.Entity<PropertySearchableData>().Property(x => x.OtherData!).AsSearchable(value => value?.Split(", "));
     }
 }
 

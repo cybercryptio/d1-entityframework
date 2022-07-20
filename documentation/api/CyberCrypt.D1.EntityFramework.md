@@ -8,7 +8,7 @@
 | class [D1DbContext](./CyberCrypt.D1.EntityFramework/D1DbContext.md) | D1 database context. |
 | static class [ModelBuilderExtensions](./CyberCrypt.D1.EntityFramework/ModelBuilderExtensions.md) | Extension methods for ModelBuilder. |
 | static class [PropertyBuilderExtensions](./CyberCrypt.D1.EntityFramework/PropertyBuilderExtensions.md) | Extentions for configuration data model properties |
-| static class [SecureIndexQueryExtensions](./CyberCrypt.D1.EntityFramework/SecureIndexQueryExtensions.md) | Extension methods for querying the secure index. |
+| static class [SearchableQueryExtensions](./CyberCrypt.D1.EntityFramework/SearchableQueryExtensions.md) | Extension methods for querying the searchable properties. |
 
 ## CyberCrypt.D1.EntityFramework.Migrator namespace
 

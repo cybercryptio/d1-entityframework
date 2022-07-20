@@ -172,7 +172,7 @@ public class SecureIndexTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        Assert.Throws<ArgumentException>(() => dbContext.Data.SecureIndexSearch(x => x.NotSearchable, keyword));
+        Assert.Throws<ArgumentException>(() => dbContext.Data.WhereSearchable(x => x.NotSearchable, keyword));
     }
 
     [Fact]
@@ -185,7 +185,7 @@ public class SecureIndexTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword);
+        var result = dbContext.Data.WhereSearchable(x => x.Data, keyword);
 
         Assert.Empty(result);
     }
@@ -206,7 +206,7 @@ public class SecureIndexTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.WhereSearchable(x => x.Data, keyword).ToList();
 
         Assert.True(result.Count() == 1);
         Assert.Equal(entry.Id, result.First().Id);
@@ -239,7 +239,7 @@ public class SecureIndexTest
         dbContext.Data.Add(secondEntry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keywords).ToList();
+        var result = dbContext.Data.WhereSearchable(x => x.Data, keywords).ToList();
 
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
@@ -270,7 +270,7 @@ public class SecureIndexTest
         dbContext.Data.Add(secondEntry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.WhereSearchable(x => x.Data, keyword).ToList();
 
         Assert.True(result.Count() == 2);
         Assert.Equal(firstEntry.Id, result.First().Id);
@@ -294,7 +294,7 @@ public class SecureIndexTest
         dbContext.Data.Add(entry);
         dbContext.SaveChanges();
 
-        var result = dbContext.Data.SecureIndexSearch(x => x.Data, keyword).ToList();
+        var result = dbContext.Data.WhereSearchable(x => x.Data, keyword).ToList();
 
         Assert.Empty(result);
     }
@@ -319,12 +319,12 @@ public class SecureIndexTest
 
         var result = dbContext
             .Data
-            .SecureIndexSearch(x => x.Data, keyword)
+            .WhereSearchable(x => x.Data, keyword)
             .Where(x => x.NotSearchable == otherString)
             .ToList();
         var noResults = dbContext
             .Data
-            .SecureIndexSearch(x => x.Data, keyword)
+            .WhereSearchable(x => x.Data, keyword)
             .Where(x => x.NotSearchable == "notExisting")
             .ToList();
 
