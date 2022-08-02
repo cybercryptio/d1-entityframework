@@ -29,7 +29,26 @@ if (String.IsNullOrWhiteSpace(d1Password))
 {
     throw new Exception("D1 Generic password not defined");
 }
-builder.Services.AddScoped<Func<ID1Generic>>(x => () => new D1GenericClient(d1Url, new UsernamePasswordCredentials(d1Url, d1Username, d1Password)));
+var oidcEnabled = builder.Configuration.GetValue<bool>("D1Generic:OidcEnabled");
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+if (oidcEnabled)
+{
+    builder.Services.AddScoped<Func<ID1Generic>>(x =>
+    {
+        var accessor = x.GetRequiredService<IHttpContextAccessor>();
+        return () =>
+        {
+            var token = accessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(' ').LastOrDefault();
+            return new D1GenericClient(d1Url, new TokenCredentials(d1Url));
+        };
+    });
+}
+else
+{
+    builder.Services.AddScoped<Func<ID1Generic>>(x => () => new D1GenericClient(d1Url, new UsernamePasswordCredentials(d1Url, d1Username, d1Password)));
+}
+
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>
@@ -40,6 +59,7 @@ builder.Services.AddDbContext<StorageContext>(options =>
         errorNumbersToAdd: null);
     })
 );
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -48,10 +68,19 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Initialize database.
-using (var scope = app.Services.CreateScope())
+if (!oidcEnabled)
 {
-    var context = scope.ServiceProvider.GetRequiredService<StorageContext>();
-    context.Database.EnsureCreated();
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<StorageContext>();
+        context.Database.EnsureCreated();
+    }
+}
+else
+{
+    Console.BackgroundColor = ConsoleColor.Red;
+    Console.WriteLine("WARNING: Database will not be created, because OIDC is enabled and dependency injection fails this early.");
+    Console.ResetColor();
 }
 
 app.UseSwagger();

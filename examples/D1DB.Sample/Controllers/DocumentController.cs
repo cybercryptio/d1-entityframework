@@ -4,7 +4,6 @@ using D1DB.Sample.Models;
 using Microsoft.AspNetCore.Mvc;
 using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
-using CyberCrypt.D1.Client;
 using CyberCrypt.D1.EntityFramework;
 
 namespace D1DB.Sample.Controllers;
