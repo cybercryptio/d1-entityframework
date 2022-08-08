@@ -11,7 +11,9 @@ namespace D1DB.Sample.Data
     {
         public StorageContext(Func<ID1Generic> clientFactory, DbContextOptions<StorageContext> options)
             : base(clientFactory, options)
-        { }
+        {
+            this.Database.EnsureCreated();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
