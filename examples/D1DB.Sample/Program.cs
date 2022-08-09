@@ -120,7 +120,20 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(
+
+    options =>
+    {
+        if (oidcEnabled)
+        {
+            var clientId = builder.Configuration.GetValue<string>("D1Generic:Oidc:ClientId");
+            if (!string.IsNullOrEmpty(oidcAuthzEndpoint))
+            {
+                options.OAuthClientId(clientId);
+            }
+        }
+    }
+);
 
 app.UseCors();
 
