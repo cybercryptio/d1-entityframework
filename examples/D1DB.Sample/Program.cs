@@ -63,7 +63,6 @@ builder.Services.AddDbContext<StorageContext>(options =>
         errorNumbersToAdd: null);
     })
 );
-
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -111,9 +110,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI(
-
-    options =>
+app.UseSwaggerUI(options =>
     {
         if (oidcEnabled)
         {
