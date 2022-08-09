@@ -86,25 +86,19 @@ builder.Services.AddSwaggerGen(c =>
         }
     );
 
-    var scheme = new OpenApiSecurityScheme
-    {
-        Reference = new OpenApiReference
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
         {
-            Type = ReferenceType.SecurityScheme,
-            Id = schemeId,
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = schemeId,
+                }
+            },
+            new string[] { }
         }
-    };
-
-    var requiredScopes = new string[] { };
-
-    OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement() {
-        {
-            scheme, requiredScopes
-        },
-    };
-
-    c.AddSecurityRequirement(securityRequirements);
-
+    });
 });
 
 var app = builder.Build();
