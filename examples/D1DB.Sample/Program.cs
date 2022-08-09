@@ -113,19 +113,10 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Initialize database.
-if (!oidcEnabled)
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<StorageContext>();
-        context.Database.EnsureCreated();
-    }
-}
-else
-{
-    Console.BackgroundColor = ConsoleColor.Red;
-    Console.WriteLine("WARNING: Database will not be created, because OIDC is enabled and dependency injection fails this early.");
-    Console.ResetColor();
+    var context = scope.ServiceProvider.GetRequiredService<StorageContext>();
+    context.Database.EnsureCreated();
 }
 
 app.UseSwagger();
