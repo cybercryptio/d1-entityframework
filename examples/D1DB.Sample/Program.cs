@@ -54,18 +54,15 @@ else
 }
 
 builder.Services.AddDbContext<StorageContext>(options =>
-{
-    options.UseSqlServer(
-        connectionString,
-        sqlServerOptionsAction: sqlOptions =>
-        {
-            sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 10,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorNumbersToAdd: null);
-        }
-    );
-});
+    options.UseSqlServer(connectionString,
+    sqlServerOptionsAction: sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(
+        maxRetryCount: 10,
+        maxRetryDelay: TimeSpan.FromSeconds(30),
+        errorNumbersToAdd: null);
+    })
+);
 
 builder.Services.AddControllers();
 
