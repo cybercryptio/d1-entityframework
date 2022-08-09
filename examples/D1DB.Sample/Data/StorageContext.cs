@@ -10,7 +10,8 @@ namespace D1DB.Sample.Data
     public class StorageContext : D1DbContext
     {
         public StorageContext(Func<ID1Generic> clientFactory, DbContextOptions<StorageContext> options)
-            : base(clientFactory, options) { }
+            : base(clientFactory, options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
