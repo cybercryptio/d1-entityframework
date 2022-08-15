@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- The [Cybercrypt D1 Generic](https://github.com/cybercryptio/d1-service-generic/) service must be deployed and accessible. See the [Cybercrypt D1 Generic README](https://github.com/cybercryptio/d1-service-generic/blob/master/README.md) for more information.
+- The [CYBERCRYPT D1 Generic](https://github.com/cybercryptio/d1-service-generic/) service must be deployed and accessible. See the [CYBERCRYPT D1 Generic README](https://github.com/cybercryptio/d1-service-generic/blob/master/README.md) for more information.
 - [Entity Framework Core 6](https://docs.microsoft.com/en-us/ef/core/) must be referenced in the application.
 - [A supported database](../README.md#supported-databases) deployed.
 
