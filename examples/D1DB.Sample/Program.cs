@@ -33,7 +33,8 @@ if (oidcEnabled)
         return () =>
         {
             var token = accessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(' ').LastOrDefault();
-            return new D1GenericClient(d1Url, new TokenCredentials(token));
+            var channel = new D1Channel(new Uri(d1Url), new TokenCredentials(token!));
+            return new D1GenericClient(channel);
         };
     });
 }
@@ -50,7 +51,11 @@ else
         throw new Exception("D1 Generic password not defined");
     }
 
-    builder.Services.AddScoped<Func<ID1Generic>>(x => () => new D1GenericClient(d1Url, new UsernamePasswordCredentials(d1Url, d1Username, d1Password)));
+    builder.Services.AddScoped<Func<ID1Generic>>(x =>
+    {
+        var channel = new D1Channel(new Uri(d1Url), d1Username, d1Password);
+        return () => new D1GenericClient(channel);
+    });
 }
 
 builder.Services.AddDbContext<StorageContext>(options =>
@@ -68,36 +73,37 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    var schemeId = "OIDC";
-
-    c.AddSecurityDefinition(
-        schemeId,
-        new OpenApiSecurityScheme
-        {
-            Type = SecuritySchemeType.OAuth2,
-            Flows = new OpenApiOAuthFlows
-            {
-                Implicit = new OpenApiOAuthFlow
-                {
-                    AuthorizationUrl = new Uri(oidcAuthzEndpoint, UriKind.Absolute),
-                }
-            },
-        }
-    );
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
-        {
+    if (oidcEnabled)
+    {
+        var schemeId = "OIDC";
+        c.AddSecurityDefinition(
+            schemeId,
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = schemeId,
-                }
-            },
-            new string[] { }
-        }
-    });
+                    Implicit = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri(oidcAuthzEndpoint, UriKind.Absolute),
+                    }
+                },
+            }
+        );
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = schemeId,
+                    }
+                },
+                new string[] { }
+            }
+        });
+    }
 });
 
 var app = builder.Build();
