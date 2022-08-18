@@ -16,19 +16,3 @@ build: ## Build the library
 .PHONY: clean
 clean: ## Remove build artifacts
 	@make -C D1DB.Sample build
-
-.PHONY: docker-up
-docker-up:
-	docker-compose up --detach
-
-.PHONY: docker-down
-docker-down:
-	docker-compose down -v
-
-.PHONY: run
-run:
-	D1DB_CONNECTIONSTRINGS__DEFAULTCONNECTIONSTRING='Server=tcp:localhost,1433;Initial Catalog=SampleDB;Persist Security Info=False;User ID=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30' \
-	D1DB_D1GENERIC__URL='http://localhost:9000' \
-	D1DB_D1GENERIC__OIDC__AUTHORIZATIONENDPOINT='http://7f0d22.iam.encryptonize.com/realms/master/protocol/openid-connect/auth' \
-	D1DB_D1GENERIC__OIDC__CLIENTID='d1-sandbox' \
-	dotnet run --project ./D1DB.Sample/D1DB.Sample.csproj
