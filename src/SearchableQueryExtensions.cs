@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
 using CyberCrypt.D1.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -109,7 +110,7 @@ public static class SearchableQueryExtensions
         // Return empty result in case of no matching identifiers
         if (!searchResults.Any())
         {
-            return Enumerable.Empty<T>().AsQueryable();
+            return dbSet.Take(0);
         }
 
         // Process all the results from the search, build a list of expressions to pass on to
@@ -136,7 +137,7 @@ public static class SearchableQueryExtensions
 
         // Return empty result in case of no matching identifiers
         if (!idExpressions.Any()) {
-            return Enumerable.Empty<T>().AsQueryable();
+            return dbSet.Take(0);
         }
 
         // Build final expression for filtering entities
