@@ -4,6 +4,7 @@ using D1DB.Sample.Data;
 using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 using CyberCrypt.D1.Client.Credentials;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("D1DB_");
@@ -19,17 +20,44 @@ if (String.IsNullOrWhiteSpace(d1Url))
 {
     throw new Exception("D1 Generic URL not defined");
 }
-var d1Username = builder.Configuration.GetValue<string>("D1Generic:Username");
-if (String.IsNullOrWhiteSpace(d1Username))
+
+var oidcAuthzEndpoint = builder.Configuration.GetValue<string>("D1Generic:Oidc:AuthorizationEndpoint");
+var oidcEnabled = !string.IsNullOrEmpty(oidcAuthzEndpoint);
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+if (oidcEnabled)
 {
-    throw new Exception("D1 Generic username not defined");
+    builder.Services.AddScoped<Func<ID1Generic>>(x =>
+    {
+        var accessor = x.GetRequiredService<IHttpContextAccessor>();
+        return () =>
+        {
+            var token = accessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(' ').LastOrDefault();
+            var channel = new D1Channel(new Uri(d1Url), new TokenCredentials(token!));
+            return new D1GenericClient(channel);
+        };
+    });
 }
-var d1Password = builder.Configuration.GetValue<string>("D1Generic:Password");
-if (String.IsNullOrWhiteSpace(d1Password))
+else
 {
-    throw new Exception("D1 Generic password not defined");
+    var d1Username = builder.Configuration.GetValue<string>("D1Generic:Username");
+    if (String.IsNullOrWhiteSpace(d1Username))
+    {
+        throw new Exception("D1 Generic username not defined");
+    }
+    var d1Password = builder.Configuration.GetValue<string>("D1Generic:Password");
+    if (String.IsNullOrWhiteSpace(d1Password))
+    {
+        throw new Exception("D1 Generic password not defined");
+    }
+
+    builder.Services.AddScoped<Func<ID1Generic>>(x =>
+    {
+        var channel = new D1Channel(new Uri(d1Url), d1Username, d1Password);
+        return () => new D1GenericClient(channel);
+    });
 }
-builder.Services.AddScoped<Func<ID1Generic>>(x => () => new D1GenericClient(d1Url, new UsernamePasswordCredentials(d1Url, d1Username, d1Password)));
+
 builder.Services.AddDbContext<StorageContext>(options =>
     options.UseSqlServer(connectionString,
     sqlServerOptionsAction: sqlOptions =>
@@ -43,7 +71,40 @@ builder.Services.AddDbContext<StorageContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    if (oidcEnabled)
+    {
+        var schemeId = "OIDC";
+        c.AddSecurityDefinition(
+            schemeId,
+            new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    Implicit = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri(oidcAuthzEndpoint, UriKind.Absolute),
+                    }
+                },
+            }
+        );
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = schemeId,
+                    }
+                },
+                new string[] { }
+            }
+        });
+    }
+});
 
 var app = builder.Build();
 
@@ -55,7 +116,18 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+    {
+        if (oidcEnabled)
+        {
+            var clientId = builder.Configuration.GetValue<string>("D1Generic:Oidc:ClientId");
+            if (!string.IsNullOrEmpty(oidcAuthzEndpoint))
+            {
+                options.OAuthClientId(clientId);
+            }
+        }
+    }
+);
 
 app.UseCors();
 

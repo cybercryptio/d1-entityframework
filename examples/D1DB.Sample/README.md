@@ -27,6 +27,8 @@ It can be configured either through the configuration file [appsettings.json](ap
 | D1DB_D1GENERIC__URL                          | The URL to the D1 Generic service | `http://localhost:9000` |
 | D1DB_D1GENERIC__USERNAME                     | The D1 Generic username           | `<insert D1 Generic username>` |
 | D1DB_D1GENERIC__PASSWORD                     | The D1 Generic password           | `<insert D1 Generic password>` |
+| D1DB_D1GENERIC__OIDC__AUTHORIZATIONENDPOINT  | The OIDC authorization endpoint   | `<insert OIDC endpoint>` |
+| D1DB_D1GENERIC__OIDC__CLIENTID               | The OIDC client id                | `<insert OIDC client id>` |
 
 Once those environment variables have been defined, the application can be started by running:
 
