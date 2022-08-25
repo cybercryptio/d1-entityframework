@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using CyberCrypt.D1.Client;
 using CyberCrypt.D1.Client.Credentials;
 using Microsoft.OpenApi.Models;
+using Grpc.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables("D1DB_");
@@ -21,6 +22,8 @@ if (String.IsNullOrWhiteSpace(d1Url))
     throw new Exception("D1 Generic URL not defined");
 }
 
+var insecureChannel = builder.Configuration.GetValue<bool>("D1Generic:Insecure");
+var channelCredentials = insecureChannel ? ChannelCredentials.Insecure : ChannelCredentials.SecureSsl;
 var oidcAuthzEndpoint = builder.Configuration.GetValue<string>("D1Generic:Oidc:AuthorizationEndpoint");
 var oidcEnabled = !string.IsNullOrEmpty(oidcAuthzEndpoint);
 
@@ -33,7 +36,7 @@ if (oidcEnabled)
         return () =>
         {
             var token = accessor.HttpContext?.Request.Headers["Authorization"].ToString().Split(' ').LastOrDefault();
-            var channel = new D1Channel(new Uri(d1Url), new TokenCredentials(token!));
+            var channel = new D1Channel(new Uri(d1Url), new TokenCredentials(token!)) { ChannelCredentials = channelCredentials };
             return new D1GenericClient(channel);
         };
     });
@@ -53,7 +56,7 @@ else
 
     builder.Services.AddScoped<Func<ID1Generic>>(x =>
     {
-        var channel = new D1Channel(new Uri(d1Url), d1Username, d1Password);
+        var channel = new D1Channel(new Uri(d1Url), d1Username, d1Password) { ChannelCredentials = channelCredentials };
         return () => new D1GenericClient(channel);
     });
 }
@@ -121,9 +124,11 @@ app.UseSwaggerUI(options =>
         if (oidcEnabled)
         {
             var clientId = builder.Configuration.GetValue<string>("D1Generic:Oidc:ClientId");
-            if (!string.IsNullOrEmpty(oidcAuthzEndpoint))
+            var scopes = builder.Configuration.GetValue<string>("D1Generic:Oidc:Scopes")?.Split(" ");
+            options.OAuthClientId(clientId);
+            if (scopes is not null)
             {
-                options.OAuthClientId(clientId);
+                options.OAuthScopes(scopes);
             }
         }
     }
