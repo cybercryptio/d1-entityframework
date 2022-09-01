@@ -14,6 +14,14 @@ internal static class ModelExtensions
             throw new ArgumentNullException(nameof(property));
         }
 
+        // Check if already encrypted. Happens with inheritance.
+        var encryptedAnnotation = property.FindAnnotation(Constants.EncryptedAnnotationName);
+        var alreadyMarkedAsEncrypting = encryptedAnnotation is not null && encryptedAnnotation.Value is bool && (bool)encryptedAnnotation.Value == true;
+        if (alreadyMarkedAsEncrypting)
+        {
+            return false;
+        }
+
 #pragma warning disable EF1001 // Internal EF Core API usage.
         if (property.FindAnnotation(CoreAnnotationNames.ValueConverter) is not null)
 #pragma warning restore EF1001 // Internal EF Core API usage.

@@ -44,6 +44,8 @@ public static class ModelBuilderExtensions
                 {
                     throw new NotSupportedException($"Encryption column of type '{property.ClrType.FullName}' is not supported");
                 }
+
+                property.AddAnnotation(Constants.EncryptedAnnotationName, true);
             }
         }
 
