@@ -16,7 +16,7 @@ internal static class ModelExtensions
 
         // Check if already encrypted. Happens with inheritance.
         var encryptedAnnotation = property.FindAnnotation(Constants.EncryptedAnnotationName);
-        var alreadyMarkedAsEncrypting = encryptedAnnotation is not null && encryptedAnnotation.Value is not null && encryptedAnnotation.Value is bool && (bool)encryptedAnnotation.Value == true;
+        var alreadyMarkedAsEncrypting = encryptedAnnotation is not null && encryptedAnnotation.Value is bool && (bool)encryptedAnnotation.Value == true;
         if (alreadyMarkedAsEncrypting)
         {
             return false;
