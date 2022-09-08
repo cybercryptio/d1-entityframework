@@ -17,7 +17,8 @@ namespace ContosoUniversity.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    HireDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    HireDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,7 +33,8 @@ namespace ContosoUniversity.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    EnrollmentDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    EnrollmentDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -19,91 +19,104 @@ namespace ContosoUniversity.Data
             {
                 FirstMidName = "Carson",
                 LastName = "Alexander",
-                EnrollmentDate = DateTime.Parse("2016-09-01")
+                EnrollmentDate = DateTime.Parse("2016-09-01"),
+                Email = "cal@consoto.org"
             };
 
             var alonso = new Student
             {
                 FirstMidName = "Meredith",
                 LastName = "Alonso",
-                EnrollmentDate = DateTime.Parse("2018-09-01")
+                EnrollmentDate = DateTime.Parse("2018-09-01"),
+                Email = "mal@consoto.org"
             };
 
             var anand = new Student
             {
                 FirstMidName = "Arturo",
                 LastName = "Anand",
-                EnrollmentDate = DateTime.Parse("2019-09-01")
+                EnrollmentDate = DateTime.Parse("2019-09-01"),
+                Email = "aan@consoto.org"
             };
 
             var barzdukas = new Student
             {
                 FirstMidName = "Gytis",
                 LastName = "Barzdukas",
-                EnrollmentDate = DateTime.Parse("2018-09-01")
+                EnrollmentDate = DateTime.Parse("2018-09-01"),
+                Email = "gba@consoto.org"
             };
 
             var li = new Student
             {
                 FirstMidName = "Yan",
                 LastName = "Li",
-                EnrollmentDate = DateTime.Parse("2018-09-01")
+                EnrollmentDate = DateTime.Parse("2018-09-01"),
+                Email = "yli@consoto.org"
             };
 
             var justice = new Student
             {
                 FirstMidName = "Peggy",
                 LastName = "Justice",
-                EnrollmentDate = DateTime.Parse("2017-09-01")
+                EnrollmentDate = DateTime.Parse("2017-09-01"),
+                Email = "pju@consoto.org"
             };
 
             var norman = new Student
             {
                 FirstMidName = "Laura",
                 LastName = "Norman",
-                EnrollmentDate = DateTime.Parse("2019-09-01")
+                EnrollmentDate = DateTime.Parse("2019-09-01"),
+                Email = "lno@consoto.org"
             };
 
             var olivetto = new Student
             {
                 FirstMidName = "Nino",
                 LastName = "Olivetto",
-                EnrollmentDate = DateTime.Parse("2011-09-01")
+                EnrollmentDate = DateTime.Parse("2011-09-01"),
+                Email = "nol@consoto.org"
             };
 
             var abercrombie = new Instructor
             {
                 FirstMidName = "Kim",
                 LastName = "Abercrombie",
-                HireDate = DateTime.Parse("1995-03-11")
+                HireDate = DateTime.Parse("1995-03-11"),
+                Email = "kab@consoto.org"
             };
 
             var fakhouri = new Instructor
             {
                 FirstMidName = "Fadi",
                 LastName = "Fakhouri",
-                HireDate = DateTime.Parse("2002-07-06")
+                HireDate = DateTime.Parse("2002-07-06"),
+                Email = "ffa@consoto.org"
             };
 
             var harui = new Instructor
             {
                 FirstMidName = "Roger",
                 LastName = "Harui",
-                HireDate = DateTime.Parse("1998-07-01")
+                HireDate = DateTime.Parse("1998-07-01"),
+                Email = "rha@consoto.org"
             };
 
             var kapoor = new Instructor
             {
                 FirstMidName = "Candace",
                 LastName = "Kapoor",
-                HireDate = DateTime.Parse("2001-01-15")
+                HireDate = DateTime.Parse("2001-01-15"),
+                Email = "cka@consoto.org"
             };
 
             var zheng = new Instructor
             {
                 FirstMidName = "Roger",
                 LastName = "Zheng",
-                HireDate = DateTime.Parse("2004-02-12")
+                HireDate = DateTime.Parse("2004-02-12"),
+                Email = "rzh@consoto.org"
             };
 
             var officeAssignments = new OfficeAssignment[]

@@ -95,6 +95,11 @@ namespace ContosoUniversity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Email");
+
                     b.Property<string>("FirstMidName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -133,6 +138,11 @@ namespace ContosoUniversity.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Email");
 
                     b.Property<DateTime>("EnrollmentDate")
                         .HasColumnType("TEXT");

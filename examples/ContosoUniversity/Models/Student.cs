@@ -30,6 +30,12 @@ namespace ContosoUniversity.Models
             }
         }
 
+        [Required]
+        [EmailAddress]
+        [Column("Email")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
         public ICollection<Enrollment> Enrollments { get; set; }
     }
 }

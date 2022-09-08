@@ -31,6 +31,12 @@ namespace ContosoUniversity.Models
             get { return LastName + ", " + FirstMidName; }
         }
 
+        [Required]
+        [EmailAddress]
+        [Column("Email")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
         public ICollection<Course> Courses { get; set; }
         public OfficeAssignment OfficeAssignment { get; set; }
     }
