@@ -1,11 +1,13 @@
 using ContosoUniversity.Models;
+using CyberCrypt.D1.Client;
+using CyberCrypt.D1.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Data
 {
-    public class SchoolContext : DbContext
+    public class SchoolContext : D1DbContext
     {
-        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
+        public SchoolContext(Func<ID1Generic> clientFactory, DbContextOptions<SchoolContext> options) : base(clientFactory, options)
         {
         }
 
@@ -23,6 +25,8 @@ namespace ContosoUniversity.Data
                 .WithMany(i => i.Courses);
             modelBuilder.Entity<Student>().ToTable(nameof(Student));
             modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

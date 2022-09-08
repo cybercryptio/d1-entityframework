@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CyberCrypt.D1.EntityFramework;
 
 namespace ContosoUniversity.Models
 {
@@ -35,6 +36,7 @@ namespace ContosoUniversity.Models
         [EmailAddress]
         [Column("Email")]
         [Display(Name = "Email")]
+        [Confidential]
         public string Email { get; set; }
 
         public ICollection<Course> Courses { get; set; }
