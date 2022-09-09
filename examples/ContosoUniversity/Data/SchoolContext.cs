@@ -25,6 +25,7 @@ namespace ContosoUniversity.Data
                 .WithMany(i => i.Courses);
             modelBuilder.Entity<Student>().ToTable(nameof(Student));
             modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
+            modelBuilder.Entity<Student>().Property(x => x.Email).AsSearchable(v => new[] { v });
 
             base.OnModelCreating(modelBuilder);
         }

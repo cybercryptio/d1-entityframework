@@ -1,5 +1,6 @@
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
+using CyberCrypt.D1.EntityFramework;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -50,6 +51,8 @@ namespace ContosoUniversity.Pages.Students
             {
                 studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString)
                                        || s.FirstMidName.Contains(searchString));
+                var emails = _context.Students.WhereSearchable(x => x.Email, searchString);
+                studentsIQ = studentsIQ.Union(emails);
             }
             switch (sortOrder)
             {
