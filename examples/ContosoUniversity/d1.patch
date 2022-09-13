@@ -1,0 +1,768 @@
+From 8dfcbf11b7fa535b3181b19c178597faa70564eb Mon Sep 17 00:00:00 2001
+From: Kim Christensen <kim@cyber-crypt.com>
+Date: Thu, 8 Sep 2022 09:26:24 +0200
+Subject: [PATCH 1/3] Add email to student and instructor
+
+---
+ .../ContosoUniversity/Data/DbInitializer.cs   | 39 ++++++++++++-------
+ ... 20220908072235_InitialCreate.Designer.cs} | 12 +++++-
+ ...ate.cs => 20220908072235_InitialCreate.cs} |  6 ++-
+ .../Migrations/SchoolContextModelSnapshot.cs  | 10 +++++
+ .../ContosoUniversity/Models/Instructor.cs    |  6 +++
+ examples/ContosoUniversity/Models/Student.cs  |  6 +++
+ .../Pages/Instructors/Create.cshtml           |  5 +++
+ .../Pages/Instructors/Delete.cshtml           |  6 +++
+ .../Pages/Instructors/Details.cshtml          |  6 +++
+ .../Pages/Instructors/Edit.cshtml             |  5 +++
+ .../Pages/Instructors/Index.cshtml            |  4 ++
+ .../Pages/Students/Create.cshtml              |  5 +++
+ .../Pages/Students/Delete.cshtml              |  6 +++
+ .../Pages/Students/Details.cshtml             |  6 +++
+ .../Pages/Students/Edit.cshtml                |  5 +++
+ .../Pages/Students/Index.cshtml               |  6 +++
+ 16 files changed, 117 insertions(+), 16 deletions(-)
+ rename examples/ContosoUniversity/Migrations/{20220907131509_InitialCreate.Designer.cs => 20220908072235_InitialCreate.Designer.cs} (95%)
+ rename examples/ContosoUniversity/Migrations/{20220907131509_InitialCreate.cs => 20220908072235_InitialCreate.cs} (97%)
+
+diff --git a/examples/ContosoUniversity/Data/DbInitializer.cs b/examples/ContosoUniversity/Data/DbInitializer.cs
+index 3c5f135..8098fb0 100644
+--- a/examples/ContosoUniversity/Data/DbInitializer.cs
++++ b/examples/ContosoUniversity/Data/DbInitializer.cs
+@@ -19,91 +19,104 @@ namespace ContosoUniversity.Data
+             {
+                 FirstMidName = "Carson",
+                 LastName = "Alexander",
+-                EnrollmentDate = DateTime.Parse("2016-09-01")
++                EnrollmentDate = DateTime.Parse("2016-09-01"),
++                Email = "cal@consoto.org"
+             };
+ 
+             var alonso = new Student
+             {
+                 FirstMidName = "Meredith",
+                 LastName = "Alonso",
+-                EnrollmentDate = DateTime.Parse("2018-09-01")
++                EnrollmentDate = DateTime.Parse("2018-09-01"),
++                Email = "mal@consoto.org"
+             };
+ 
+             var anand = new Student
+             {
+                 FirstMidName = "Arturo",
+                 LastName = "Anand",
+-                EnrollmentDate = DateTime.Parse("2019-09-01")
++                EnrollmentDate = DateTime.Parse("2019-09-01"),
++                Email = "aan@consoto.org"
+             };
+ 
+             var barzdukas = new Student
+             {
+                 FirstMidName = "Gytis",
+                 LastName = "Barzdukas",
+-                EnrollmentDate = DateTime.Parse("2018-09-01")
++                EnrollmentDate = DateTime.Parse("2018-09-01"),
++                Email = "gba@consoto.org"
+             };
+ 
+             var li = new Student
+             {
+                 FirstMidName = "Yan",
+                 LastName = "Li",
+-                EnrollmentDate = DateTime.Parse("2018-09-01")
++                EnrollmentDate = DateTime.Parse("2018-09-01"),
++                Email = "yli@consoto.org"
+             };
+ 
+             var justice = new Student
+             {
+                 FirstMidName = "Peggy",
+                 LastName = "Justice",
+-                EnrollmentDate = DateTime.Parse("2017-09-01")
++                EnrollmentDate = DateTime.Parse("2017-09-01"),
++                Email = "pju@consoto.org"
+             };
+ 
+             var norman = new Student
+             {
+                 FirstMidName = "Laura",
+                 LastName = "Norman",
+-                EnrollmentDate = DateTime.Parse("2019-09-01")
++                EnrollmentDate = DateTime.Parse("2019-09-01"),
++                Email = "lno@consoto.org"
+             };
+ 
+             var olivetto = new Student
+             {
+                 FirstMidName = "Nino",
+                 LastName = "Olivetto",
+-                EnrollmentDate = DateTime.Parse("2011-09-01")
++                EnrollmentDate = DateTime.Parse("2011-09-01"),
++                Email = "nol@consoto.org"
+             };
+ 
+             var abercrombie = new Instructor
+             {
+                 FirstMidName = "Kim",
+                 LastName = "Abercrombie",
+-                HireDate = DateTime.Parse("1995-03-11")
++                HireDate = DateTime.Parse("1995-03-11"),
++                Email = "kab@consoto.org"
+             };
+ 
+             var fakhouri = new Instructor
+             {
+                 FirstMidName = "Fadi",
+                 LastName = "Fakhouri",
+-                HireDate = DateTime.Parse("2002-07-06")
++                HireDate = DateTime.Parse("2002-07-06"),
++                Email = "ffa@consoto.org"
+             };
+ 
+             var harui = new Instructor
+             {
+                 FirstMidName = "Roger",
+                 LastName = "Harui",
+-                HireDate = DateTime.Parse("1998-07-01")
++                HireDate = DateTime.Parse("1998-07-01"),
++                Email = "rha@consoto.org"
+             };
+ 
+             var kapoor = new Instructor
+             {
+                 FirstMidName = "Candace",
+                 LastName = "Kapoor",
+-                HireDate = DateTime.Parse("2001-01-15")
++                HireDate = DateTime.Parse("2001-01-15"),
++                Email = "cka@consoto.org"
+             };
+ 
+             var zheng = new Instructor
+             {
+                 FirstMidName = "Roger",
+                 LastName = "Zheng",
+-                HireDate = DateTime.Parse("2004-02-12")
++                HireDate = DateTime.Parse("2004-02-12"),
++                Email = "rzh@consoto.org"
+             };
+ 
+             var officeAssignments = new OfficeAssignment[]
+diff --git a/examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.Designer.cs b/examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.Designer.cs
+similarity index 95%
+rename from examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.Designer.cs
+rename to examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.Designer.cs
+index 750fdc2..b9652fb 100644
+--- a/examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.Designer.cs
++++ b/examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.Designer.cs
+@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+ namespace ContosoUniversity.Migrations
+ {
+     [DbContext(typeof(SchoolContext))]
+-    [Migration("20220907131509_InitialCreate")]
++    [Migration("20220908072235_InitialCreate")]
+     partial class InitialCreate
+     {
+         protected override void BuildTargetModel(ModelBuilder modelBuilder)
+@@ -97,6 +97,11 @@ namespace ContosoUniversity.Migrations
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("INTEGER");
+ 
++                    b.Property<string>("Email")
++                        .IsRequired()
++                        .HasColumnType("TEXT")
++                        .HasColumnName("Email");
++
+                     b.Property<string>("FirstMidName")
+                         .IsRequired()
+                         .HasMaxLength(50)
+@@ -136,6 +141,11 @@ namespace ContosoUniversity.Migrations
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("INTEGER");
+ 
++                    b.Property<string>("Email")
++                        .IsRequired()
++                        .HasColumnType("TEXT")
++                        .HasColumnName("Email");
++
+                     b.Property<DateTime>("EnrollmentDate")
+                         .HasColumnType("TEXT");
+ 
+diff --git a/examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.cs b/examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.cs
+similarity index 97%
+rename from examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.cs
+rename to examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.cs
+index 04540ae..846127e 100644
+--- a/examples/ContosoUniversity/Migrations/20220907131509_InitialCreate.cs
++++ b/examples/ContosoUniversity/Migrations/20220908072235_InitialCreate.cs
+@@ -17,7 +17,8 @@ namespace ContosoUniversity.Migrations
+                         .Annotation("Sqlite:Autoincrement", true),
+                     LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                     FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+-                    HireDate = table.Column<DateTime>(type: "TEXT", nullable: false)
++                    HireDate = table.Column<DateTime>(type: "TEXT", nullable: false),
++                    Email = table.Column<string>(type: "TEXT", nullable: false)
+                 },
+                 constraints: table =>
+                 {
+@@ -32,7 +33,8 @@ namespace ContosoUniversity.Migrations
+                         .Annotation("Sqlite:Autoincrement", true),
+                     LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                     FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+-                    EnrollmentDate = table.Column<DateTime>(type: "TEXT", nullable: false)
++                    EnrollmentDate = table.Column<DateTime>(type: "TEXT", nullable: false),
++                    Email = table.Column<string>(type: "TEXT", nullable: false)
+                 },
+                 constraints: table =>
+                 {
+diff --git a/examples/ContosoUniversity/Migrations/SchoolContextModelSnapshot.cs b/examples/ContosoUniversity/Migrations/SchoolContextModelSnapshot.cs
+index b669228..6832c7b 100644
+--- a/examples/ContosoUniversity/Migrations/SchoolContextModelSnapshot.cs
++++ b/examples/ContosoUniversity/Migrations/SchoolContextModelSnapshot.cs
+@@ -95,6 +95,11 @@ namespace ContosoUniversity.Migrations
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("INTEGER");
+ 
++                    b.Property<string>("Email")
++                        .IsRequired()
++                        .HasColumnType("TEXT")
++                        .HasColumnName("Email");
++
+                     b.Property<string>("FirstMidName")
+                         .IsRequired()
+                         .HasMaxLength(50)
+@@ -134,6 +139,11 @@ namespace ContosoUniversity.Migrations
+                         .ValueGeneratedOnAdd()
+                         .HasColumnType("INTEGER");
+ 
++                    b.Property<string>("Email")
++                        .IsRequired()
++                        .HasColumnType("TEXT")
++                        .HasColumnName("Email");
++
+                     b.Property<DateTime>("EnrollmentDate")
+                         .HasColumnType("TEXT");
+ 
+diff --git a/examples/ContosoUniversity/Models/Instructor.cs b/examples/ContosoUniversity/Models/Instructor.cs
+index 7221356..da45856 100644
+--- a/examples/ContosoUniversity/Models/Instructor.cs
++++ b/examples/ContosoUniversity/Models/Instructor.cs
+@@ -31,6 +31,12 @@ namespace ContosoUniversity.Models
+             get { return LastName + ", " + FirstMidName; }
+         }
+ 
++        [Required]
++        [EmailAddress]
++        [Column("Email")]
++        [Display(Name = "Email")]
++        public string Email { get; set; }
++
+         public ICollection<Course> Courses { get; set; }
+         public OfficeAssignment OfficeAssignment { get; set; }
+     }
+diff --git a/examples/ContosoUniversity/Models/Student.cs b/examples/ContosoUniversity/Models/Student.cs
+index b4a872b..4e1fe92 100644
+--- a/examples/ContosoUniversity/Models/Student.cs
++++ b/examples/ContosoUniversity/Models/Student.cs
+@@ -30,6 +30,12 @@ namespace ContosoUniversity.Models
+             }
+         }
+ 
++        [Required]
++        [EmailAddress]
++        [Column("Email")]
++        [Display(Name = "Email")]
++        public string Email { get; set; }
++
+         public ICollection<Enrollment> Enrollments { get; set; }
+     }
+ }
+\ No newline at end of file
+diff --git a/examples/ContosoUniversity/Pages/Instructors/Create.cshtml b/examples/ContosoUniversity/Pages/Instructors/Create.cshtml
+index 6a49ad1..8df369d 100644
+--- a/examples/ContosoUniversity/Pages/Instructors/Create.cshtml
++++ b/examples/ContosoUniversity/Pages/Instructors/Create.cshtml
+@@ -23,6 +23,11 @@
+                 <input asp-for="Instructor.FirstMidName" class="form-control" />
+                 <span asp-validation-for="Instructor.FirstMidName" class="text-danger"></span>
+             </div>
++            <div class="form-group">
++                <label asp-for="Instructor.Email" class="control-label"></label>
++                <input asp-for="Instructor.Email" class="form-control" />
++                <span asp-validation-for="Instructor.Email" class="text-danger"></span>
++            </div>
+             <div class="form-group">
+                 <label asp-for="Instructor.HireDate" class="control-label"></label>
+                 <input asp-for="Instructor.HireDate" class="form-control" />
+diff --git a/examples/ContosoUniversity/Pages/Instructors/Delete.cshtml b/examples/ContosoUniversity/Pages/Instructors/Delete.cshtml
+index 2bb9bfa..f4d3da8 100644
+--- a/examples/ContosoUniversity/Pages/Instructors/Delete.cshtml
++++ b/examples/ContosoUniversity/Pages/Instructors/Delete.cshtml
+@@ -24,6 +24,12 @@
+         <dd class="col-sm-10">
+             @Html.DisplayFor(model => model.Instructor.FirstMidName)
+         </dd>
++        <dt class="col-sm-2">
++            @Html.DisplayNameFor(model => model.Instructor.Email)
++        </dt>
++        <dd class="col-sm-10">
++            @Html.DisplayFor(model => model.Instructor.Email)
++        </dd>
+         <dt class="col-sm-2">
+             @Html.DisplayNameFor(model => model.Instructor.HireDate)
+         </dt>
+diff --git a/examples/ContosoUniversity/Pages/Instructors/Details.cshtml b/examples/ContosoUniversity/Pages/Instructors/Details.cshtml
+index 31e3807..353930c 100644
+--- a/examples/ContosoUniversity/Pages/Instructors/Details.cshtml
++++ b/examples/ContosoUniversity/Pages/Instructors/Details.cshtml
+@@ -23,6 +23,12 @@
+         <dd class="col-sm-10">
+             @Html.DisplayFor(model => model.Instructor.FirstMidName)
+         </dd>
++        <dt class="col-sm-2">
++            @Html.DisplayNameFor(model => model.Instructor.Email)
++        </dt>
++        <dd class="col-sm-10">
++            @Html.DisplayFor(model => model.Instructor.Email)
++        </dd>
+         <dt class="col-sm-2">
+             @Html.DisplayNameFor(model => model.Instructor.HireDate)
+         </dt>
+diff --git a/examples/ContosoUniversity/Pages/Instructors/Edit.cshtml b/examples/ContosoUniversity/Pages/Instructors/Edit.cshtml
+index 5cb9c0e..caab1ec 100644
+--- a/examples/ContosoUniversity/Pages/Instructors/Edit.cshtml
++++ b/examples/ContosoUniversity/Pages/Instructors/Edit.cshtml
+@@ -21,6 +21,11 @@
+                 <input asp-for="Instructor.FirstMidName" class="form-control" />
+                 <span asp-validation-for="Instructor.FirstMidName" class="text-danger"></span>
+             </div>
++            <div class="form-group">
++                <label asp-for="Instructor.Email" class="control-label"></label>
++                <input asp-for="Instructor.Email" class="form-control" />
++                <span asp-validation-for="Instructor.Email" class="text-danger"></span>
++            </div>
+             <div class="form-group">
+                 <label asp-for="Instructor.HireDate" class="control-label"></label>
+                 <input asp-for="Instructor.HireDate" class="form-control" />
+diff --git a/examples/ContosoUniversity/Pages/Instructors/Index.cshtml b/examples/ContosoUniversity/Pages/Instructors/Index.cshtml
+index be437d7..ceb4825 100644
+--- a/examples/ContosoUniversity/Pages/Instructors/Index.cshtml
++++ b/examples/ContosoUniversity/Pages/Instructors/Index.cshtml
+@@ -15,6 +15,7 @@
+         <tr>
+             <th>Last Name</th>
+             <th>First Name</th>
++            <th>Email</th>
+             <th>Hire Date</th>
+             <th>Office</th>
+             <th>Courses</th>
+@@ -36,6 +37,9 @@
+                 <td>
+                     @Html.DisplayFor(modelItem => item.FirstMidName)
+                 </td>
++                <td>
++                    @Html.DisplayFor(modelItem => item.Email)
++                </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.HireDate)
+                 </td>
+diff --git a/examples/ContosoUniversity/Pages/Students/Create.cshtml b/examples/ContosoUniversity/Pages/Students/Create.cshtml
+index ac46ac3..08207ef 100644
+--- a/examples/ContosoUniversity/Pages/Students/Create.cshtml
++++ b/examples/ContosoUniversity/Pages/Students/Create.cshtml
+@@ -23,6 +23,11 @@
+                 <input asp-for="Student.FirstMidName" class="form-control" />
+                 <span asp-validation-for="Student.FirstMidName" class="text-danger"></span>
+             </div>
++            <div class="form-group">
++                <label asp-for="Student.Email" class="control-label"></label>
++                <input asp-for="Student.Email" class="form-control" />
++                <span asp-validation-for="Student.Email" class="text-danger"></span>
++            </div>
+             <div class="form-group">
+                 <label asp-for="Student.EnrollmentDate" class="control-label"></label>
+                 <input asp-for="Student.EnrollmentDate" class="form-control" />
+diff --git a/examples/ContosoUniversity/Pages/Students/Delete.cshtml b/examples/ContosoUniversity/Pages/Students/Delete.cshtml
+index 48720c9..35cd361 100644
+--- a/examples/ContosoUniversity/Pages/Students/Delete.cshtml
++++ b/examples/ContosoUniversity/Pages/Students/Delete.cshtml
+@@ -26,6 +26,12 @@
+         <dd class="col-sm-10">
+             @Html.DisplayFor(model => model.Student.FirstMidName)
+         </dd>
++        <dt class="col-sm-2">
++            @Html.DisplayNameFor(model => model.Student.Email)
++        </dt>
++        <dd class="col-sm-10">
++            @Html.DisplayFor(model => model.Student.Email)
++        </dd>
+         <dt class="col-sm-2">
+             @Html.DisplayNameFor(model => model.Student.EnrollmentDate)
+         </dt>
+diff --git a/examples/ContosoUniversity/Pages/Students/Details.cshtml b/examples/ContosoUniversity/Pages/Students/Details.cshtml
+index b6ba95a..8f5d9f5 100644
+--- a/examples/ContosoUniversity/Pages/Students/Details.cshtml
++++ b/examples/ContosoUniversity/Pages/Students/Details.cshtml
+@@ -23,6 +23,12 @@
+         <dd class="col-sm-10">
+             @Html.DisplayFor(model => model.Student.FirstMidName)
+         </dd>
++        <dt class="col-sm-2">
++            @Html.DisplayNameFor(model => model.Student.Email)
++        </dt>
++        <dd class="col-sm-10">
++            @Html.DisplayFor(model => model.Student.Email)
++        </dd>
+         <dt class="col-sm-2">
+             @Html.DisplayNameFor(model => model.Student.EnrollmentDate)
+         </dt>
+diff --git a/examples/ContosoUniversity/Pages/Students/Edit.cshtml b/examples/ContosoUniversity/Pages/Students/Edit.cshtml
+index 83e9e47..eefa329 100644
+--- a/examples/ContosoUniversity/Pages/Students/Edit.cshtml
++++ b/examples/ContosoUniversity/Pages/Students/Edit.cshtml
+@@ -24,6 +24,11 @@
+                 <input asp-for="Student.FirstMidName" class="form-control" />
+                 <span asp-validation-for="Student.FirstMidName" class="text-danger"></span>
+             </div>
++            <div class="form-group">
++                <label asp-for="Student.Email" class="control-label"></label>
++                <input asp-for="Student.Email" class="form-control" />
++                <span asp-validation-for="Student.Email" class="text-danger"></span>
++            </div>
+             <div class="form-group">
+                 <label asp-for="Student.EnrollmentDate" class="control-label"></label>
+                 <input asp-for="Student.EnrollmentDate" class="form-control" />
+diff --git a/examples/ContosoUniversity/Pages/Students/Index.cshtml b/examples/ContosoUniversity/Pages/Students/Index.cshtml
+index 9a91786..09f8ad5 100644
+--- a/examples/ContosoUniversity/Pages/Students/Index.cshtml
++++ b/examples/ContosoUniversity/Pages/Students/Index.cshtml
+@@ -34,6 +34,9 @@
+             <th>
+                 @Html.DisplayNameFor(model => model.Students[0].FirstMidName)
+             </th>
++            <th>
++                @Html.DisplayNameFor(model => model.Students[0].Email)
++            </th>
+             <th>
+                 <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort"
+                    asp-route-currentFilter="@Model.CurrentFilter">
+@@ -53,6 +56,9 @@
+                 <td>
+                     @Html.DisplayFor(modelItem => item.FirstMidName)
+                 </td>
++                <td>
++                    @Html.DisplayFor(modelItem => item.Email)
++                </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.EnrollmentDate)
+                 </td>
+-- 
+2.34.1
+
+
+From 6dec822a1726216929a90a6de6b0404e5bea5867 Mon Sep 17 00:00:00 2001
+From: Kim Christensen <kim@cyber-crypt.com>
+Date: Thu, 8 Sep 2022 12:56:04 +0200
+Subject: [PATCH 2/3] Encrypt email in database
+
+---
+ .../ContosoUniversity.csproj                  |  4 +++
+ .../ContosoUniversity/Data/SchoolContext.cs   |  8 ++++--
+ .../ContosoUniversity/Models/Instructor.cs    |  2 ++
+ examples/ContosoUniversity/Models/Student.cs  |  2 ++
+ examples/ContosoUniversity/Program.cs         | 27 ++++++++++++++++---
+ 5 files changed, 38 insertions(+), 5 deletions(-)
+
+diff --git a/examples/ContosoUniversity/ContosoUniversity.csproj b/examples/ContosoUniversity/ContosoUniversity.csproj
+index 045c43d..7d3c407 100644
+--- a/examples/ContosoUniversity/ContosoUniversity.csproj
++++ b/examples/ContosoUniversity/ContosoUniversity.csproj
+@@ -20,4 +20,8 @@
+     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
+   </ItemGroup>
+ 
++  <ItemGroup>
++    <ProjectReference Include="..\..\src\CyberCrypt.D1.EntityFramework.csproj" />
++  </ItemGroup>
++
+ </Project>
+diff --git a/examples/ContosoUniversity/Data/SchoolContext.cs b/examples/ContosoUniversity/Data/SchoolContext.cs
+index f7c4bd6..6d01e9f 100644
+--- a/examples/ContosoUniversity/Data/SchoolContext.cs
++++ b/examples/ContosoUniversity/Data/SchoolContext.cs
+@@ -1,11 +1,13 @@
+ using ContosoUniversity.Models;
++using CyberCrypt.D1.Client;
++using CyberCrypt.D1.EntityFramework;
+ using Microsoft.EntityFrameworkCore;
+ 
+ namespace ContosoUniversity.Data
+ {
+-    public class SchoolContext : DbContext
++    public class SchoolContext : D1DbContext
+     {
+-        public SchoolContext(DbContextOptions<SchoolContext> options) : base(options)
++        public SchoolContext(Func<ID1Generic> clientFactory, DbContextOptions<SchoolContext> options) : base(clientFactory, options)
+         {
+         }
+ 
+@@ -23,6 +25,8 @@ namespace ContosoUniversity.Data
+                 .WithMany(i => i.Courses);
+             modelBuilder.Entity<Student>().ToTable(nameof(Student));
+             modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
++
++            base.OnModelCreating(modelBuilder);
+         }
+     }
+ }
+\ No newline at end of file
+diff --git a/examples/ContosoUniversity/Models/Instructor.cs b/examples/ContosoUniversity/Models/Instructor.cs
+index da45856..5814a79 100644
+--- a/examples/ContosoUniversity/Models/Instructor.cs
++++ b/examples/ContosoUniversity/Models/Instructor.cs
+@@ -2,6 +2,7 @@ using System;
+ using System.Collections.Generic;
+ using System.ComponentModel.DataAnnotations;
+ using System.ComponentModel.DataAnnotations.Schema;
++using CyberCrypt.D1.EntityFramework;
+ 
+ namespace ContosoUniversity.Models
+ {
+@@ -35,6 +36,7 @@ namespace ContosoUniversity.Models
+         [EmailAddress]
+         [Column("Email")]
+         [Display(Name = "Email")]
++        [Confidential]
+         public string Email { get; set; }
+ 
+         public ICollection<Course> Courses { get; set; }
+diff --git a/examples/ContosoUniversity/Models/Student.cs b/examples/ContosoUniversity/Models/Student.cs
+index 4e1fe92..0c53c12 100644
+--- a/examples/ContosoUniversity/Models/Student.cs
++++ b/examples/ContosoUniversity/Models/Student.cs
+@@ -2,6 +2,7 @@ using System;
+ using System.Collections.Generic;
+ using System.ComponentModel.DataAnnotations;
+ using System.ComponentModel.DataAnnotations.Schema;
++using CyberCrypt.D1.EntityFramework;
+ 
+ namespace ContosoUniversity.Models
+ {
+@@ -34,6 +35,7 @@ namespace ContosoUniversity.Models
+         [EmailAddress]
+         [Column("Email")]
+         [Display(Name = "Email")]
++        [Confidential]
+         public string Email { get; set; }
+ 
+         public ICollection<Enrollment> Enrollments { get; set; }
+diff --git a/examples/ContosoUniversity/Program.cs b/examples/ContosoUniversity/Program.cs
+index 280c489..a0f8ae2 100644
+--- a/examples/ContosoUniversity/Program.cs
++++ b/examples/ContosoUniversity/Program.cs
+@@ -1,12 +1,33 @@
+ using Microsoft.EntityFrameworkCore;
+-using Microsoft.Extensions.DependencyInjection;
+ using ContosoUniversity.Data;
++using Grpc.Core;
++using CyberCrypt.D1.Client;
++
+ var builder = WebApplication.CreateBuilder(args);
++builder.Configuration.AddEnvironmentVariables("CONTOSO_");
+ 
+ // Add services to the container.
+ builder.Services.AddRazorPages();
+-builder.Services.AddDbContext<SchoolContext>(options =>
+-    options.UseSqlite(builder.Configuration.GetConnectionString("SchoolContext") ?? throw new InvalidOperationException("Connection string 'SchoolContext' not found.")));
++
++var connectionString = builder.Configuration.GetConnectionString("SchoolContext") ?? throw new InvalidOperationException("Connection string 'SchoolContext' not found.");
++
++# region Changes
++
++var insecureChannel = builder.Configuration.GetValue<bool>("D1:Insecure");
++var channelCredentials = insecureChannel ? ChannelCredentials.Insecure : ChannelCredentials.SecureSsl;
++var d1Url = builder.Configuration.GetValue<string>("D1:Url") ?? throw new InvalidOperationException("D1 Generic URL not found.");
++var d1Username = builder.Configuration.GetValue<string>("D1:Username") ?? throw new InvalidOperationException("D1 Generic username not found.");
++var d1Password = builder.Configuration.GetValue<string>("D1:Password") ?? throw new InvalidOperationException("D1 Generic password not found.");
++
++builder.Services.AddScoped<Func<ID1Generic>>(x =>
++{
++    var channel = new D1Channel(new Uri(d1Url), d1Username, d1Password) { ChannelCredentials = channelCredentials };
++    return () => new D1GenericClient(channel);
++});
++
++builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlite(connectionString));
++
++#endregion
+ 
+ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+ 
+-- 
+2.34.1
+
+
+From 71b4dd1fd557c926d00808a108994c0b67c0be55 Mon Sep 17 00:00:00 2001
+From: Kim Christensen <kim@cyber-crypt.com>
+Date: Fri, 9 Sep 2022 10:12:31 +0200
+Subject: [PATCH 3/3] Add encrypted search to application
+
+---
+ .../ContosoUniversity/Data/DbInitializer.cs   | 26 +++++++++----------
+ .../ContosoUniversity/Data/SchoolContext.cs   |  1 +
+ .../Pages/Students/Index.cshtml.cs            |  3 +++
+ 3 files changed, 17 insertions(+), 13 deletions(-)
+
+diff --git a/examples/ContosoUniversity/Data/DbInitializer.cs b/examples/ContosoUniversity/Data/DbInitializer.cs
+index 8098fb0..563c846 100644
+--- a/examples/ContosoUniversity/Data/DbInitializer.cs
++++ b/examples/ContosoUniversity/Data/DbInitializer.cs
+@@ -20,7 +20,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Carson",
+                 LastName = "Alexander",
+                 EnrollmentDate = DateTime.Parse("2016-09-01"),
+-                Email = "cal@consoto.org"
++                Email = "cal@contoso.org"
+             };
+ 
+             var alonso = new Student
+@@ -28,7 +28,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Meredith",
+                 LastName = "Alonso",
+                 EnrollmentDate = DateTime.Parse("2018-09-01"),
+-                Email = "mal@consoto.org"
++                Email = "mal@contoso.org"
+             };
+ 
+             var anand = new Student
+@@ -36,7 +36,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Arturo",
+                 LastName = "Anand",
+                 EnrollmentDate = DateTime.Parse("2019-09-01"),
+-                Email = "aan@consoto.org"
++                Email = "aan@contoso.org"
+             };
+ 
+             var barzdukas = new Student
+@@ -44,7 +44,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Gytis",
+                 LastName = "Barzdukas",
+                 EnrollmentDate = DateTime.Parse("2018-09-01"),
+-                Email = "gba@consoto.org"
++                Email = "gba@contoso.org"
+             };
+ 
+             var li = new Student
+@@ -52,7 +52,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Yan",
+                 LastName = "Li",
+                 EnrollmentDate = DateTime.Parse("2018-09-01"),
+-                Email = "yli@consoto.org"
++                Email = "yli@contoso.org"
+             };
+ 
+             var justice = new Student
+@@ -60,7 +60,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Peggy",
+                 LastName = "Justice",
+                 EnrollmentDate = DateTime.Parse("2017-09-01"),
+-                Email = "pju@consoto.org"
++                Email = "pju@contoso.org"
+             };
+ 
+             var norman = new Student
+@@ -68,7 +68,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Laura",
+                 LastName = "Norman",
+                 EnrollmentDate = DateTime.Parse("2019-09-01"),
+-                Email = "lno@consoto.org"
++                Email = "lno@contoso.org"
+             };
+ 
+             var olivetto = new Student
+@@ -76,7 +76,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Nino",
+                 LastName = "Olivetto",
+                 EnrollmentDate = DateTime.Parse("2011-09-01"),
+-                Email = "nol@consoto.org"
++                Email = "nol@contoso.org"
+             };
+ 
+             var abercrombie = new Instructor
+@@ -84,7 +84,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Kim",
+                 LastName = "Abercrombie",
+                 HireDate = DateTime.Parse("1995-03-11"),
+-                Email = "kab@consoto.org"
++                Email = "kab@contoso.org"
+             };
+ 
+             var fakhouri = new Instructor
+@@ -92,7 +92,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Fadi",
+                 LastName = "Fakhouri",
+                 HireDate = DateTime.Parse("2002-07-06"),
+-                Email = "ffa@consoto.org"
++                Email = "ffa@contoso.org"
+             };
+ 
+             var harui = new Instructor
+@@ -100,7 +100,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Roger",
+                 LastName = "Harui",
+                 HireDate = DateTime.Parse("1998-07-01"),
+-                Email = "rha@consoto.org"
++                Email = "rha@contoso.org"
+             };
+ 
+             var kapoor = new Instructor
+@@ -108,7 +108,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Candace",
+                 LastName = "Kapoor",
+                 HireDate = DateTime.Parse("2001-01-15"),
+-                Email = "cka@consoto.org"
++                Email = "cka@contoso.org"
+             };
+ 
+             var zheng = new Instructor
+@@ -116,7 +116,7 @@ namespace ContosoUniversity.Data
+                 FirstMidName = "Roger",
+                 LastName = "Zheng",
+                 HireDate = DateTime.Parse("2004-02-12"),
+-                Email = "rzh@consoto.org"
++                Email = "rzh@contoso.org"
+             };
+ 
+             var officeAssignments = new OfficeAssignment[]
+diff --git a/examples/ContosoUniversity/Data/SchoolContext.cs b/examples/ContosoUniversity/Data/SchoolContext.cs
+index 6d01e9f..6076938 100644
+--- a/examples/ContosoUniversity/Data/SchoolContext.cs
++++ b/examples/ContosoUniversity/Data/SchoolContext.cs
+@@ -25,6 +25,7 @@ namespace ContosoUniversity.Data
+                 .WithMany(i => i.Courses);
+             modelBuilder.Entity<Student>().ToTable(nameof(Student));
+             modelBuilder.Entity<Instructor>().ToTable(nameof(Instructor));
++            modelBuilder.Entity<Student>().Property(x => x.Email).AsSearchable(v => new[] { v });
+ 
+             base.OnModelCreating(modelBuilder);
+         }
+diff --git a/examples/ContosoUniversity/Pages/Students/Index.cshtml.cs b/examples/ContosoUniversity/Pages/Students/Index.cshtml.cs
+index 5fac6d9..b8e1b00 100644
+--- a/examples/ContosoUniversity/Pages/Students/Index.cshtml.cs
++++ b/examples/ContosoUniversity/Pages/Students/Index.cshtml.cs
+@@ -1,5 +1,6 @@
+ using ContosoUniversity.Data;
+ using ContosoUniversity.Models;
++using CyberCrypt.D1.EntityFramework;
+ using Microsoft.AspNetCore.Mvc.RazorPages;
+ using Microsoft.EntityFrameworkCore;
+ using Microsoft.Extensions.Configuration;
+@@ -50,6 +51,8 @@ namespace ContosoUniversity.Pages.Students
+             {
+                 studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString)
+                                        || s.FirstMidName.Contains(searchString));
++                var emails = _context.Students.WhereSearchable(x => x.Email, searchString);
++                studentsIQ = studentsIQ.Union(emails);
+             }
+             switch (sortOrder)
+             {
+-- 
+2.34.1
+

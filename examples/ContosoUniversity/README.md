@@ -23,3 +23,11 @@ Now you can run the application using
 ```bash
 dotnet run
 ```
+
+## Manually patching the original sample
+
+If you want to manually patch the original sample, apply the `d1.patch` by running the following command:
+
+```bash
+git am d1.patch
+```
