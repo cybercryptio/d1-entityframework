@@ -5,7 +5,13 @@ with a small change adding emails to students and instructors.
 
 ## Running the sample
 
-Make sure an instance of D1 Generic is running and a user have been created.
+Make sure an instance of D1 Generic is running and a user have been created, and you have Entity Framework Core tools installed.
+
+To install Entity Framework Core tools run the following command.
+
+```bash
+dotnet tool install --global dotnet-ef
+```
 
 Then run the following commands to ensure the SQLite database is created correctly.
 
