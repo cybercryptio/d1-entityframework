@@ -9,6 +9,7 @@
     <Company>Cybercrypt A/S</Company>
     <PackageDescription>Integrate D1 with Entity Framework</PackageDescription>
     <RepositoryUrl>https://github.com/cybercryptio/d1-entityframework</RepositoryUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
