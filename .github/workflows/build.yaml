@@ -72,4 +72,4 @@ jobs:
       env:
         PACKAGE_SOURCE: https://api.nuget.org/v3/index.json
         API_KEY: ${{ secrets.NUGET_API_KEY }}
-        VERSION: ${{ github.ref_name }}
+        VERSION: ${{ steps.gitversion.outputs.semVer }}
